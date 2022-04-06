@@ -10,6 +10,7 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
 
     private static GameStateManager Instance;
 
+    //this is what kind of state the game is in itself
     public enum GAMESTATE
     {
         PLAYING,
@@ -18,7 +19,17 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
         PAUSE
     }
 
-    private static GAMESTATE State;
+    private static GAMESTATE GameState;
+
+    //this is the current state of whether it is online or not
+    public enum PLAYSTATE
+    {
+        LOCAL,
+        ONLINE,
+        NONE
+    }
+
+    private static PLAYSTATE PlayState;
 
     private void Awake()
     {
@@ -33,32 +44,58 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
         }
     }
 
-    //sets State to GAMEOVER
+    //sets GameState to GAMEOVER
     public static void Gameover()
     {
-        State = GAMESTATE.GAMEOVER;
+        GameState = GAMESTATE.GAMEOVER;
 
         //this is so that the game freezes when it's gameover
         //can be removed if we don't like the look
         Time.timeScale = 0f;
     }
-    public static GAMESTATE GetState()
+    
+    //returns the current GameState
+    public static GAMESTATE GetGameState()
     {
-        return State;
+        return GameState;
     }
 
-    //set State to MENU, Multiplay to NONE and Load Main Menu
+    //returns the current PlayState
+    public static PLAYSTATE GetPlayState()
+    {
+        return PlayState;
+    }
+
+    //sets the PlayState to LOCAL
+    public static void Local()
+    {
+        PlayState = PLAYSTATE.LOCAL;
+    }
+
+    //set GameState to MENU, Multiplay to NONE and Load Main Menu
     public static void MainMenu()
     {
-        State = GAMESTATE.MENU;
+        GameState = GAMESTATE.MENU;
         SceneManager.LoadScene(/*MainMenuName*/ "");
     }
 
-    //sets State to PAUSE
+    //sets the PlayState to LOCAL
+    public static void NoPlayState()
+    {
+        PlayState = PLAYSTATE.NONE;
+    }
+
+    //sets the PlayState to ONLINE
+    public static void Online()
+    {
+        PlayState = PLAYSTATE.ONLINE;
+    }
+
+    //sets GameState to PAUSE
     //if we choose to use this, only in local games
     public static void Pause()
     {
-        State = GAMESTATE.PAUSE;
+        GameState = GAMESTATE.PAUSE;
 
         //this is so that the game freezes when it's gameover
         //can be removed if we don't like the look
@@ -71,21 +108,21 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
         Start(SceneManager.GetActiveScene().name);
     }
 
-    //set State to PLAYING
+    //set GameState to PLAYING
     //would be used to resume play after a pause
     public static void Play()
     {
-        State = GAMESTATE.PLAYING;
+        GameState = GAMESTATE.PLAYING;
         Time.timeScale = 1f;
     }
 
-    //set State to PLAYING and load a/the level
+    //set GameState to PLAYING and load a/the level
     //will also be used to restart after a gameover
     //if there is only one level, we could make the string name a SerializeField instead of a parameter
     public static void Start(string Level)
     {
 
-        State = GAMESTATE.PLAYING;
+        GameState = GAMESTATE.PLAYING;
 
         //not sure if this is necessary just cuz this is for local
         SceneManager.LoadScene(Level);
