@@ -8,7 +8,7 @@ public class RoomItem : MonoBehaviour
     [SerializeField] private TMPro.TMP_Text RoomName;
     private LobbyManager Manager;
 
-    private string Password;
+    public string Password;
 
     private void Start()
     {
@@ -20,18 +20,15 @@ public class RoomItem : MonoBehaviour
         RoomName.text = _RoomName;
     }
 
-    public void SetPassword(string word)
-    {
-        Password = word;
-    }
-
-    public string GetPassword()
-    {
-        return Password;
-    }
-
     public void OnClickItem()
     {
-        Manager.JoinRoom(RoomName.text);
+        if(Password == null || Password.Equals(""))
+        {
+            Manager.JoinRoom(RoomName.text);
+        }
+        else
+        {
+            Manager.ActivatePasswordPanel(RoomName.text, Password);
+        }
     }
 }

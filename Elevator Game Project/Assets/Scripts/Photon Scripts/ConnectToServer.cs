@@ -14,7 +14,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     public void OnClickConnect()
     {
-        if(UsernameInput.text.Length >= 1)
+        if(UsernameInput.text.Length >= 1 && UsernameInput.text.Length <= 12)
         {
             PhotonNetwork.NickName = UsernameInput.text;
             ButtonText.text = "Connecting...";
