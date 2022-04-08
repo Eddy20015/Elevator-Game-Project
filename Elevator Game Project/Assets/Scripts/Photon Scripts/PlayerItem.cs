@@ -9,10 +9,7 @@ public class PlayerItem : MonoBehaviourPunCallbacks
 {
     [SerializeField] private TMPro.TMP_Text PlayerName;
 
-    //this is stuff for the hat selector stuff
-    ExitGames.Client.Photon.Hashtable PlayerProperties = new ExitGames.Client.Photon.Hashtable();   //photon's version of a hashtable
-    [SerializeField] private Image HatPicture;  //probably won't be an image, but this is for the display
-    //[SerializeField] private (not sure what type probably mesh)[] Hats;
+    //ExitGames.Client.Photon.Hashtable PlayerProperties = new ExitGames.Client.Photon.Hashtable();   //photon's version of a hashtable
 
     public void SetPlayerInfo(Player _Player)
     {

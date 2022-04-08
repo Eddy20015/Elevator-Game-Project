@@ -64,7 +64,7 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
     public static void ConnectToServerScene()
     {
         GameState = GAMESTATE.MENU;
-        Online();
+        PlayState = PLAYSTATE.ONLINE;
         SceneManager.LoadScene(ConnectToServerName);
     }
 
@@ -94,7 +94,7 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
     public static void Lobby()
     {
         GameState = GAMESTATE.MENU;
-        Online();
+        PlayState = PLAYSTATE.ONLINE;
         SceneManager.LoadScene(LobbyName);
     }
 
@@ -108,11 +108,11 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
     public static void MainMenu()
     {
         GameState = GAMESTATE.MENU;
-        NoPlayState();
+        PlayState = PLAYSTATE.NONE;
         SceneManager.LoadScene(MainMenuName);
     }
 
-    //sets the PlayState to LOCAL
+    //sets the PlayState to NONE
     public static void NoPlayState()
     {
         PlayState = PLAYSTATE.NONE;

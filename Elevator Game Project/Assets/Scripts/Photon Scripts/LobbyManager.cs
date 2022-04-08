@@ -10,6 +10,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //Following BlackThornProd Tutorials for this section
 
     [SerializeField] private TMPro.TMP_InputField RoomInputField;
+    [SerializeField] private TMPro.TMP_InputField PasswordInputField;
     [SerializeField] private GameObject LobbyPanel;
     [SerializeField] private GameObject RoomPanel;
     [SerializeField] private TMPro.TMP_Text RoomName;
@@ -39,7 +40,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if(RoomInputField.text.Length >= 1)
         {
-            PhotonNetwork.CreateRoom(RoomInputField.text, new RoomOptions() { MaxPlayers = 2 });
+            RoomOptions roomOptions = new RoomOptions();
+            roomOptions.MaxPlayers = 2;
+            roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "Password", PasswordInputField.text } };
+            PhotonNetwork.CreateRoom(RoomInputField.text, roomOptions) ;
         }
     }
 
@@ -84,7 +88,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void OnClickLeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
-        //destroy empty room
+        //need to confirm if rooms are destrohyed when they are empty
     }
 
     public void OnClickBack()
