@@ -31,6 +31,15 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
 
     private static PLAYSTATE PlayState;
 
+    [SerializeField] private string MainMenuNameSetter;
+    private static string MainMenuName;
+
+    [SerializeField] private string ConnectToServerNameSetter;
+    private static string ConnectToServerName;
+
+    [SerializeField] private string LobbyNameSetter;
+    private static string LobbyName;
+
     private void Awake()
     {
         if (Instance == null)
@@ -42,6 +51,21 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
         {
             Destroy(this);
         }
+
+        GameState = GAMESTATE.MENU;
+        PlayState = PLAYSTATE.NONE;
+
+        MainMenuName = MainMenuNameSetter;
+        ConnectToServerName = ConnectToServerNameSetter;
+        LobbyName = LobbyNameSetter;
+    }
+
+    //go to the ConnectToServer scene
+    public static void ConnectToServerScene()
+    {
+        GameState = GAMESTATE.MENU;
+        PlayState = PLAYSTATE.ONLINE;
+        SceneManager.LoadScene(ConnectToServerName);
     }
 
     //sets GameState to GAMEOVER
@@ -66,6 +90,14 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
         return PlayState;
     }
 
+    //go to the Lobby scene
+    public static void Lobby()
+    {
+        GameState = GAMESTATE.MENU;
+        PlayState = PLAYSTATE.ONLINE;
+        SceneManager.LoadScene(LobbyName);
+    }
+
     //sets the PlayState to LOCAL
     public static void Local()
     {
@@ -76,10 +108,11 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
     public static void MainMenu()
     {
         GameState = GAMESTATE.MENU;
-        SceneManager.LoadScene(/*MainMenuName*/ "");
+        PlayState = PLAYSTATE.NONE;
+        SceneManager.LoadScene(MainMenuName);
     }
 
-    //sets the PlayState to LOCAL
+    //sets the PlayState to NONE
     public static void NoPlayState()
     {
         PlayState = PLAYSTATE.NONE;
