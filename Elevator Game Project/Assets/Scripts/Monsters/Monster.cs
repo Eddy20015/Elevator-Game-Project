@@ -7,11 +7,11 @@ public class Monster : MonoBehaviour
 {
     //Tim Kashani
 
-    [SerializeField] float speed;
+    [SerializeField] protected float speed;
 
-    [SerializeField] GameObject player;
+    [SerializeField] protected GameObject player;
 
-    NavMeshAgent agent;
+    protected NavMeshAgent agent;
 
     // Start is called before the first frame update
     void Start()
