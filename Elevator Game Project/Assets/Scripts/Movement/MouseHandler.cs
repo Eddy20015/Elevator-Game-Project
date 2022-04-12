@@ -24,13 +24,16 @@ public class MouseHandler : MonoBehaviour
 
     void Update()
     {
-        float mouseX = Input.GetAxis("Mouse X") * horizontalSpeed;
-        float mouseY = Input.GetAxis("Mouse Y") * verticalSpeed;
+        if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * horizontalSpeed;
+            float mouseY = Input.GetAxis("Mouse Y") * verticalSpeed;
 
-        yRotation += mouseX;
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90, 90);
+            yRotation += mouseX;
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90, 90);
 
-        cam.transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f);
+            cam.transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f);
+        }
     }
 }

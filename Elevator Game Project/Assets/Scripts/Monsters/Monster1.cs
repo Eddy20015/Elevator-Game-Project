@@ -11,6 +11,7 @@ public class Monster1 : Monster
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        monsterCollider = GetComponent<Collider>();
     }
 
     // Update is called once per frame
@@ -28,7 +29,8 @@ public class Monster1 : Monster
         if (f > 15)
         {
             agent.speed = speed;
-        } else
+        } 
+        else
         {
             agent.speed = speed * 2;
         }
