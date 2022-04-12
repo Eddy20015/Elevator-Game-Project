@@ -20,10 +20,15 @@ public class PlayerMovement : MonoBehaviour
 
     private Camera cam;
 
+    private GameObject interactionTarget;
+
+    private bool canInteract;
+
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
         cam = Camera.main;
+        canInteract = false;
     }
 
     void Update()
@@ -50,6 +55,32 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity -= Gravity * Time.deltaTime;
             characterController.Move(new Vector3(0, velocity, 0));
+        }
+
+        if (Input.GetKeyDown(KeyCode.E) && canInteract)
+        {
+            //replace "Interaction" with whatever we name it in the Interactable script
+            interactionTarget.SendMessage("Interact");
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        RaycastHit hit;
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit, 2f))
+        {
+            if (hit.collider.tag == "Interactable")
+            {
+                canInteract = true;
+                interactionTarget = hit.transform.gameObject;
+            }
+        }
+        else
+        {
+            canInteract = false;
+            interactionTarget = null;
         }
     }
 }
