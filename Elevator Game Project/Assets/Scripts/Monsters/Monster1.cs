@@ -7,6 +7,8 @@ public class Monster1 : Monster
 {
     //Tim Kashani
 
+    [SerializeField] GameObject eyes;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +19,8 @@ public class Monster1 : Monster
     void Update()
     {
         Chase();
+        eyes.transform.LookAt(player.transform);
+        eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
     }
 
     public override void Chase()
