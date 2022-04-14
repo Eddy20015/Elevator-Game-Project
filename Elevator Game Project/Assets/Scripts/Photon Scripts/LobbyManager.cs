@@ -250,6 +250,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void OnClickStartButton()
     {
+        //GameStateManager.Start(GameScene);
         PhotonNetwork.LoadLevel(GameScene);
     }
 }

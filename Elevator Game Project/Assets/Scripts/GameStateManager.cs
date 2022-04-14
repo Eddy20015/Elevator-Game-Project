@@ -1,11 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-//using Photon.Pun;
+using Photon.Pun;
 
-public class GameStateManager : MonoBehaviour //PunCallbacks
+public class GameStateManager : MonoBehaviourPunCallbacks
 {
-    //Coded by Ed Slee
-
     //Will be using this GameStateManager as a SceneManager that loads and changes scenes with the correct GameState
 
     private static GameStateManager Instance;
@@ -13,10 +11,12 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
     //this is what kind of state the game is in itself
     public enum GAMESTATE
     {
-        PLAYING,
+        CINEMATIC,
+        DEAD,
         GAMEOVER,
         MENU,
-        PAUSE
+        PAUSE,
+        PLAYING
     }
 
     private static GAMESTATE GameState;
@@ -25,8 +25,8 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
     public enum PLAYSTATE
     {
         LOCAL,
-        ONLINE,
-        NONE
+        NONE,
+        ONLINE
     }
 
     private static PLAYSTATE PlayState;
@@ -58,6 +58,20 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
         MainMenuName = MainMenuNameSetter;
         ConnectToServerName = ConnectToServerNameSetter;
         LobbyName = LobbyNameSetter;
+    }
+
+    //sets GameState to CINEMATICS
+    public static void Cinematics()
+    {
+        GameState = GAMESTATE.CINEMATIC;
+
+        Time.timeScale = 1f;
+    }
+
+    //sets GameState to DEAD
+    public static void Dead()
+    {
+        GameState = GAMESTATE.DEAD;
     }
 
     //go to the ConnectToServer scene
@@ -148,6 +162,16 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
         GameState = GAMESTATE.PLAYING;
         Time.timeScale = 1f;
     }
+    
+    //set the GameState to desired state
+    //only to be used in Online for streaming purposes
+    public static void SetGameState(GAMESTATE State)
+    {
+        if(PlayState == PLAYSTATE.ONLINE)
+        {
+            GameState = State;
+        }
+    }
 
     //set GameState to PLAYING and load a/the level
     //will also be used to restart after a gameover
@@ -158,7 +182,14 @@ public class GameStateManager : MonoBehaviour //PunCallbacks
         GameState = GAMESTATE.PLAYING;
 
         //not sure if this is necessary just cuz this is for local
-        SceneManager.LoadScene(Level);
+        if(PlayState == PLAYSTATE.LOCAL)
+        {
+            SceneManager.LoadScene(Level);
+        }
+        else if (PlayState == PLAYSTATE.ONLINE)
+        {
+            PhotonNetwork.LoadLevel(Level);
+        }
 
         //this can be removed if Gameover() will not set timescale to 0
         Time.timeScale = 1f;

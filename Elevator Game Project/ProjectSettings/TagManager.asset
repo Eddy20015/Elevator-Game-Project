@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Bullet
   - Interactable
+  - SpawnPoint
+  - Master
   layers:
   - Default
   - TransparentFX
