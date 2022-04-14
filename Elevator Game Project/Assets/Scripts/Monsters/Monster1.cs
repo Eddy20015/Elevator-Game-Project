@@ -53,7 +53,7 @@ public class Monster1 : Monster
             agent.speed = speed * 2;
         }
 
-        Debug.Log(foundPlayer);
-        Debug.Log(h.point);
+        //Debug.Log(foundPlayer);
+        //Debug.Log(h.point);
     }
 }
