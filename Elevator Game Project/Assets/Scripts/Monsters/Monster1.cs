@@ -29,12 +29,31 @@ public class Monster1 : Monster
 
         float f = Vector3.Distance(transform.position, player.transform.position);
 
-        if (f > 15)
+        RaycastHit h;
+
+        Physics.Raycast(transform.position, eyes.transform.forward, out h);
+
+        bool foundPlayer = false;
+
+        if (h.distance < 15)
+        {
+            if (Vector3.Distance(new Vector3(h.point.x, player.transform.position.y, h.point.z), player.transform.position) < 1)
+            {
+                foundPlayer = true;
+            }
+        }
+
+        
+
+        if (f > 15 || !foundPlayer)
         {
             agent.speed = speed;
         } else
         {
             agent.speed = speed * 2;
         }
+
+        Debug.Log(foundPlayer);
+        Debug.Log(h.point);
     }
 }
