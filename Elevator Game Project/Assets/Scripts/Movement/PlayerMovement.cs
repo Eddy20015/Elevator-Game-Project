@@ -59,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && canInteract)
         {
-            //replace "Interaction" with whatever we name it in the Interactable script
             interactionTarget.SendMessage("Interact");
         }
     }
