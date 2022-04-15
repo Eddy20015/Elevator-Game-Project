@@ -9,7 +9,9 @@ public class Monster : MonoBehaviour
 
     [SerializeField] protected float speed;
 
-    [SerializeField] protected GameObject player;
+    [SerializeField] protected PlayerScript player;
+
+    protected Collider monsterCollider;
 
     protected NavMeshAgent agent;
 
@@ -17,6 +19,7 @@ public class Monster : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        monsterCollider = GetComponent<Collider>();
     }
 
     // Update is called once per frame
@@ -28,5 +31,18 @@ public class Monster : MonoBehaviour
     public virtual void Chase()
     {
 
+    }
+
+    public void KillPlayer()
+    {
+        player.GetKilled();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            KillPlayer();
+        }
     }
 }
