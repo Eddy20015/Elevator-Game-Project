@@ -44,6 +44,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             float horizontal = Input.GetAxis("Horizontal") * MovementSpeed;
             float vertical = Input.GetAxis("Vertical") * MovementSpeed;
 
+
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);

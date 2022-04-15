@@ -10,9 +10,27 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     private GameObject deathUI;
 
+    [SerializeField]
+    private GameObject pauseUI;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
+        {
+            GameStateManager.Pause();
+            pauseUI.SetActive(true);
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PAUSE)
+        {
+            GameStateManager.Play();
+            pauseUI.SetActive(false);
+        }
+    }
+
     private void Start()
     {
         deathUI.SetActive(false);
+        pauseUI.SetActive(false);
     }
 
     public void GetKilled()
@@ -20,5 +38,10 @@ public class PlayerScript : MonoBehaviour
         isAlive = false;
         GameStateManager.Gameover();
         deathUI.SetActive(true);
+    }
+
+    public void SetPauseUIToFalse()
+    {
+        pauseUI.SetActive(false);
     }
 }
