@@ -47,7 +47,6 @@ public class RoomManager : MonoBehaviourPunCallbacks
         //Check if we're in the game scene
         if(scene.name == GameSceneName)
         {
-            Debug.LogError("Making the PlayerManagers");
             playerManager = PhotonNetwork.Instantiate(PlayerManagerName, Vector3.zero, Quaternion.identity);
         }
     }
