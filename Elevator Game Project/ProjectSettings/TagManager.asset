@@ -7,6 +7,8 @@ TagManager:
   - Monster
   - Bullet
   - Interactable
+  - SpawnPoint
+  - Master
   layers:
   - Default
   - TransparentFX
