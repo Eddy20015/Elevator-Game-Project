@@ -68,7 +68,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
             PhotonNetwork.CreateRoom(RoomInputField.text, roomOptions);
             //PhotonNetwork.CreateRoom(RoomInputField.text, new RoomOptions() { MaxPlayers = 2, CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { PasswordKey, PasswordInputField.text } } });
-
+                
         }
     }
 
@@ -250,7 +250,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void OnClickStartButton()
     {
-        //GameStateManager.Start(GameScene);
-        PhotonNetwork.LoadLevel(GameScene);
+        GameStateManager.Start(GameScene);
+        //PhotonNetwork.LoadLevel(GameScene);
     }
 }

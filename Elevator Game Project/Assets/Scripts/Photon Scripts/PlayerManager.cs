@@ -70,7 +70,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 stream.SendNext(GameStateManager.GetGameState());
             }
-            else if(GameStateManager.GetGameState() != GameStateManager.GAMESTATE.MENU)
+            else if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.MENU)
             {
                 GameStateManager.SetGameState(GameStateManager.GAMESTATE.PLAYING);
             }
