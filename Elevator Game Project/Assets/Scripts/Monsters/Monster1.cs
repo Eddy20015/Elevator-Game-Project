@@ -7,6 +7,8 @@ public class Monster1 : Monster
 {
     //Tim Kashani
 
+    [SerializeField] GameObject eyes;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,8 @@ public class Monster1 : Monster
     void Update()
     {
         Chase();
+        eyes.transform.LookAt(player.transform);
+        eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
     }
 
     public override void Chase()
@@ -26,7 +30,23 @@ public class Monster1 : Monster
 
         float f = Vector3.Distance(transform.position, player.transform.position);
 
-        if (f > 15)
+        RaycastHit h;
+
+        Physics.Raycast(transform.position, eyes.transform.forward, out h);
+
+        bool foundPlayer = false;
+
+        if (h.distance < 15)
+        {
+            if (Vector3.Distance(new Vector3(h.point.x, player.transform.position.y, h.point.z), player.transform.position) < 1)
+            {
+                foundPlayer = true;
+            }
+        }
+
+        
+
+        if (f > 15 || !foundPlayer)
         {
             agent.speed = speed;
         } 
@@ -34,5 +54,8 @@ public class Monster1 : Monster
         {
             agent.speed = speed * 2;
         }
+
+        //Debug.Log(foundPlayer);
+        //Debug.Log(h.point);
     }
 }
