@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 4184284204877490221}
   - component: {fileID: 4184284204877490222}
   - component: {fileID: 4606867188363337946}
+
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -314,11 +315,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368045bed380bd24f8ba444a2073fbf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementSpeed: 2
-  SprintMultiplier: 2.5
+  MovementSpeed: 1
+  SprintMultiplier: 2
   Gravity: 9.8
+
   velocity: 1
 --- !u!114 &4606867188363337946
+
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -327,11 +330,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4184284204877490223}
   m_Enabled: 1
   m_EditorHideFlags: 0
+
   m_Script: {fileID: 11500000, guid: b89bb69236b5058449085dfa99a890c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   deathUI: {fileID: 0}
   pauseUI: {fileID: 0}
+
 --- !u!1 &4184284205109604277
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,7 +522,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4184284205902078477}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &4184284205902078474
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -536,8 +541,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: e6d828603e7ef47878d61c1eb7f52898, type: 2}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -570,6 +574,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class MouseHandler : MonoBehaviour
 {
@@ -16,24 +17,35 @@ public class MouseHandler : MonoBehaviour
     private float yRotation = 0.0f;
 
     private Camera cam;
+    private PhotonView view;
 
     void Start()
     {
-        cam = Camera.main;
+        cam = GetComponentInChildren<Camera>();
+        view = GetComponent<PhotonView>();
+        //Get rid of the camera if it is not mine
+        if (!view.IsMine)
+            Destroy(cam.gameObject);
     }
 
     void Update()
     {
-        if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
+        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
+           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
         {
-            float mouseX = Input.GetAxis("Mouse X") * horizontalSpeed;
-            float mouseY = Input.GetAxis("Mouse Y") * verticalSpeed;
+            Debug.Log(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING);
+            if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
+            {
+                float mouseX = Input.GetAxis("Mouse X") * horizontalSpeed;
+                float mouseY = Input.GetAxis("Mouse Y") * verticalSpeed;
 
-            yRotation += mouseX;
-            xRotation -= mouseY;
-            xRotation = Mathf.Clamp(xRotation, -90, 90);
+                yRotation += mouseX;
+                xRotation -= mouseY;
+                xRotation = Mathf.Clamp(xRotation, -90, 90);
 
-            cam.transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f);
+                cam.transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f);
+            }
         }
+          
     }
 }
