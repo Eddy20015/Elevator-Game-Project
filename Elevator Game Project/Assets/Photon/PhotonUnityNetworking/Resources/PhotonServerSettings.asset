@@ -42,6 +42,8 @@ MonoBehaviour:
   - RPC_SetMasterTag
   - RPC_SetChargedAmount
   - RPC_SetIsUsed
+  - RPC_SetCompleted
+  - RPC_SetIsCompleted
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

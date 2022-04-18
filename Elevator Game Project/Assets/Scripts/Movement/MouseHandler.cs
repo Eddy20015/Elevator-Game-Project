@@ -33,7 +33,7 @@ public class MouseHandler : MonoBehaviour
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
            (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
         {
-            Debug.Log(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING);
+            //Debug.Log(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING);
             if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
             {
                 float mouseX = Input.GetAxis("Mouse X") * horizontalSpeed;

@@ -6,13 +6,14 @@ using Photon.Pun;
 public class ChargeStation : MonoBehaviour, IInteractable
 {
     [SerializeField] private float chargedAmount, maxChargeAmount, chargeTick, incrementAmount;
-    [SerializeField] private bool isUsed;
+    [SerializeField] private bool isUsed, isCompleted;
     private PhotonView view;
 
     // Start is called before the first frame update
     void Start()
     {
         view = GetComponent<PhotonView>();
+        isCompleted = false;
     }
 
     private void OnTriggerStay(Collider other)
@@ -24,9 +25,16 @@ public class ChargeStation : MonoBehaviour, IInteractable
     }
     public void Interact()
     {
+        //check if all puzzles are completed
+        if (isCompleted)
+        {
+            ChargingStationManager.chargingStationManager.CheckPuzzleState();
+        }
         //Only can be used by 1 per person
         if (isUsed)
+        {
             return;
+        }  
         else
         {
             ChargeTheStation();
@@ -42,21 +50,40 @@ public class ChargeStation : MonoBehaviour, IInteractable
     public IEnumerator ChargingStation()
     {
         isUsed = true;
-        while(chargedAmount < maxChargeAmount && Input.GetKey(KeyCode.E))
+        while (chargedAmount < maxChargeAmount && Input.GetKey(KeyCode.E))
         {
             chargedAmount += incrementAmount;
             yield return new WaitForSeconds(chargeTick);
             Debug.Log(chargedAmount);
             //Send the info to other clients
-            if(view.IsMine)
+            if (view.IsMine)
             {
                 view.RPC("RPC_SetIsUsed", RpcTarget.AllBuffered, isUsed);
                 view.RPC("RPC_SetChargedAmount", RpcTarget.AllBuffered, chargedAmount);
             }
         }
         isUsed = false;
+        //Check if this station is completed
+        if (chargedAmount >= maxChargeAmount)
+        {
+            isCompleted = true;
+            if(view.IsMine)
+            {
+                view.RPC("RPC_SetCompleted", RpcTarget.AllBuffered, isCompleted);
+            }
+        }
     }
 
+    public bool getPuzzleState()
+    {
+        return isCompleted;
+    }
+
+    [PunRPC]
+    void RPC_SetCompleted(bool status)
+    {
+        isCompleted = status;
+    }
     //Multiplayer code
     [PunRPC]
     void RPC_SetIsUsed(bool status)
