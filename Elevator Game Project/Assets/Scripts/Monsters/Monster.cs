@@ -15,6 +15,8 @@ public class Monster : MonoBehaviour
 
     protected NavMeshAgent agent;
 
+    protected bool isRunning;
+
     // Start is called before the first frame update
     void Start()
     {

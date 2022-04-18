@@ -242,6 +242,7 @@ GameObject:
   - component: {fileID: 4184284204877490220}
   - component: {fileID: 4184284204877490221}
   - component: {fileID: 4184284204877490222}
+  - component: {fileID: 4606867188363337946}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -317,6 +318,20 @@ MonoBehaviour:
   SprintMultiplier: 2.5
   Gravity: 9.8
   velocity: 1
+--- !u!114 &4606867188363337946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4184284204877490223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b89bb69236b5058449085dfa99a890c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathUI: {fileID: 0}
+  pauseUI: {fileID: 0}
 --- !u!1 &4184284205109604277
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +491,7 @@ GameObject:
   - component: {fileID: 4184284205902078475}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
