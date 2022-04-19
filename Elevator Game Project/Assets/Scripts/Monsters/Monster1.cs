@@ -16,6 +16,11 @@ public class Monster1 : Monster, IPunObservable
     [SerializeField] float sphere1Radius;
     [SerializeField] float sphere2Radius;
 
+    //points that the monster goes to while patrolling
+
+    [SerializeField] Vector3[] points;
+    int currentPoint;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -81,8 +86,10 @@ public class Monster1 : Monster, IPunObservable
         //its ok for it to be null, so this only applicable in LOCAL
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL && player == null)
         {
-            player = GameObject.FindGameObjectWithTag("Player");
+            //player = GameObject.FindGameObjectWithTag("Player");
         }
+
+        RandomPoint();
     }
 
     //sets the distances for the other view
@@ -164,7 +171,16 @@ public class Monster1 : Monster, IPunObservable
 
     void Patrol()
     {
+        if (Vector3.Distance(transform.position, points[currentPoint]) < 1)
+        {
+            RandomPoint();
+        }
+    }
 
+    void RandomPoint()
+    {
+        currentPoint = (int)Random.Range(0, points.Length - 0.01f);
+        agent.SetDestination(points[currentPoint]);
     }
 
     //useful for Photon and switching players
@@ -186,6 +202,14 @@ public class Monster1 : Monster, IPunObservable
                     APlayerIsInRange = true;
                 }
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!isRunning)
+        {
+            player = null;
         }
     }
 

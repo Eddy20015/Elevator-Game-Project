@@ -122,6 +122,11 @@ MonoBehaviour:
   Player2Distance: 0
   sphere1Radius: 15
   sphere2Radius: 0
+  points:
+  - {x: 15, y: 1, z: 15}
+  - {x: 15, y: 1, z: -15}
+  - {x: -15, y: 1, z: 15}
+  - {x: -15, y: 1, z: -15}
 --- !u!114 &1762382505125620667
 MonoBehaviour:
   m_ObjectHideFlags: 0

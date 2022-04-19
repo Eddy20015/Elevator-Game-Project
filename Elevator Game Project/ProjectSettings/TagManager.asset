@@ -11,6 +11,7 @@ TagManager:
   - Master
   - Find
   - Kill
+  - Point
   layers:
   - Default
   - TransparentFX
