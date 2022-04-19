@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4184284204480497563}
   - component: {fileID: 4184284204480497564}
   - component: {fileID: 2901401106096141298}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Tasks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 4184284204783078465}
   - component: {fileID: 4184284204783078466}
   - component: {fileID: 4184284204783078467}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -243,8 +243,7 @@ GameObject:
   - component: {fileID: 4184284204877490221}
   - component: {fileID: 4184284204877490222}
   - component: {fileID: 4606867188363337946}
-
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -318,10 +317,8 @@ MonoBehaviour:
   MovementSpeed: 1
   SprintMultiplier: 2
   Gravity: 9.8
-
-  velocity: 1
+  velocity: 0
 --- !u!114 &4606867188363337946
-
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -330,13 +327,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4184284204877490223}
   m_Enabled: 1
   m_EditorHideFlags: 0
-
   m_Script: {fileID: 11500000, guid: b89bb69236b5058449085dfa99a890c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   deathUI: {fileID: 0}
   pauseUI: {fileID: 0}
-
 --- !u!1 &4184284205109604277
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,7 +343,7 @@ GameObject:
   - component: {fileID: 4184284205109604274}
   - component: {fileID: 4184284205109604275}
   - component: {fileID: 4184284205109604276}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,7 +409,7 @@ GameObject:
   - component: {fileID: 4184284205331967344}
   - component: {fileID: 4184284205331967342}
   - component: {fileID: 4184284205331967343}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -494,7 +489,7 @@ GameObject:
   - component: {fileID: 4184284205902078473}
   - component: {fileID: 4184284205902078474}
   - component: {fileID: 4184284205902078475}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}

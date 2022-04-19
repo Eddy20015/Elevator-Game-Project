@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Monster1 : Monster
+public class Monster1Old : Monster
 {
     //Tim Kashani
 
@@ -55,7 +55,7 @@ public class Monster1 : Monster
     {
         //chase after player
 
-        
+
 
         agent.SetDestination(player.transform.position);
 
@@ -82,13 +82,13 @@ public class Monster1 : Monster
             }
         }
 
-        
+
 
         if (f > 15 || !foundPlayer)
         {
             agent.speed = speed;
             isRunning = false;
-        } 
+        }
         else
         {
             agent.speed = speed * 2;
@@ -112,4 +112,3 @@ public class Monster1 : Monster
             }
         }
     }
-}
