@@ -9,6 +9,8 @@ TagManager:
   - Interactable
   - SpawnPoint
   - Master
+  - Find
+  - Kill
   layers:
   - Default
   - TransparentFX

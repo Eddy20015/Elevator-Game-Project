@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
-public class Monster1 : Monster
+
+public class Monster1 : Monster, IPunObservable
 {
     //Tim Kashani
 
     [SerializeField] GameObject eyes;
+
+    public float Player1Distance;
+    public float Player2Distance;
 
     // Start is called before the first frame update
     void Start()
@@ -16,36 +21,89 @@ public class Monster1 : Monster
 
         agent = GetComponent<NavMeshAgent>();
         monsterCollider = GetComponent<Collider>();
+        findTrigger = transform.Find("Find Player").GetComponent<SphereCollider>();
+        view = gameObject.GetPhotonView();
+        request = gameObject.GetComponent<RequestOwnership>();
 
-        //calculates the distance of all players and goes after the shortest one
-
-        float d = 500;
-
-        foreach (PlayerScript p in FindObjectsOfType<PlayerScript>())
+        //assigns the Player GameObjects for photon
+        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
-            float f = Vector3.Distance(transform.position, p.transform.position);
-            if (f < d)
+            //this is all assignment information for Player1 (master) and Player2 (!master)
+            GameObject PlayerFound = GameObject.FindGameObjectWithTag("Player");
+            if (PhotonNetwork.IsMasterClient)
             {
-                player = p;
-                d = f;
+                Player1 = PlayerFound;
+            }
+            else
+            {
+                Player2 = PlayerFound;
             }
         }
 
-        //if no player is within 500 meters just find one
-        //if there are no playerscripts in scene then it will break
-
-        if (player == null)
+        //get the distance between itselfs and the player it can access, then RPC's the other number
+        if (PhotonNetwork.IsMasterClient)
         {
-            player = FindObjectOfType<PlayerScript>();
+            Player1Distance = Vector3.Distance(transform.position, Player1.transform.position);
+            view.RPC("RPC_InitialDistances", RpcTarget.Others, Player1Distance);
+        }
+        else
+        {
+            Player2Distance = Vector3.Distance(transform.position, Player2.transform.position);
+            view.RPC("RPC_InitialDistances", RpcTarget.Others, Player2Distance);
+        }
+
+        if (Player1Distance > Player2Distance)
+        {
+            //if player2 is closer, then set player to be player2 on player2's view
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                player = Player2;
+                request.MakeRequest();
+            }
+        }
+        else
+        {
+            //if player1 is closer, then set player to be player1 on player1's view
+            if (PhotonNetwork.IsMasterClient)
+            {
+                player = Player1;
+                request.MakeRequest();
+            }
+        }
+
+        //if there are no players in scene then it will break
+        //so use this if nothing as been assigned
+        //however in online, sometimes if the player that shares the same view is not being followed,
+        //its ok for it to be null, so this only applicable in LOCAL
+        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL && player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+    }
+
+    //sets the distances for the other view
+    [PunRPC]
+    public void RPC_InitialDistances(float Distance)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            Player1Distance = Distance;
+        }
+        else
+        {
+            Player2Distance = Distance;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        Chase();
-        eyes.transform.LookAt(player.transform);
-        eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
+        if(player != null)
+        {
+            Chase();
+            eyes.transform.LookAt(player.transform);
+            eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
+        } 
     }
 
     public override void Chase()
@@ -62,7 +120,7 @@ public class Monster1 : Monster
 
         bool foundPlayer = false;
 
-        if (h.distance < 15)
+        if (h.distance < findTrigger.radius)
         {
             if (Vector3.Distance(new Vector3(h.point.x, player.transform.position.y, h.point.z), player.transform.position) < 1)
             {
@@ -70,9 +128,7 @@ public class Monster1 : Monster
             }
         }
 
-        
-
-        if (f > 15 || !foundPlayer)
+        if (f > findTrigger.radius || !foundPlayer)
         {
             agent.speed = speed;
             isRunning = false;
@@ -87,17 +143,96 @@ public class Monster1 : Monster
         //Debug.Log(h.point);
     }
 
+    //useful for Photon and switching players
     private void OnTriggerStay(Collider other)
     {
+        //not running after a player
         if (!isRunning)
         {
+            //the gameobject as the player tag
             if (other.tag == "Player")
             {
-                if (other.GetComponent<PlayerScript>() != player)
+                //the Player is not the one already being chased
+                if (/*other.gameObject != player*/ !APlayerIsInRange)
                 {
-                    player = other.GetComponent<PlayerScript>();
+                    //make this new player the one that will be chased
+                    player = other.gameObject;
+                    view.RPC("RPC_SetPlayerToNull", RpcTarget.Others);
+                    request.MakeRequest();
+                    APlayerIsInRange = true;
                 }
             }
+        }
+    }
+
+    //sets the other player's view to null
+    //this way the monster won't try to follow the new player on this view 
+    //and the old player on the old view 
+    //this has no adverse effects if the "old" player == the new player, since it would be on the save view
+    [PunRPC]
+    private void RPC_SetPlayerToNull()
+    {
+        player = null;
+    }
+    
+    //Essentially this is PhotonUpdate
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        //get the distance of the players that each view has access to from the monster
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Player1Distance = Vector3.Distance(transform.position, Player1.transform.position);
+        }
+        else
+        {
+            Player2Distance = Vector3.Distance(transform.position, Player2.transform.position);
+        }
+
+
+        if (stream.IsWriting)
+        {
+            //first will be from Master or not, and second will be if the distance from either player1 or player2
+
+            //Master will send the Player1Distance, as master is Player1
+            if (PhotonNetwork.IsMasterClient)
+            {
+                
+                stream.SendNext(Player1Distance);
+            }
+            //Not Master will send the Player2Distance, as not master is Player2
+            else
+            {
+                stream.SendNext(Player2Distance);
+            }
+        }
+        else
+        {
+            object Received = stream.ReceiveNext();
+            if (Received is float)
+            {
+                float PlayerDistance = (float) Received;
+
+                //we want Master to have the Distance from NotMaster's Player2
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    Player2Distance = PlayerDistance;
+                }
+
+                //we want NotMaster to have the Distance from Master's Player1
+                else if (!PhotonNetwork.IsMasterClient)
+                {
+                    Player1Distance = PlayerDistance;
+                }
+            }
+            else
+            {
+                Debug.LogError("BuddySystemReceived didn't received a float");
+            }
+        }
+
+        if (Player1Distance > findTrigger.radius && Player2Distance > findTrigger.radius)
+        {
+            APlayerIsInRange = false;
         }
     }
 }

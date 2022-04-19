@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-//Created by Benedict; watched a tutorial
 public class SpawnManager : MonoBehaviourPunCallbacks
 {
 

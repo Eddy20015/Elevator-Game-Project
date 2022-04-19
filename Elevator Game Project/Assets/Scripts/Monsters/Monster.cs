@@ -2,20 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviourPunCallbacks
 {
     //Tim Kashani
 
     [SerializeField] protected float speed;
 
-    [SerializeField] protected PlayerScript player;
+    protected GameObject player;
+
+    //used for online players
+    protected GameObject Player1;
+    protected GameObject Player2;
+    protected bool APlayerIsInRange;    //will be used to determine if either player is in range,
+                                        //as if no one is, then the next player to walk in the range is the new target
 
     protected Collider monsterCollider;
+    protected SphereCollider findTrigger;
 
     protected NavMeshAgent agent;
 
     protected bool isRunning;
+
+    protected PhotonView view;
+    protected RequestOwnership request;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +38,7 @@ public class Monster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Chase();
+        //Chase();
     }
 
     public virtual void Chase()
@@ -35,7 +46,7 @@ public class Monster : MonoBehaviour
 
     }
 
-    public void KillPlayer()
+    /*public void KillPlayer()
     {
         player.GetKilled();
     }
@@ -46,5 +57,5 @@ public class Monster : MonoBehaviour
         {
             KillPlayer();
         }
-    }
+    }*/
 }
