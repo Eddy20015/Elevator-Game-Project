@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4184284204480497563}
   - component: {fileID: 4184284204480497564}
   - component: {fileID: 2901401106096141298}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Tasks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 4184284204783078465}
   - component: {fileID: 4184284204783078466}
   - component: {fileID: 4184284204783078467}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -243,9 +243,7 @@ GameObject:
   - component: {fileID: 4184284204877490221}
   - component: {fileID: 4184284204877490222}
   - component: {fileID: 4606867188363337946}
-  - component: {fileID: -7078036688856987478}
-  - component: {fileID: 8974563276492738540}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -384,7 +382,7 @@ GameObject:
   - component: {fileID: 4184284205109604274}
   - component: {fileID: 4184284205109604275}
   - component: {fileID: 4184284205109604276}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +448,7 @@ GameObject:
   - component: {fileID: 4184284205331967344}
   - component: {fileID: 4184284205331967342}
   - component: {fileID: 4184284205331967343}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -530,7 +528,7 @@ GameObject:
   - component: {fileID: 4184284205902078473}
   - component: {fileID: 4184284205902078474}
   - component: {fileID: 4184284205902078475}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}

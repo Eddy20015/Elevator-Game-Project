@@ -13,6 +13,8 @@ public class Monster1 : Monster, IPunObservable
 
     public float Player1Distance;
     public float Player2Distance;
+    [SerializeField] float sphere1;
+    [SerializeField] float sphere2;
 
     // Start is called before the first frame update
     void Start()
@@ -110,11 +112,20 @@ public class Monster1 : Monster, IPunObservable
     {
         //chase after player
 
+        
+
         agent.SetDestination(player.transform.position);
 
         float f = Vector3.Distance(transform.position, player.transform.position);
 
         RaycastHit h;
+
+        //Physics.CheckSphere(transform.position, sphere1, out h, 3);
+
+        //if (h.)
+        //{
+        //    player = h.transform.parent;
+        //}
 
         Physics.Raycast(transform.position, eyes.transform.forward, out h);
 
