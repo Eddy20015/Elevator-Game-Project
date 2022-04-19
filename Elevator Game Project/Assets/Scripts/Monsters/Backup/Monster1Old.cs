@@ -29,7 +29,7 @@ public class Monster1Old : Monster
             float f = Vector3.Distance(transform.position, p.transform.position);
             if (f < d)
             {
-                player = p;
+                //player = p;
                 d = f;
             }
         }
@@ -39,7 +39,7 @@ public class Monster1Old : Monster
 
         if (player == null)
         {
-            player = FindObjectOfType<PlayerScript>();
+            //player = FindObjectOfType<PlayerScript>();
         }
     }
 
@@ -107,8 +107,9 @@ public class Monster1Old : Monster
             {
                 if (other.GetComponent<PlayerScript>() != player)
                 {
-                    player = other.GetComponent<PlayerScript>();
+                    //player = other.GetComponent<PlayerScript>();
                 }
             }
         }
     }
+}

@@ -40,38 +40,40 @@ public class Monster1 : Monster, IPunObservable
             {
                 Player2 = PlayerFound;
             }
-        }
 
-        //get the distance between itselfs and the player it can access, then RPC's the other number
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Player1Distance = Vector3.Distance(transform.position, Player1.transform.position);
-            view.RPC("RPC_InitialDistances", RpcTarget.Others, Player1Distance);
-        }
-        else
-        {
-            Player2Distance = Vector3.Distance(transform.position, Player2.transform.position);
-            view.RPC("RPC_InitialDistances", RpcTarget.Others, Player2Distance);
-        }
-
-        if (Player1Distance > Player2Distance)
-        {
-            //if player2 is closer, then set player to be player2 on player2's view
-            if (!PhotonNetwork.IsMasterClient)
-            {
-                player = Player2;
-                request.MakeRequest();
-            }
-        }
-        else
-        {
-            //if player1 is closer, then set player to be player1 on player1's view
+            //get the distance between itselfs and the player it can access, then RPC's the other number
             if (PhotonNetwork.IsMasterClient)
             {
-                player = Player1;
-                request.MakeRequest();
+                Player1Distance = Vector3.Distance(transform.position, Player1.transform.position);
+                view.RPC("RPC_InitialDistances", RpcTarget.Others, Player1Distance);
+            }
+            else
+            {
+                Player2Distance = Vector3.Distance(transform.position, Player2.transform.position);
+                view.RPC("RPC_InitialDistances", RpcTarget.Others, Player2Distance);
+            }
+
+            if (Player1Distance > Player2Distance)
+            {
+                //if player2 is closer, then set player to be player2 on player2's view
+                if (!PhotonNetwork.IsMasterClient)
+                {
+                    player = Player2;
+                    request.MakeRequest();
+                }
+            }
+            else
+            {
+                //if player1 is closer, then set player to be player1 on player1's view
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    player = Player1;
+                    request.MakeRequest();
+                }
             }
         }
+
+        
 
         //if there are no players in scene then it will break
         //so use this if nothing as been assigned
@@ -105,7 +107,10 @@ public class Monster1 : Monster, IPunObservable
             Chase();
             eyes.transform.LookAt(player.transform);
             eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
-        } 
+        } else
+        {
+            Patrol();
+        }
     }
 
     public override void Chase()
@@ -120,12 +125,15 @@ public class Monster1 : Monster, IPunObservable
 
         RaycastHit h;
 
-        Physics.SphereCast(transform.position, sphere1Radius, Vector3.zero, out h, 3);
+        //Physics.SphereCast(transform.position, sphere1Radius, Vector3.zero, out h, 3);
 
-        if (h.collider != null && !isRunning)
-        {
-            player = h.collider.transform.parent.gameObject;
-        }
+        //Debug.Log(h.collider != null);
+
+        //if (h.collider != null)
+        //{
+        //    player = h.collider.transform.parent.gameObject;
+        //    Debug.Log("Found Player in Sphere Cast");
+        //}
 
         Physics.Raycast(transform.position, eyes.transform.forward, out h);
 
@@ -152,6 +160,11 @@ public class Monster1 : Monster, IPunObservable
 
         //Debug.Log(foundPlayer);
         //Debug.Log(h.point);
+    }
+
+    void Patrol()
+    {
+
     }
 
     //useful for Photon and switching players

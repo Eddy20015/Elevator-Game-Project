@@ -120,6 +120,8 @@ MonoBehaviour:
   eyes: {fileID: 1683952548332718603}
   Player1Distance: 0
   Player2Distance: 0
+  sphere1Radius: 15
+  sphere2Radius: 0
 --- !u!114 &1762382505125620667
 MonoBehaviour:
   m_ObjectHideFlags: 0
