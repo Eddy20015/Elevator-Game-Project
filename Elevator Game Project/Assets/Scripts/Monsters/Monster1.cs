@@ -7,14 +7,14 @@ using Photon.Pun;
 
 public class Monster1 : Monster, IPunObservable
 {
-    //Tim Kashani
+    //Tim Kashani, Ed Slee
 
     [SerializeField] GameObject eyes;
 
     public float Player1Distance;
     public float Player2Distance;
-    [SerializeField] float sphere1;
-    [SerializeField] float sphere2;
+    [SerializeField] float sphere1Radius;
+    [SerializeField] float sphere2Radius;
 
     // Start is called before the first frame update
     void Start()
@@ -120,12 +120,12 @@ public class Monster1 : Monster, IPunObservable
 
         RaycastHit h;
 
-        //Physics.CheckSphere(transform.position, sphere1, out h, 3);
+        Physics.SphereCast(transform.position, sphere1Radius, Vector3.zero, out h, 3);
 
-        //if (h.)
-        //{
-        //    player = h.transform.parent;
-        //}
+        if (h.collider != null && !isRunning)
+        {
+            player = h.collider.transform.parent.gameObject;
+        }
 
         Physics.Raycast(transform.position, eyes.transform.forward, out h);
 
