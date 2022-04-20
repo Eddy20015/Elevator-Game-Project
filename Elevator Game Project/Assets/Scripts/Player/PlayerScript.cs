@@ -62,7 +62,26 @@ public class PlayerScript : MonoBehaviourPunCallbacks
     {
         if (other.tag.Equals("Kill"))
         {
+            Debug.Log("Works");
             GetKilled();
+        }
+
+        if (other.tag.Equals("Find"))
+        {
+            other.GetComponentInParent<Monster>().SetPlayer(gameObject, true);
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.tag.Equals("Kill"))
+        {
+            GetKilled();
+        }
+
+        if (other.tag.Equals("Find"))
+        {
+            other.GetComponentInParent<Monster>().SetPlayer(gameObject, false);
         }
     }
 }

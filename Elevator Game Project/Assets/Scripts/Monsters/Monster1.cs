@@ -171,7 +171,7 @@ public class Monster1 : Monster, IPunObservable
 
     void Patrol()
     {
-        if (Vector3.Distance(transform.position, points[currentPoint]) < 1)
+        if (Vector3.Distance(transform.position, points[currentPoint]) < 1 && !isRunning)
         {
             RandomPoint();
         }
@@ -181,6 +181,28 @@ public class Monster1 : Monster, IPunObservable
     {
         currentPoint = (int)Random.Range(0, points.Length - 0.01f);
         agent.SetDestination(points[currentPoint]);
+        APlayerIsInRange = false;
+        isRunning = false;
+    }
+
+    public override void SetPlayer(GameObject g, bool b)
+    {
+        //has the player set the target for the monster because collision wasnt working
+
+        if (b)
+        {
+            player = g;
+        } else if (!isRunning)
+        {
+            if (player == g)
+            {
+                player = null;
+            }
+
+            
+        }
+
+        
     }
 
     //useful for Photon and switching players
@@ -190,7 +212,7 @@ public class Monster1 : Monster, IPunObservable
         if (!isRunning)
         {
             //the gameobject as the player tag
-            if (other.tag == "Player")
+            if (other.tag.Equals("PlayerCollider") || other.tag.Equals("Player"))
             {
                 //the Player is not the one already being chased
                 if (/*other.gameObject != player*/ !APlayerIsInRange)
@@ -200,9 +222,16 @@ public class Monster1 : Monster, IPunObservable
                     view.RPC("RPC_SetPlayerToNull", RpcTarget.Others);
                     request.MakeRequest();
                     APlayerIsInRange = true;
+                    Debug.Log("Found Player");
                 }
+
+                Debug.Log("Please Work");
             }
+
+            Debug.Log("Is Not Running");
         }
+
+        Debug.Log("What");
     }
 
     private void OnTriggerExit(Collider other)
