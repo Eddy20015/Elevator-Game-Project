@@ -5,14 +5,14 @@ using UnityEngine.AI;
 using Photon.Pun;
 
 
-public class Monster1 : Monster, IPunObservable
+public class Shadowman : Monster
 {
     //Tim Kashani, Ed Slee
 
     [SerializeField] GameObject eyes;
 
-    public float Player1Distance;
-    public float Player2Distance;
+    //public float Player1Distance;
+    //public float Player2Distance;
     [SerializeField] float sphere1Radius;
     [SerializeField] float sphere2Radius;
 
@@ -30,10 +30,10 @@ public class Monster1 : Monster, IPunObservable
         monsterCollider = GetComponent<Collider>();
         findTrigger = transform.Find("Find Player").GetComponent<SphereCollider>();
         view = gameObject.GetPhotonView();
-        request = gameObject.GetComponent<RequestOwnership>();
+        //request = gameObject.GetComponent<RequestOwnership>();
 
         //assigns the Player GameObjects for photon
-        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        /*if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
             //this is all assignment information for Player1 (master) and Player2 (!master)
             GameObject PlayerFound = GameObject.FindGameObjectWithTag("Player");
@@ -76,7 +76,7 @@ public class Monster1 : Monster, IPunObservable
                     request.MakeRequest();
                 }
             }
-        }
+        }*/
 
         
 
@@ -89,11 +89,15 @@ public class Monster1 : Monster, IPunObservable
             //player = GameObject.FindGameObjectWithTag("Player");
         }
 
-        RandomPoint();
+        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
+          (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient))
+        {
+            RandomPoint();
+        }
     }
 
     //sets the distances for the other view
-    [PunRPC]
+    /*[PunRPC]
     public void RPC_InitialDistances(float Distance)
     {
         if (!PhotonNetwork.IsMasterClient)
@@ -104,19 +108,26 @@ public class Monster1 : Monster, IPunObservable
         {
             Player2Distance = Distance;
         }
-    }
+    }*/
 
     // Update is called once per frame
     void Update()
     {
-        if(player != null)
+        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
+          (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient))
         {
-            Chase();
-            eyes.transform.LookAt(player.transform);
-            eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
-        } else
-        {
-            Patrol();
+            if (player != null)
+            {
+                Debug.LogError("Is view mine? " + player.GetPhotonView().IsMine);
+                Chase();
+                eyes.transform.LookAt(player.transform);
+                eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
+            }
+            else
+            {
+                Patrol();
+                Debug.LogError("Patrolling");
+            }
         }
     }
 
@@ -124,37 +135,26 @@ public class Monster1 : Monster, IPunObservable
     {
         //chase after player
 
-        
-
         agent.SetDestination(player.transform.position);
 
-        float f = Vector3.Distance(transform.position, player.transform.position);
+        float distanceBetween = Vector3.Distance(transform.position, player.transform.position);
 
-        RaycastHit h;
+        RaycastHit hit;
 
-        //Physics.SphereCast(transform.position, sphere1Radius, Vector3.zero, out h, 3);
-
-        //Debug.Log(h.collider != null);
-
-        //if (h.collider != null)
-        //{
-        //    player = h.collider.transform.parent.gameObject;
-        //    Debug.Log("Found Player in Sphere Cast");
-        //}
-
-        Physics.Raycast(transform.position, eyes.transform.forward, out h);
+        Physics.Raycast(transform.position, eyes.transform.forward, out hit);
 
         bool foundPlayer = false;
 
-        if (h.distance < findTrigger.radius)
+        if (hit.distance < findTrigger.radius)
         {
-            if (Vector3.Distance(new Vector3(h.point.x, player.transform.position.y, h.point.z), player.transform.position) < 1)
+            if (Vector3.Distance(new Vector3(hit.point.x, player.transform.position.y, hit.point.z), player.transform.position) < 1)
             {
                 foundPlayer = true;
             }
         }
 
-        if (f > findTrigger.radius || !foundPlayer)
+        Debug.LogError("foundPlayer == " + foundPlayer);
+        if (distanceBetween > findTrigger.radius || !foundPlayer)
         {
             agent.speed = speed;
             isRunning = false;
@@ -164,6 +164,7 @@ public class Monster1 : Monster, IPunObservable
             agent.speed = speed * 2;
             isRunning = true;
         }
+        Debug.LogError("isRunning == " + isRunning);
 
         //Debug.Log(foundPlayer);
         //Debug.Log(h.point);
@@ -181,28 +182,23 @@ public class Monster1 : Monster, IPunObservable
     {
         currentPoint = (int)Random.Range(0, points.Length - 0.01f);
         agent.SetDestination(points[currentPoint]);
-        APlayerIsInRange = false;
         isRunning = false;
     }
 
-    public override void SetPlayer(GameObject g, bool b)
+    public override void SetPlayer(GameObject _player, bool b)
     {
         //has the player set the target for the monster because collision wasnt working
 
         if (b)
         {
-            player = g;
+            player = _player ;
         } else if (!isRunning)
         {
-            if (player == g)
+            if (player == _player)
             {
                 player = null;
             }
-
-            
-        }
-
-        
+        } 
     }
 
     //useful for Photon and switching players
@@ -214,18 +210,13 @@ public class Monster1 : Monster, IPunObservable
             //the gameobject as the player tag
             if (other.tag.Equals("PlayerCollider") || other.tag.Equals("Player"))
             {
-                //the Player is not the one already being chased
-                if (/*other.gameObject != player*/ !APlayerIsInRange)
-                {
+   
                     //make this new player the one that will be chased
                     player = other.gameObject;
-                    view.RPC("RPC_SetPlayerToNull", RpcTarget.Others);
-                    request.MakeRequest();
-                    APlayerIsInRange = true;
-                    Debug.Log("Found Player");
-                }
+                    //view.RPC("RPC_SetPlayerToNull", RpcTarget.Others);
+                    //request.MakeRequest();
+                    Debug.Log("Is view mine? " + view.IsMine);
 
-                Debug.Log("Please Work");
             }
 
             Debug.Log("Is Not Running");
@@ -239,77 +230,6 @@ public class Monster1 : Monster, IPunObservable
         if (!isRunning)
         {
             player = null;
-        }
-    }
-
-    //sets the other player's view to null
-    //this way the monster won't try to follow the new player on this view 
-    //and the old player on the old view 
-    //this has no adverse effects if the "old" player == the new player, since it would be on the save view
-    [PunRPC]
-    private void RPC_SetPlayerToNull()
-    {
-        player = null;
-    }
-    
-    //Essentially this is PhotonUpdate
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        //get the distance of the players that each view has access to from the monster
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Player1Distance = Vector3.Distance(transform.position, Player1.transform.position);
-        }
-        else
-        {
-            Player2Distance = Vector3.Distance(transform.position, Player2.transform.position);
-        }
-
-
-        if (stream.IsWriting)
-        {
-            //first will be from Master or not, and second will be if the distance from either player1 or player2
-
-            //Master will send the Player1Distance, as master is Player1
-            if (PhotonNetwork.IsMasterClient)
-            {
-                
-                stream.SendNext(Player1Distance);
-            }
-            //Not Master will send the Player2Distance, as not master is Player2
-            else
-            {
-                stream.SendNext(Player2Distance);
-            }
-        }
-        else
-        {
-            object Received = stream.ReceiveNext();
-            if (Received is float)
-            {
-                float PlayerDistance = (float) Received;
-
-                //we want Master to have the Distance from NotMaster's Player2
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    Player2Distance = PlayerDistance;
-                }
-
-                //we want NotMaster to have the Distance from Master's Player1
-                else if (!PhotonNetwork.IsMasterClient)
-                {
-                    Player1Distance = PlayerDistance;
-                }
-            }
-            else
-            {
-                Debug.LogError("BuddySystemReceived didn't received a float");
-            }
-        }
-
-        if (Player1Distance > findTrigger.radius && Player2Distance > findTrigger.radius)
-        {
-            APlayerIsInRange = false;
         }
     }
 }

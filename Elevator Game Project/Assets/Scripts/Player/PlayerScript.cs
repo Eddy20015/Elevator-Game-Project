@@ -49,7 +49,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks
         }
         else
         {
-            BuddySystemManager.SetDead(PhotonNetwork.IsMasterClient);
+            //BuddySystemManager.SetDead(PhotonNetwork.IsMasterClient);
         }
     }
 

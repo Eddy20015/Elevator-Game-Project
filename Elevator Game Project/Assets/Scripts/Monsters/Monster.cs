@@ -13,9 +13,9 @@ public class Monster : MonoBehaviourPunCallbacks
     protected GameObject player;
 
     //used for online players
-    protected GameObject Player1;
-    protected GameObject Player2;
-    protected bool APlayerIsInRange;    //will be used to determine if either player is in range,
+    //protected GameObject Player1;
+    //protected GameObject Player2;
+    //protected bool APlayerIsInRange;    //will be used to determine if either player is in range,
                                         //as if no one is, then the next player to walk in the range is the new target
 
     protected Collider monsterCollider;

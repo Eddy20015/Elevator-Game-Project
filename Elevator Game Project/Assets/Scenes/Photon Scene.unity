@@ -255,18 +255,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -3606446865402438339, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
-      propertyPath: sceneViewId
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 420750382, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
-      propertyPath: speed
-      value: 0.15
-      objectReference: {fileID: 0}
-    - target: {fileID: 420750382, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 135213952127551239, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -313,7 +301,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 135213952127551259, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
       propertyPath: m_Name
-      value: Monster1
+      value: Shadowman
       objectReference: {fileID: 0}
     - target: {fileID: 8215021209067245728, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
       propertyPath: sceneViewId

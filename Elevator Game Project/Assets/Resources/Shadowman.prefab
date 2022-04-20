@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 8215021209067245728}
   - component: {fileID: 3889803930640846322}
   m_Layer: 0
-  m_Name: Monster1
+  m_Name: Shadowman
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,8 +119,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.5
   eyes: {fileID: 1683952548332718603}
-  Player1Distance: 0
-  Player2Distance: 0
   sphere1Radius: 15
   sphere2Radius: 0
   points:
@@ -181,7 +179,6 @@ MonoBehaviour:
   OwnershipTransfer: 2
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 420750382}
   - {fileID: 3889803930640846322}
   sceneViewId: 0
   InstantiationId: 0
@@ -200,8 +197,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PositionModel:
     SynchronizeEnabled: 1
-    TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
+    TeleportEnabled: 0
+    TeleportIfDistanceGreaterThan: 100
     InterpolateOption: 2
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
@@ -212,7 +209,7 @@ MonoBehaviour:
   m_RotationModel:
     SynchronizeEnabled: 1
     InterpolateOption: 1
-    InterpolateRotateTowardsSpeed: 180
+    InterpolateRotateTowardsSpeed: 360
     InterpolateLerpSpeed: 5
   m_ScaleModel:
     SynchronizeEnabled: 0
