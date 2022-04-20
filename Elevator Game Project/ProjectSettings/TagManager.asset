@@ -12,6 +12,7 @@ TagManager:
   - Find
   - Kill
   - Point
+  - PlayerCollider
   layers:
   - Default
   - TransparentFX
