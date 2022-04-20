@@ -52,6 +52,11 @@ public class Shadowman : Monster
                 Chase();
                 eyes.transform.LookAt(player.transform);
                 eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
+
+                if (Vector3.Distance(transform.position, agent.destination) < 1.5f)
+                {
+                    RandomPoint();
+                }
             }
             else
             {
@@ -102,7 +107,7 @@ public class Shadowman : Monster
 
     void Patrol()
     {
-        if (Vector3.Distance(transform.position, points[currentPoint]) < 1 && !isRunning)
+        if (Vector3.Distance(transform.position, agent.destination) < 1.5f && !isRunning)
         {
             RandomPoint();
         }
