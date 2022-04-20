@@ -30,95 +30,25 @@ public class Shadowman : Monster
         monsterCollider = GetComponent<Collider>();
         findTrigger = transform.Find("Find Player").GetComponent<SphereCollider>();
         view = gameObject.GetPhotonView();
-        //request = gameObject.GetComponent<RequestOwnership>();
 
-        //assigns the Player GameObjects for photon
-        /*if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
-        {
-            //this is all assignment information for Player1 (master) and Player2 (!master)
-            GameObject PlayerFound = GameObject.FindGameObjectWithTag("Player");
-            if (PhotonNetwork.IsMasterClient)
-            {
-                Player1 = PlayerFound;
-            }
-            else
-            {
-                Player2 = PlayerFound;
-            }
-
-            //get the distance between itselfs and the player it can access, then RPC's the other number
-            if (PhotonNetwork.IsMasterClient)
-            {
-                Player1Distance = Vector3.Distance(transform.position, Player1.transform.position);
-                view.RPC("RPC_InitialDistances", RpcTarget.Others, Player1Distance);
-            }
-            else
-            {
-                Player2Distance = Vector3.Distance(transform.position, Player2.transform.position);
-                view.RPC("RPC_InitialDistances", RpcTarget.Others, Player2Distance);
-            }
-
-            if (Player1Distance > Player2Distance)
-            {
-                //if player2 is closer, then set player to be player2 on player2's view
-                if (!PhotonNetwork.IsMasterClient)
-                {
-                    player = Player2;
-                    request.MakeRequest();
-                }
-            }
-            else
-            {
-                //if player1 is closer, then set player to be player1 on player1's view
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    player = Player1;
-                    request.MakeRequest();
-                }
-            }
-        }*/
-
-        
-
-        //if there are no players in scene then it will break
-        //so use this if nothing as been assigned
-        //however in online, sometimes if the player that shares the same view is not being followed,
-        //its ok for it to be null, so this only applicable in LOCAL
-        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL && player == null)
-        {
-            //player = GameObject.FindGameObjectWithTag("Player");
-        }
-
-        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
+        //will start the monster looking for a random point
+        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient))
         {
             RandomPoint();
         }
     }
 
-    //sets the distances for the other view
-    /*[PunRPC]
-    public void RPC_InitialDistances(float Distance)
-    {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            Player1Distance = Distance;
-        }
-        else
-        {
-            Player2Distance = Distance;
-        }
-    }*/
-
     // Update is called once per frame
     void Update()
     {
+        //online, only the master client version will actually move around, the one from the persepective of not master just follows
         if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient))
         {
             if (player != null)
             {
-                Debug.LogError("Is view mine? " + player.GetPhotonView().IsMine);
+                //Debug.LogError("Is view mine? " + player.GetPhotonView().IsMine);
                 Chase();
                 eyes.transform.LookAt(player.transform);
                 eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
@@ -126,7 +56,7 @@ public class Shadowman : Monster
             else
             {
                 Patrol();
-                Debug.LogError("Patrolling");
+                //Debug.LogError("Patrolling");
             }
         }
     }
@@ -134,7 +64,6 @@ public class Shadowman : Monster
     public override void Chase()
     {
         //chase after player
-
         agent.SetDestination(player.transform.position);
 
         float distanceBetween = Vector3.Distance(transform.position, player.transform.position);
@@ -145,6 +74,7 @@ public class Shadowman : Monster
 
         bool foundPlayer = false;
 
+        //not sure what this does - Ed
         if (hit.distance < findTrigger.radius)
         {
             if (Vector3.Distance(new Vector3(hit.point.x, player.transform.position.y, hit.point.z), player.transform.position) < 1)
@@ -153,7 +83,7 @@ public class Shadowman : Monster
             }
         }
 
-        Debug.LogError("foundPlayer == " + foundPlayer);
+        //Debug.LogError("foundPlayer == " + foundPlayer);
         if (distanceBetween > findTrigger.radius || !foundPlayer)
         {
             agent.speed = speed;
@@ -164,7 +94,7 @@ public class Shadowman : Monster
             agent.speed = speed * 2;
             isRunning = true;
         }
-        Debug.LogError("isRunning == " + isRunning);
+        //Debug.LogError("isRunning == " + isRunning);
 
         //Debug.Log(foundPlayer);
         //Debug.Log(h.point);
@@ -191,8 +121,12 @@ public class Shadowman : Monster
 
         if (b)
         {
-            player = _player ;
-        } else if (!isRunning)
+            if(player == null)
+            {
+                player = _player;
+            }
+        } 
+        else if (!isRunning)
         {
             if (player == _player)
             {
@@ -201,22 +135,22 @@ public class Shadowman : Monster
         } 
     }
 
-    //useful for Photon and switching players
     private void OnTriggerStay(Collider other)
     {
+        Debug.LogError("IS THIS WORKING");
         //not running after a player
         if (!isRunning)
         {
+            Debug.LogError("PlayerCollider? " + other.tag.Equals("PlayerCollider") + ", " + other.tag.Equals("Player"));
             //the gameobject as the player tag
             if (other.tag.Equals("PlayerCollider") || other.tag.Equals("Player"))
             {
-   
+                if(player == null)
+                {
                     //make this new player the one that will be chased
                     player = other.gameObject;
-                    //view.RPC("RPC_SetPlayerToNull", RpcTarget.Others);
-                    //request.MakeRequest();
-                    Debug.Log("Is view mine? " + view.IsMine);
-
+                    Debug.LogError("player = " + player + "is view mine?" + player.GetPhotonView().IsMine);
+                }
             }
 
             Debug.Log("Is Not Running");
@@ -230,6 +164,8 @@ public class Shadowman : Monster
         if (!isRunning)
         {
             player = null;
+            Debug.LogError("player is now null");
         }
+        Debug.LogError("Exited the Trigger");
     }
 }

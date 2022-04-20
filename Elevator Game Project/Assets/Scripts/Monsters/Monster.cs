@@ -35,18 +35,12 @@ public class Monster : MonoBehaviourPunCallbacks
         monsterCollider = GetComponent<Collider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //Chase();
-    }
-
     public virtual void Chase()
     {
 
     }
 
-    public virtual void SetPlayer(GameObject g, bool b)
+    public virtual void SetPlayer(GameObject _player, bool b)
     {
 
     }
