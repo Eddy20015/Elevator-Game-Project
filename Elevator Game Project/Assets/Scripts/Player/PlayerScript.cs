@@ -68,7 +68,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks
 
         if (other.tag.Equals("Find"))
         {
-            other.GetComponentInParent<Monster>().SetPlayer(gameObject, true);
+            //other.GetComponentInParent<Monster>().SetPlayer(gameObject, true);
         }
     }
 
@@ -81,7 +81,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks
 
         if (other.tag.Equals("Find"))
         {
-            other.GetComponentInParent<Monster>().SetPlayer(gameObject, false);
+            //other.GetComponentInParent<Monster>().SetPlayer(gameObject, false);
         }
     }
 }

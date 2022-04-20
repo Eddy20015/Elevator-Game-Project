@@ -137,11 +137,11 @@ public class Shadowman : Monster
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.LogError("IS THIS WORKING");
+        //Debug.LogError("IS THIS WORKING");
         //not running after a player
         if (!isRunning)
         {
-            Debug.LogError("PlayerCollider? " + other.tag.Equals("PlayerCollider") + ", " + other.tag.Equals("Player"));
+            //Debug.LogError("PlayerCollider? " + other.tag.Equals("PlayerCollider") + ", " + other.tag.Equals("Player"));
             //the gameobject as the player tag
             if (other.tag.Equals("PlayerCollider") || other.tag.Equals("Player"))
             {
@@ -149,14 +149,14 @@ public class Shadowman : Monster
                 {
                     //make this new player the one that will be chased
                     player = other.gameObject;
-                    Debug.LogError("player = " + player + "is view mine?" + player.GetPhotonView().IsMine);
+                    //Debug.LogError("player = " + player + "is view mine?" + player.GetPhotonView().IsMine);
                 }
             }
 
-            Debug.Log("Is Not Running");
+            //Debug.Log("Is Not Running");
         }
 
-        Debug.Log("What");
+        //Debug.Log("What");
     }
 
     private void OnTriggerExit(Collider other)
@@ -164,8 +164,8 @@ public class Shadowman : Monster
         if (!isRunning)
         {
             player = null;
-            Debug.LogError("player is now null");
+            //Debug.LogError("player is now null");
         }
-        Debug.LogError("Exited the Trigger");
+        //Debug.LogError("Exited the Trigger");
     }
 }
