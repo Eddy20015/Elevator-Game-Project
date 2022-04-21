@@ -6,7 +6,7 @@ using Photon.Pun;
 public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
 {
     [SerializeField] private float chargedAmount, maxChargeAmount, incrementAmount;
-    [SerializeField] private bool isUsed;
+    [SerializeField] private bool isUsed, isCompleted;
     private PhotonView view;
 
     // Start is called before the first frame update
@@ -29,11 +29,21 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
         view.RPC("RPC_SetIsUsed", RpcTarget.Others, false);
     }
 
+    public bool getPuzzleState()
+    {
+        return isCompleted;
+    }
+
     public void Interact()
     {
+        //check if all puzzles are completed
+        if (isCompleted)
+        {
+            ChargingStationManager.chargingStationManager.CheckPuzzleState();
+        }
         //**This will increase the charged amount
         //If it isn't fully charged + they are holding E + it isn't being used by another player
-        if(chargedAmount < maxChargeAmount && Input.GetKey(KeyCode.E) && !isUsed)
+        if (chargedAmount < maxChargeAmount && Input.GetKey(KeyCode.E) && !isUsed)
         {
             view.RPC("RPC_SetIsUsed", RpcTarget.Others, true);
             chargedAmount += incrementAmount;
@@ -44,6 +54,13 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
         if(Input.GetKeyUp(KeyCode.E))
         {
             view.RPC("RPC_SetIsUsed", RpcTarget.Others, false);
+        }
+
+        //Check if this station is completed
+        if (chargedAmount >= maxChargeAmount)
+        {
+            isCompleted = true;
+            view.RPC("RPC_SetCompleted", RpcTarget.AllBuffered, isCompleted);
         }
     }
 
@@ -58,5 +75,11 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
     void RPC_SetChargedAmount(float amount)
     {
         chargedAmount = amount;
+    }
+
+    [PunRPC]
+    void RPC_SetCompleted(bool status)
+    {
+        isCompleted = status;
     }
 }
