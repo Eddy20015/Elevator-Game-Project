@@ -42,6 +42,11 @@ MonoBehaviour:
   - RPC_SetMasterTag
   - RPC_SetChargedAmount
   - RPC_SetIsUsed
+  - RPC_Alive
+  - RPC_Dead
+  - RPC_SetPlayer
+  - RPC_InitialDistances
+  - RPC_SetPlayerToNull
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

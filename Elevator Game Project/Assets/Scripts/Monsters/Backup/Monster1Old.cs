@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Monster1 : Monster
+public class Monster1Old : Monster
 {
     //Tim Kashani
 
     [SerializeField] GameObject eyes;
+
+    [SerializeField] float sphere1;
+    [SerializeField] float sphere2;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +29,7 @@ public class Monster1 : Monster
             float f = Vector3.Distance(transform.position, p.transform.position);
             if (f < d)
             {
-                player = p;
+                //player = p;
                 d = f;
             }
         }
@@ -36,7 +39,7 @@ public class Monster1 : Monster
 
         if (player == null)
         {
-            player = FindObjectOfType<PlayerScript>();
+            //player = FindObjectOfType<PlayerScript>();
         }
     }
 
@@ -52,11 +55,20 @@ public class Monster1 : Monster
     {
         //chase after player
 
+
+
         agent.SetDestination(player.transform.position);
 
         float f = Vector3.Distance(transform.position, player.transform.position);
 
         RaycastHit h;
+
+        //Physics.CheckSphere(transform.position, sphere1, out h, 3);
+
+        //if (h.)
+        //{
+        //    player = h.transform.parent;
+        //}
 
         Physics.Raycast(transform.position, eyes.transform.forward, out h);
 
@@ -70,13 +82,13 @@ public class Monster1 : Monster
             }
         }
 
-        
+
 
         if (f > 15 || !foundPlayer)
         {
             agent.speed = speed;
             isRunning = false;
-        } 
+        }
         else
         {
             agent.speed = speed * 2;
@@ -95,7 +107,7 @@ public class Monster1 : Monster
             {
                 if (other.GetComponent<PlayerScript>() != player)
                 {
-                    player = other.GetComponent<PlayerScript>();
+                    //player = other.GetComponent<PlayerScript>();
                 }
             }
         }

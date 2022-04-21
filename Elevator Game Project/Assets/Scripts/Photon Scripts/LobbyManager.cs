@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-    //Following BlackThornProd Tutorials for this section
-
     [SerializeField] private TMPro.TMP_InputField RoomInputField;
     [SerializeField] private TMPro.TMP_InputField PasswordInputField;
     [SerializeField] private GameObject LobbyPanel;
