@@ -35,6 +35,8 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     private bool canSprint = true;
 
+    private bool isSprinting;
+
     private PhotonView view;
 
     private void Start()
@@ -45,7 +47,8 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         view = GetComponent<PhotonView>();
     }
 
-    void Update()
+    //controls the raycast form the camera to interact with interactable objects
+    private void FixedUpdate()
     {
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
            (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
@@ -55,33 +58,48 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             float vertical = Input.GetAxis("Vertical") * MovementSpeed;
 
             //whether or not the player can sprint
-            if (stamina < 0)
+            if (stamina <= 0)
             {
+                stamina = 0;
                 canSprint = false;
+                Debug.Log("Cannot sprint");
                 stamina += staminaRechargeRate;
             }
             else if (stamina >= 100)
             {
                 stamina = 100;
+                Debug.Log("Ready to sprint");
                 canSprint = true;
             }
-            else if (stamina > 0 && stamina < 100 && canSprint == false)
+            else if (stamina > 0 && stamina < 100 && isSprinting == false)
             {
+                Debug.Log("Recharging");
                 stamina += staminaRechargeRate;
             }
 
             //controls movement and whether the player is sprinting or just moving normally
-            if (Input.GetKey(KeyCode.LeftShift) && canSprint == true)
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
-                stamina -= staminaDepletionRate;
+                if (canSprint)
+                {
+                    characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
+                    stamina -= staminaDepletionRate;
+                    isSprinting = true;
+                    Debug.Log(stamina);
+                }
+                else if (canSprint == false)
+                {
+                    characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
+                    isSprinting = false;
+                }
             }
             else
             {
                 characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
+                isSprinting = false;
             }
 
-            // Gravity
+            //Gravity
             if (characterController.isGrounded)
             {
                 velocity = 0;
@@ -97,15 +115,8 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 //replace "Interaction" with whatever we name it in the Interactable script
                 interactionTarget.SendMessage("Interact");
             }
-        }
-    }
 
-    //controls the raycast form the camera to interact with interactable objects
-    private void FixedUpdate()
-    {
-        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
-           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
-        {
+            //deals with raycast for interacting with interactable objects
             RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
