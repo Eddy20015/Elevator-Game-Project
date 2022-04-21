@@ -17,7 +17,14 @@ public class MouseHandler : MonoBehaviour
     private float yRotation = 0.0f;
 
     private Camera cam;
+
     private PhotonView view;
+
+    //sets the gamestate to playing when the player spawns
+    private void Awake()
+    {
+        GameStateManager.Play();
+    }
 
     void Start()
     {
@@ -25,15 +32,17 @@ public class MouseHandler : MonoBehaviour
         view = GetComponent<PhotonView>();
         //Get rid of the camera if it is not mine
         if (!view.IsMine)
+        {
             Destroy(cam.gameObject);
+        }  
     }
 
+    //controls mouse movement to camera movement
     void Update()
     {
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
            (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
         {
-            Debug.Log(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING);
             if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
             {
                 float mouseX = Input.GetAxis("Mouse X") * horizontalSpeed;

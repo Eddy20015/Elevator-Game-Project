@@ -19,11 +19,21 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     [SerializeField]
     private float velocity = 0;
 
+    [SerializeField]
+    private float staminaDepletionRate = 0.1f;
+
+    [SerializeField]
+    private float staminaRechargeRate = 0.5f;
+
+    private float stamina = 100f;
+
     private Camera cam;
 
     private GameObject interactionTarget;
 
     private bool canInteract;
+
+    private bool canSprint = true;
 
     private PhotonView view;
 
@@ -44,10 +54,27 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             float horizontal = Input.GetAxis("Horizontal") * MovementSpeed;
             float vertical = Input.GetAxis("Vertical") * MovementSpeed;
 
+            //whether or not the player can sprint
+            if (stamina < 0)
+            {
+                canSprint = false;
+                stamina += staminaRechargeRate;
+            }
+            else if (stamina >= 100)
+            {
+                stamina = 100;
+                canSprint = true;
+            }
+            else if (stamina > 0 && stamina < 100 && canSprint == false)
+            {
+                stamina += staminaRechargeRate;
+            }
 
-            if (Input.GetKey(KeyCode.LeftShift))
+            //controls movement and whether the player is sprinting or just moving normally
+            if (Input.GetKey(KeyCode.LeftShift) && canSprint == true)
             {
                 characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
+                stamina -= staminaDepletionRate;
             }
             else
             {
@@ -73,6 +100,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         }
     }
 
+    //controls the raycast form the camera to interact with interactable objects
     private void FixedUpdate()
     {
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||

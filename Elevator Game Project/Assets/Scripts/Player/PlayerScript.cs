@@ -13,6 +13,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField]
     private GameObject pauseUI;
 
+    //logic for pausing and unpausing
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
