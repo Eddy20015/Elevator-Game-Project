@@ -47,6 +47,8 @@ MonoBehaviour:
   - RPC_SetPlayer
   - RPC_InitialDistances
   - RPC_SetPlayerToNull
+  - RPC_SetCompleted
+  - RPC_SetIsCompleted
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

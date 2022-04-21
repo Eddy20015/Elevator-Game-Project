@@ -34,6 +34,7 @@ public class MouseHandler : MonoBehaviour
         if (!view.IsMine)
         {
             Destroy(cam.gameObject);
+        }
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -55,6 +56,5 @@ public class MouseHandler : MonoBehaviour
                 cam.transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f);
             }
         }
-          
     }
 }
