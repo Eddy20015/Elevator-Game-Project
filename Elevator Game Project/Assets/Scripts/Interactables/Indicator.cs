@@ -22,5 +22,6 @@ public class Indicator : MonoBehaviour
     public void Activate(bool b)
     {
         m.enabled = b;
+        Debug.Log(b);
     }
 }

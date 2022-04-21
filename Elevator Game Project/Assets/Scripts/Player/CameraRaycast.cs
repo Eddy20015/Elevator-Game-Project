@@ -17,15 +17,15 @@ public class CameraRaycast : MonoBehaviour
     {
         RaycastHit h;
 
-        //Physics.queriesHitTriggers = true;
+        Physics.queriesHitTriggers = false;
 
-        //Physics.Raycast(transform.position, transform.forward, out h, 100, 6, QueryTriggerInteraction.Collide);
+        //Physics.Raycast(transform.position, transform.forward, out h, 100, 0, QueryTriggerInteraction.Ignore);
 
         Physics.Raycast(transform.position, transform.forward, out h);
 
         if (h.collider)
         {
-            if (h.collider.tag.Equals("Indicator"))
+            if (h.collider.tag.Equals("Indicator") && Vector3.Distance(transform.position, h.point) < 5)
             {
                 indicator = h.collider.GetComponent<Indicator>();
                 indicator.Activate(true);
