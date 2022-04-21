@@ -19,6 +19,8 @@ public class CameraRaycast : MonoBehaviour
 
         //Physics.queriesHitTriggers = true;
 
+        //Physics.Raycast(transform.position, transform.forward, out h, 100, 6, QueryTriggerInteraction.Collide);
+
         Physics.Raycast(transform.position, transform.forward, out h);
 
         if (h.collider)
@@ -27,13 +29,15 @@ public class CameraRaycast : MonoBehaviour
             {
                 indicator = h.collider.GetComponent<Indicator>();
                 indicator.Activate(true);
-            } else
+            } else if (indicator)
             {
                 indicator.Activate(false);
             }
-        } else
+        } else if (indicator)
         {
             indicator.Activate(false);
         }
+
+        Debug.Log(h.point);
     }
 }

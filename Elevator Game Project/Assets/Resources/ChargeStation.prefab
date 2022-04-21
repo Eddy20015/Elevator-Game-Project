@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7525009147685179447}
   - component: {fileID: 9220037710183866256}
   - component: {fileID: 2176720627360473235}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ChargeStationMesh (1)
   m_TagString: Indicator
   m_Icon: {fileID: 0}
