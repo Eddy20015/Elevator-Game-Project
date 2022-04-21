@@ -26,6 +26,7 @@ public class MouseHandler : MonoBehaviour
         //Get rid of the camera if it is not mine
         if (!view.IsMine)
             Destroy(cam.gameObject);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
