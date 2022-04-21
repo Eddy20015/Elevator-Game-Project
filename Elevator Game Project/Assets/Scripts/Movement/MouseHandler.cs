@@ -34,7 +34,7 @@ public class MouseHandler : MonoBehaviour
         if (!view.IsMine)
         {
             Destroy(cam.gameObject);
-        }  
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     //controls mouse movement to camera movement

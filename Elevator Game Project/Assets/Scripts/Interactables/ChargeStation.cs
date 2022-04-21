@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class ChargeStation : MonoBehaviour, IInteractable
+public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
 {
-    [SerializeField] private float chargedAmount, maxChargeAmount, chargeTick, incrementAmount;
+    [SerializeField] private float chargedAmount, maxChargeAmount, incrementAmount;
     [SerializeField] private bool isUsed;
     private PhotonView view;
 
@@ -22,39 +22,29 @@ public class ChargeStation : MonoBehaviour, IInteractable
             Interact();
         }
     }
+
+    //Make sure isUsed is false once you are out of it
+    private void OnTriggerExit(Collider other)
+    {
+        view.RPC("RPC_SetIsUsed", RpcTarget.Others, false);
+    }
+
     public void Interact()
     {
-        //Only can be used by 1 per person
-        if (isUsed)
-            return;
-        else
+        //**This will increase the charged amount
+        //If it isn't fully charged + they are holding E + it isn't being used by another player
+        if(chargedAmount < maxChargeAmount && Input.GetKey(KeyCode.E) && !isUsed)
         {
-            ChargeTheStation();
-        }
-    }
-
-    public void ChargeTheStation()
-    {
-        StartCoroutine(ChargingStation());
-    }
-
-    //Charge the station until max only if they are holding down E
-    public IEnumerator ChargingStation()
-    {
-        isUsed = true;
-        while(chargedAmount < maxChargeAmount && Input.GetKey(KeyCode.E))
-        {
+            view.RPC("RPC_SetIsUsed", RpcTarget.Others, true);
             chargedAmount += incrementAmount;
-            yield return new WaitForSeconds(chargeTick);
-            Debug.Log(chargedAmount);
-            //Send the info to other clients
-            if(view.IsMine)
-            {
-                view.RPC("RPC_SetIsUsed", RpcTarget.AllBuffered, isUsed);
-                view.RPC("RPC_SetChargedAmount", RpcTarget.AllBuffered, chargedAmount);
-            }
+            view.RPC("RPC_SetChargedAmount", RpcTarget.Others, chargedAmount);
         }
-        isUsed = false;
+
+        //If you let go of E, it is not in use **Makes it so only one person can use it at a time
+        if(Input.GetKeyUp(KeyCode.E))
+        {
+            view.RPC("RPC_SetIsUsed", RpcTarget.Others, false);
+        }
     }
 
     //Multiplayer code

@@ -9,8 +9,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     [SerializeField] private GameObject Prefab;
     [SerializeField] private string PrefabName;
-    [SerializeField] private string MasterTag;
-    [SerializeField] private string PlayerTag;
+    //[SerializeField] private string MasterTag;
+    //[SerializeField] private string PlayerTag;
 
     private PhotonView view;
 
@@ -20,15 +20,20 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         view = GetComponent<PhotonView>();
         TagsSetUp = false;
-    }
 
-    private void Start()
-    {
         if (view.IsMine)
         {
             CreateController();
         }
     }
+
+    /*private void Start()
+    {
+        if (view.IsMine)
+        {
+            CreateController();
+        }
+    }*/
 
     private void CreateController()
     {
@@ -36,15 +41,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         GameObject InstantiatedPlayer = SpawnManager.Instance.OnlineSpawn(Master, PrefabName);
         Debug.Log("Spawned in CreateController");
 
-        if (PhotonNetwork.IsMasterClient)
+        /*if (PhotonNetwork.IsMasterClient)
         {
             InstantiatedPlayer.tag = MasterTag;
             view.RPC("RPC_SetMasterTag", RpcTarget.Others);
-        }
+        }*/
     }
 
     //if doesn't work as intended, just use update
-    [PunRPC]
+    /*[PunRPC]
     private void RPC_SetMasterTag()
     {
         GameObject[] Players = GameObject.FindGameObjectsWithTag(PlayerTag);
@@ -57,7 +62,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                 break;
             }
         }
-    }
+    }*/
 
     //this shares information between the two players on line
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
