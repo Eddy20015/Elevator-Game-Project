@@ -25,6 +25,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks
         view = GetComponent<PhotonView>();
     }
 
+    //logic for pausing and unpausing
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
