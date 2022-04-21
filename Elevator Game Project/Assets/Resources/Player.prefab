@@ -288,7 +288,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1.5, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4184284204877490221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,10 +318,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MovementSpeed: 4
-  SprintMultiplier: 8
+  SprintMultiplier: 2
   Gravity: 9.8
   velocity: 0
-  staminaDepletionRate: 0.1
+  staminaDepletionRate: 0.5
   staminaRechargeRate: 0.5
 --- !u!114 &4606867188363337946
 MonoBehaviour:
