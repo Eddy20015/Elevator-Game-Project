@@ -42,26 +42,35 @@ public class Shadowman : Monster
     // Update is called once per frame
     void Update()
     {
-        //online, only the master client version will actually move around, the one from the persepective of not master just follows
-        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
-          (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient))
+        if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
         {
-            if (player != null)
+            //online, only the master client version will actually move around, the one from the persepective of not master just follows
+            if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
+              (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient))
             {
-                //Debug.LogError("Is view mine? " + player.GetPhotonView().IsMine);
-                Chase();
-                eyes.transform.LookAt(player.transform);
-                eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
-
-                if (Vector3.Distance(transform.position, agent.destination) < 1.5f)
+                //deactivated players are dead, so the monster should stop trying to go after them once they are deactivated
+                if (player != null && player.activeInHierarchy == false)
                 {
-                    RandomPoint();
+                    player = null;
                 }
-            }
-            else
-            {
-                Patrol();
-                //Debug.LogError("Patrolling");
+
+                if (player != null)
+                {
+                    //Debug.LogError("Is view mine? " + player.GetPhotonView().IsMine);
+                    Chase();
+                    eyes.transform.LookAt(player.transform);
+                    eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
+
+                    if (Vector3.Distance(transform.position, agent.destination) < 1.5f)
+                    {
+                        RandomPoint();
+                    }
+                }
+                else
+                {
+                    Patrol();
+                    //Debug.LogError("Patrolling");
+                }
             }
         }
     }

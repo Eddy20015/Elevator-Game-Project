@@ -48,6 +48,37 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     }
 
     //controls the raycast form the camera to interact with interactable objects
+    private void Update()
+    {
+        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
+           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
+        {
+            if (Input.GetKeyDown(KeyCode.E) && canInteract)
+            {
+                //replace "Interaction" with whatever we name it in the Interactable script
+                interactionTarget.SendMessage("Interact");
+            }
+
+            //deals with raycast for interacting with interactable objects
+            RaycastHit hit;
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit, 2f))
+            {
+                if (hit.collider.tag == "Interactable")
+                {
+                    canInteract = true;
+                    interactionTarget = hit.transform.gameObject;
+                }
+            }
+            else
+            {
+                canInteract = false;
+                interactionTarget = null;
+            }
+        }
+    }
+
     private void FixedUpdate()
     {
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
@@ -62,18 +93,18 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             {
                 stamina = 0;
                 canSprint = false;
-                Debug.Log("Cannot sprint");
+                //Debug.Log("Cannot sprint");
                 stamina += staminaRechargeRate;
             }
             else if (stamina >= 100)
             {
                 stamina = 100;
-                Debug.Log("Ready to sprint");
+                //Debug.Log("Ready to sprint");
                 canSprint = true;
             }
             else if (stamina > 0 && stamina < 100 && isSprinting == false)
             {
-                Debug.Log("Recharging");
+                //Debug.Log("Recharging");
                 stamina += staminaRechargeRate;
             }
 
@@ -108,30 +139,6 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             {
                 velocity -= Gravity * Time.deltaTime;
                 characterController.Move(new Vector3(0, velocity, 0));
-            }
-
-            if (Input.GetKeyDown(KeyCode.E) && canInteract)
-            {
-                //replace "Interaction" with whatever we name it in the Interactable script
-                interactionTarget.SendMessage("Interact");
-            }
-
-            //deals with raycast for interacting with interactable objects
-            RaycastHit hit;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit, 2f))
-            {
-                if (hit.collider.tag == "Interactable")
-                {
-                    canInteract = true;
-                    interactionTarget = hit.transform.gameObject;
-                }
-            }
-            else
-            {
-                canInteract = false;
-                interactionTarget = null;
             }
         }
     }

@@ -349,8 +349,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b89bb69236b5058449085dfa99a890c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  JustRevived: 0
   deathUI: {fileID: 5402208466875261175, guid: cd71855b30668994db9d5cdc8b24f48b, type: 3}
   pauseUI: {fileID: 5564352479141453364, guid: 5836f3f09c21065469fdeaa265acd130, type: 3}
+  DeadPlayerTransform: {fileID: 1210652703755287256, guid: 13fd3af9c77959c499b4b636a503e2f5, type: 3}
+  DeadPlayerName: DeadPlayer
 --- !u!114 &-7078036688856987478
 MonoBehaviour:
   m_ObjectHideFlags: 0

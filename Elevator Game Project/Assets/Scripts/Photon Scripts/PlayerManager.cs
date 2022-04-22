@@ -70,8 +70,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         if (stream.IsWriting)
         {
             //this section shares the GameState
-            if(GameStateManager.GetGameState() != GameStateManager.GAMESTATE.MENU && 
-               GameStateManager.GetGameState() != GameStateManager.GAMESTATE.DEAD)
+            if(GameStateManager.GetGameState() != GameStateManager.GAMESTATE.MENU)
             {
                 stream.SendNext(GameStateManager.GetGameState());
             }
@@ -92,8 +91,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 //this section receives the GameState
                 //this is important for GAMEOVER and PLAYING States, but NOT PAUSE, DEAD, or MENU
-                if (GameStateManager.GetGameState() != GameStateManager.GAMESTATE.PAUSE &&
-                    GameStateManager.GetGameState() != GameStateManager.GAMESTATE.DEAD)
+                if (GameStateManager.GetGameState() != GameStateManager.GAMESTATE.PAUSE)
                 {
                     GameStateManager.GAMESTATE ReceivedState = (GameStateManager.GAMESTATE)Received;
                     if (ReceivedState == GameStateManager.GAMESTATE.MENU)
@@ -101,8 +99,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                         GameStateManager.SetGameState(GameStateManager.GAMESTATE.PLAYING);
                     }
                     //this condition is just as a precaution if a non transferable state sneaks through
-                    else if (ReceivedState != GameStateManager.GAMESTATE.PAUSE &&
-                             ReceivedState != GameStateManager.GAMESTATE.DEAD)
+                    else if (ReceivedState != GameStateManager.GAMESTATE.PAUSE)
                     {
                         GameStateManager.SetGameState(ReceivedState);
                     }

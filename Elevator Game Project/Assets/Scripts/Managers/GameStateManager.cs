@@ -12,7 +12,6 @@ public class GameStateManager : MonoBehaviourPunCallbacks
     public enum GAMESTATE
     {
         CINEMATIC,
-        DEAD,
         GAMEOVER,
         MENU,
         PAUSE,
@@ -66,12 +65,6 @@ public class GameStateManager : MonoBehaviourPunCallbacks
         GameState = GAMESTATE.CINEMATIC;
 
         Time.timeScale = 1f;
-    }
-
-    //sets GameState to DEAD
-    public static void Dead()
-    {
-        GameState = GAMESTATE.DEAD;
     }
 
     //go to the ConnectToServer scene
