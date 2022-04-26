@@ -2123,6 +2123,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 4863430291140350539, guid: 65b99858df6ddee4a83c2a0bf3aa831e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -105.9
+      objectReference: {fileID: 0}
     - target: {fileID: 4863430291140350541, guid: 65b99858df6ddee4a83c2a0bf3aa831e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -2142,6 +2146,10 @@ PrefabInstance:
     - target: {fileID: 4863430291223980184, guid: 65b99858df6ddee4a83c2a0bf3aa831e, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4863430291277992094, guid: 65b99858df6ddee4a83c2a0bf3aa831e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4863430291277992094, guid: 65b99858df6ddee4a83c2a0bf3aa831e, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2382,6 +2390,10 @@ PrefabInstance:
     - target: {fileID: 4863430291759843896, guid: 65b99858df6ddee4a83c2a0bf3aa831e, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4863430291759843899, guid: 65b99858df6ddee4a83c2a0bf3aa831e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -105.9
       objectReference: {fileID: 0}
     - target: {fileID: 4863430291759843901, guid: 65b99858df6ddee4a83c2a0bf3aa831e, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2683,10 +2695,18 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 4863430293064413410, guid: 65b99858df6ddee4a83c2a0bf3aa831e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 21.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4863430293064413411, guid: 65b99858df6ddee4a83c2a0bf3aa831e, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 4863430293064413412, guid: 65b99858df6ddee4a83c2a0bf3aa831e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 714dd9707250949fab2e0f7c436d1ff2, type: 2}
     - target: {fileID: 8490828855513785297, guid: 65b99858df6ddee4a83c2a0bf3aa831e, type: 3}
       propertyPath: m_Name
       value: Prototype Environment
