@@ -17,6 +17,9 @@ public class PlayerScript : MonoBehaviourPunCallbacks
     private GameObject pauseUI;
 
     [SerializeField]
+    private GameObject victoryUI;
+
+    [SerializeField]
     private Transform DeadPlayerTransform;
 
     [SerializeField]
