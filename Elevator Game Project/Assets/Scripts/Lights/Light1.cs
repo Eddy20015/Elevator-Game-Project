@@ -8,19 +8,30 @@ public class Light1 : MonoBehaviour
 
     [SerializeField] GameObject l;
 
+    [SerializeField] GameObject pointLight;
+
+    //temporary if I think of a better solution
+    GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        player = FindObjectOfType<PlayerScript>().gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Vector3.Distance(transform.position, player.transform.position) > 50)
+        {
+            pointLight.SetActive(false);
+        } else
+        {
+            pointLight.SetActive(true);
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Monster")
         {
