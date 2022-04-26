@@ -54,11 +54,13 @@ public class PlayerScript : MonoBehaviourPunCallbacks
         if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
         {
             GameStateManager.Pause();
+            Cursor.lockState = CursorLockMode.None;
             pauseUI.SetActive(true);
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PAUSE)
         {
             GameStateManager.Play();
+            Cursor.lockState = CursorLockMode.Locked;
             pauseUI.SetActive(false);
         }
     }

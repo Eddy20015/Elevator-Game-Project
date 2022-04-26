@@ -9,6 +9,7 @@ public class DeathMenu : MonoBehaviour
     public void OnClickRestart()
     {
         GameStateManager.Restart();
+        Cursor.lockState = CursorLockMode.Locked;
         deathUI.SetActive(false);
     }
 
