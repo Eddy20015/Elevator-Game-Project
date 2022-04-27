@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     private float stamina = 100f;
 
+    private float maxStamina = 100f;
+
     private Camera cam;
 
     private GameObject interactionTarget;
@@ -96,13 +98,13 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 //Debug.Log("Cannot sprint");
                 stamina += staminaRechargeRate;
             }
-            else if (stamina >= 100)
+            else if (stamina >= maxStamina)
             {
-                stamina = 100;
+                stamina = maxStamina;
                 //Debug.Log("Ready to sprint");
                 canSprint = true;
             }
-            else if (stamina > 0 && stamina < 100 && isSprinting == false)
+            else if (stamina > 0 && stamina < maxStamina && isSprinting == false)
             {
                 //Debug.Log("Recharging");
                 stamina += staminaRechargeRate;
@@ -140,5 +142,11 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 characterController.Move(new Vector3(0, velocity, 0));
             }
         }
+    }
+
+    //will be used for the bar
+    public float GetStaminaProportion()
+    {
+        return stamina / maxStamina;
     }
 }
