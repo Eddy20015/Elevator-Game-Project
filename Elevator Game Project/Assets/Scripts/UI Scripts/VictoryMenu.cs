@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeathMenu : MonoBehaviour
+public class VictoryMenu : MonoBehaviour
 {
     [SerializeField]
-    private GameObject deathUI;
+    private GameObject victoryUI;
     public void OnClickRestart()
     {
         GameStateManager.Restart();
         Cursor.lockState = CursorLockMode.Locked;
-        deathUI.SetActive(false);
+        victoryUI.SetActive(false);
     }
 
     public void OnClickMainMenu()
     {
         GameStateManager.MainMenu();
-        deathUI.SetActive(false);
+        victoryUI.SetActive(false);
     }
 }
