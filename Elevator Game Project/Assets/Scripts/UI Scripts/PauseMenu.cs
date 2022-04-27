@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     public void OnClickResume()
     {
         GameStateManager.Play();
+        Cursor.lockState = CursorLockMode.Locked;
         pauseUI.SetActive(false);
     }
 
