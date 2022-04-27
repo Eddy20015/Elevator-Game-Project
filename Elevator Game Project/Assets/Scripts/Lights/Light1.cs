@@ -22,7 +22,7 @@ public class Light1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) > 50)
+        if (Vector3.Distance(transform.position, player.transform.position) > 100)
         {
             pointLight.SetActive(false);
         } else
@@ -43,7 +43,13 @@ public class Light1 : MonoBehaviour
     {
         if (other.tag == "Monster")
         {
-            l.SetActive(true);
+            StartCoroutine(TurnLightOn());
         }
+    }
+
+    IEnumerator TurnLightOn()
+    {
+        yield return new WaitForSeconds(3);
+        l.SetActive(true);
     }
 }
