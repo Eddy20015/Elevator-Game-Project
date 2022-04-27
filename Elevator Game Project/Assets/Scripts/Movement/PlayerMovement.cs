@@ -116,7 +116,6 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                     characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
                     stamina -= staminaDepletionRate;
                     isSprinting = true;
-                    Debug.Log(stamina);
                 }
                 else if (canSprint == false)
                 {
