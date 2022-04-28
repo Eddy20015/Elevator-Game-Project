@@ -34,7 +34,7 @@ Transform:
   m_GameObject: {fileID: 135213952127551259}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 6650680249846697505}
   - {fileID: 4457922339293814894}
@@ -118,15 +118,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 127d00a47e1924584b2fb7ab4923dc9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.5
+  speed: 3.5
   eyes: {fileID: 1683952548332718603}
   sphere1Radius: 15
   sphere2Radius: 0
   points:
-  - {x: 15, y: 1, z: 15}
-  - {x: 15, y: 1, z: -15}
-  - {x: -15, y: 1, z: 15}
-  - {x: -15, y: 1, z: -15}
+  - {x: -25, y: 1, z: -80}
+  - {x: 25, y: 1, z: -85}
+  - {x: 0, y: 1, z: 0}
+  - {x: -25, y: 1, z: 75}
 --- !u!114 &1762382505125620667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +149,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 3.5
+  m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

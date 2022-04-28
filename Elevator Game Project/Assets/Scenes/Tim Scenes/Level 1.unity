@@ -2587,42 +2587,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 420750382, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 420750382, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
-      propertyPath: points.Array.data[0].x
-      value: -25
-      objectReference: {fileID: 0}
-    - target: {fileID: 420750382, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
-      propertyPath: points.Array.data[0].z
-      value: -80
-      objectReference: {fileID: 0}
-    - target: {fileID: 420750382, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
-      propertyPath: points.Array.data[1].x
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 420750382, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
-      propertyPath: points.Array.data[1].z
-      value: -85
-      objectReference: {fileID: 0}
-    - target: {fileID: 420750382, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
-      propertyPath: points.Array.data[2].x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 420750382, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
-      propertyPath: points.Array.data[2].z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 420750382, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
-      propertyPath: points.Array.data[3].x
-      value: -25
-      objectReference: {fileID: 0}
-    - target: {fileID: 420750382, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
-      propertyPath: points.Array.data[3].z
-      value: 75
-      objectReference: {fileID: 0}
     - target: {fileID: 135213952127551239, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2633,7 +2597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 135213952127551239, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.419
       objectReference: {fileID: 0}
     - target: {fileID: 135213952127551239, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2669,11 +2633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 135213952127551259, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
       propertyPath: m_Name
-      value: Monster1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8215021209067245728, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
-      propertyPath: sceneViewId
-      value: 2
+      value: Shadowman
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
@@ -13959,6 +13919,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b8aa59e2bd1240c4919e7f99ece5859, type: 3}
+--- !u!1 &2011947346 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4184284204877490223, guid: 4b8aa59e2bd1240c4919e7f99ece5859, type: 3}
+  m_PrefabInstance: {fileID: 2011947345}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2011947347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011947346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 230d02d951d1e904790a34c88db3eeb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2087769105
 GameObject:
   m_ObjectHideFlags: 0
