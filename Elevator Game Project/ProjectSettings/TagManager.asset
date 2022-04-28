@@ -14,6 +14,7 @@ TagManager:
   - Point
   - PlayerCollider
   - Indicator
+  - Panel
   layers:
   - Default
   - TransparentFX

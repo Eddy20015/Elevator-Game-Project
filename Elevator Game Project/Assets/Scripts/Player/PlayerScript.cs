@@ -10,13 +10,10 @@ public class PlayerScript : MonoBehaviourPunCallbacks
 
     public bool JustRevived = false;
 
-    [SerializeField]
     private GameObject deathUI;
 
-    [SerializeField]
     private GameObject pauseUI;
 
-    [SerializeField]
     private GameObject victoryUI;
 
     [SerializeField]
@@ -29,8 +26,17 @@ public class PlayerScript : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        GameObject[] Panels = GameObject.FindGameObjectsWithTag("Panel");
+
+        //this needs to be editted if the order is changed
+        //not great but good enough
+        deathUI = Panels[0];
+        pauseUI = Panels[1];
+        victoryUI = Panels[2];
+
         deathUI.SetActive(false);
         pauseUI.SetActive(false);
+        victoryUI.SetActive(false);
 
         view = GetComponent<PhotonView>();
     }
@@ -54,18 +60,23 @@ public class PlayerScript : MonoBehaviourPunCallbacks
     //logic for pausing and unpausing
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
+        //this first if statement eliminates pause ability online (for now, but we should change that)
+        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
         {
-            GameStateManager.Pause();
-            Cursor.lockState = CursorLockMode.None;
-            pauseUI.SetActive(true);
+            if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
+            {
+                GameStateManager.Pause();
+                Cursor.lockState = CursorLockMode.None;
+                pauseUI.SetActive(true);
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PAUSE)
+            {
+                GameStateManager.Play();
+                Cursor.lockState = CursorLockMode.Locked;
+                pauseUI.SetActive(false);
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PAUSE)
-        {
-            GameStateManager.Play();
-            Cursor.lockState = CursorLockMode.Locked;
-            pauseUI.SetActive(false);
-        }
+        
     }
 
     public void GetKilled()
