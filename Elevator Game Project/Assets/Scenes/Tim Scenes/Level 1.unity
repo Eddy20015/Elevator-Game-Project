@@ -2257,7 +2257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.514151, g: 0.8321753, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4609,7 +4609,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5740006275692445106, guid: 0a17cec7e1b4c614fa1d7258c983b436, type: 3}
       propertyPath: m_RootOrder
-      value: 32
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 5740006275692445106, guid: 0a17cec7e1b4c614fa1d7258c983b436, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5471,7 +5471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9005943682781199687, guid: 6a0f4d51445afac46a67fe1596c0cb8a, type: 3}
       propertyPath: m_RootOrder
-      value: 31
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 9005943682781199687, guid: 6a0f4d51445afac46a67fe1596c0cb8a, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5544,6 +5544,18 @@ PrefabInstance:
     - target: {fileID: 9005943682781199687, guid: 6a0f4d51445afac46a67fe1596c0cb8a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005943682781199705, guid: 6a0f4d51445afac46a67fe1596c0cb8a, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005943682781199705, guid: 6a0f4d51445afac46a67fe1596c0cb8a, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 9005943682781199705, guid: 6a0f4d51445afac46a67fe1596c0cb8a, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 9005943682781199708, guid: 6a0f4d51445afac46a67fe1596c0cb8a, type: 3}
       propertyPath: m_Name
@@ -6499,7 +6511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5402208466875261171, guid: cd71855b30668994db9d5cdc8b24f48b, type: 3}
       propertyPath: m_RootOrder
-      value: 30
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 5402208466875261171, guid: cd71855b30668994db9d5cdc8b24f48b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -13798,10 +13810,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
