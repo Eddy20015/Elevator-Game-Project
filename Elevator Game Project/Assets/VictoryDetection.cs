@@ -14,13 +14,13 @@ public class VictoryDetection : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             playersInArea += 1;
-            if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
+            if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL && ChargingStationManager.chargingStationManager.IsCompleted)
             {
                 GameStateManager.Victory();
                 victoryUI.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
             }
-            else if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+            else if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && ChargingStationManager.chargingStationManager.IsCompleted)
             {
                 if (playersInArea == 2)
                 {
