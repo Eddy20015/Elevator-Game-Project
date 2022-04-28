@@ -15,13 +15,16 @@ public class RoomManager : MonoBehaviourPunCallbacks
     //Getters
     public GameObject PlayerManager { get => playerManager;}
 
-    private void Awake()
+    private void Start()
     {
-        //we only need this during an online scene
-        if(GameStateManager.GetPlayState() != GameStateManager.PLAYSTATE.ONLINE)
+        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
         {
-            Debug.LogError("PlayState is NOT ONLINE");
-            SpawnManager.Instance.LocalSpawn();
+            //Thinking that I will actually not be using instantiate to spawn the player
+            //Instead I will add a script to the player in the scene that destroys it if it is online
+            //this will disable the manager and properly spawn the player in local
+            
+            //Debug.Log("PlayState is LOCAL");
+            //SpawnManager.Instance.LocalSpawn();
             gameObject.SetActive(false);
         }
     }

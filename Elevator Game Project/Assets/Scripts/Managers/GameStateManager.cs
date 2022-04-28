@@ -15,7 +15,8 @@ public class GameStateManager : MonoBehaviourPunCallbacks
         GAMEOVER,
         MENU,
         PAUSE,
-        PLAYING
+        PLAYING,
+        VICTORY
     }
 
     private static GAMESTATE GameState;
@@ -84,7 +85,16 @@ public class GameStateManager : MonoBehaviourPunCallbacks
         //can be removed if we don't like the look
         Time.timeScale = 0f;
     }
-    
+
+    public static void Victory()
+    {
+        GameState = GAMESTATE.VICTORY;
+
+        //this is so that the game freezes when it's gameover
+        //can be removed if we don't like the look
+        Time.timeScale = 0f;
+    }
+
     //returns the current GameState
     public static GAMESTATE GetGameState()
     {
