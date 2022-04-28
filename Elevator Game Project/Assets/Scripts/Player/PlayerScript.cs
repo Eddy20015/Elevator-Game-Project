@@ -30,13 +30,19 @@ public class PlayerScript : MonoBehaviourPunCallbacks
 
         //this needs to be editted if the order is changed
         //not great but good enough
-        deathUI = Panels[0];
-        pauseUI = Panels[1];
-        victoryUI = Panels[2];
+        try{
+            deathUI = Panels[0];
+            pauseUI = Panels[1];
+            victoryUI = Panels[2];
 
-        deathUI.SetActive(false);
-        pauseUI.SetActive(false);
-        victoryUI.SetActive(false);
+            deathUI.SetActive(false);
+            pauseUI.SetActive(false);
+            victoryUI.SetActive(false);
+        }
+        catch
+        {
+            //Do nothing
+        }
 
         view = GetComponent<PhotonView>();
     }
