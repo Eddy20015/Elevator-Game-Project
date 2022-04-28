@@ -82,7 +82,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks
                 pauseUI.SetActive(false);
             }
         }
-        
     }
 
     public void GetKilled()
