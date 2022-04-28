@@ -11,12 +11,13 @@ public class ChargingStationManager : MonoBehaviour
     public static ChargingStationManager chargingStationManager;
 
     [SerializeField] private List<ChargeStation> chargeStations;
-    private bool isCompleted;
+    [SerializeField] private bool isCompleted;
     private PhotonView view;
     [SerializeField] private float numOfCompletedStations, maxNumOfStations;
 
     public float NumOfCompletedStations { get => numOfCompletedStations; set => numOfCompletedStations = value; }
     public float MaxNumOfStations { get => maxNumOfStations; set => maxNumOfStations = value; }
+    public bool IsCompleted { get => isCompleted; set => isCompleted = value; }
 
     // Start is called before the first frame update
     void Start()
