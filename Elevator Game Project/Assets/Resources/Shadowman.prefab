@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 127d00a47e1924584b2fb7ab4923dc9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3.5
+  speed: 3
   eyes: {fileID: 1683952548332718603}
   sphere1Radius: 15
   sphere2Radius: 0
