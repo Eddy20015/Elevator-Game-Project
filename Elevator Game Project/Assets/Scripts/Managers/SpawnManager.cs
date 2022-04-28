@@ -10,7 +10,7 @@ public class SpawnManager : MonoBehaviourPunCallbacks
 
     private static GameObject[] SpawnPoints;// = new Transform[2];
 
-    public static GameObject PlayerReference;
+    public GameObject PlayerReference; // will be mainly for Local
 
     //set the static variables
     private void Awake()
@@ -22,9 +22,10 @@ public class SpawnManager : MonoBehaviourPunCallbacks
     }
 
     //Spawn the player using the local instantiation
-    public /*static*/ void LocalSpawn()
+    public void LocalSpawn()
     {
-        GameObject.Instantiate(PlayerReference, SpawnPoints[0].transform);
+        GameObject Player = Instantiate(PlayerReference, SpawnPoints[0].transform);
+        Player.GetComponentInChildren<Camera>().enabled = true;
     }
 
     //Spawn the player using the online instantiation

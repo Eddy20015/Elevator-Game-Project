@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Matt Scenes/Greyblocking Testing.unity
     guid: 37585b7e90568014d9bbcfa1818137e8
+  - enabled: 1
+    path: Assets/Scenes/Tim Scenes/Level 1.unity
+    guid: 05bc8d12399ea40d38b46439bf5260bc
   m_configObjects: {}
