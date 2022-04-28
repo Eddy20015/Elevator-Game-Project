@@ -61,7 +61,7 @@ public class Shadowman : Monster
                     eyes.transform.LookAt(player.transform);
                     eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
 
-                    if (Vector3.Distance(transform.position, agent.destination) < 1.5f)
+                    if (Vector3.Distance(transform.position, agent.destination) < 2.5f)
                     {
                         RandomPoint();
                     }
@@ -73,6 +73,8 @@ public class Shadowman : Monster
                 }
             }
         }
+
+        Patrol();
     }
 
     public override void Chase()
@@ -88,7 +90,7 @@ public class Shadowman : Monster
 
         bool foundPlayer = false;
 
-        //not sure what this does - Ed
+        //essentially if shadowman sees the player
         if (hit.distance < findTrigger.radius)
         {
             if (Vector3.Distance(new Vector3(hit.point.x, player.transform.position.y, hit.point.z), player.transform.position) < 1)
@@ -116,17 +118,24 @@ public class Shadowman : Monster
 
     void Patrol()
     {
-        if (Vector3.Distance(transform.position, agent.destination) < 1.5f && !isRunning)
+        float pleaseWork = Vector3.Distance(transform.position, agent.destination);
+
+        if (pleaseWork < 2.5f)
         {
             RandomPoint();
         }
+
+        //Debug.Log("Patrolling");
+        //Debug.Log(pleaseWork);
     }
 
     void RandomPoint()
     {
         currentPoint = (int)Random.Range(0, points.Length - 0.01f);
         agent.SetDestination(points[currentPoint]);
+        agent.speed = speed;
         isRunning = false;
+        Debug.Log("Changed Point To " + points[currentPoint]);
     }
 
     public override void SetPlayer(GameObject _player, bool b)
