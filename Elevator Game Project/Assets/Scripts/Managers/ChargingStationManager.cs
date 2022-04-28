@@ -13,10 +13,15 @@ public class ChargingStationManager : MonoBehaviour
     [SerializeField] private List<ChargeStation> chargeStations;
     private bool isCompleted;
     private PhotonView view;
+    [SerializeField] private float numOfCompletedStations, maxNumOfStations;
+
+    public float NumOfCompletedStations { get => numOfCompletedStations; set => numOfCompletedStations = value; }
+    public float MaxNumOfStations { get => maxNumOfStations; set => maxNumOfStations = value; }
 
     // Start is called before the first frame update
     void Start()
     {
+        numOfCompletedStations = 0;
         view = GetComponent<PhotonView>();
         if (chargingStationManager == null)
         {
@@ -28,17 +33,21 @@ public class ChargingStationManager : MonoBehaviour
     //Checks if all the puzzles are completed
     public void CheckPuzzleState()
     {
+        numOfCompletedStations = 0;
         bool temp = true;
         foreach (ChargeStation stations in chargeStations)
         {
+            numOfCompletedStations++;
             if (stations.getPuzzleState() == false)
             {
+                numOfCompletedStations--;
                 temp = false;
             }
             isCompleted = temp;
         }
         //Updates all the clients
-        view.RPC("RPC_SetIsCompleted", RpcTarget.AllBuffered, isCompleted);
+        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+            view.RPC("RPC_SetIsCompleted", RpcTarget.AllBuffered, isCompleted);
         
 
         //Debug.Log(isCompleted);
