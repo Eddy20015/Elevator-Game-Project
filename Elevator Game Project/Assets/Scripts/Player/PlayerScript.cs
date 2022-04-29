@@ -89,8 +89,8 @@ public class PlayerScript : MonoBehaviourPunCallbacks
         if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
         {
             isAlive = false;
-            GameStateManager.Gameover();
-            deathUI.SetActive(true);
+
+            VideoManager.SetJumpScare1(true);
         }
         else
         {

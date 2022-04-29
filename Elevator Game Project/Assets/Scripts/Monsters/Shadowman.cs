@@ -135,7 +135,7 @@ public class Shadowman : Monster
         agent.SetDestination(points[currentPoint]);
         agent.speed = speed;
         isRunning = false;
-        Debug.Log("Changed Point To " + points[currentPoint]);
+        //Debug.Log("Changed Point To " + points[currentPoint]);
     }
 
     public override void SetPlayer(GameObject _player, bool b)

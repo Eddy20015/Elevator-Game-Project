@@ -45,7 +45,7 @@ public class BuddySystemManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            Debug.Log("Game isn't over yet: Player1Dead = " + Player1Dead + " and Player2Dead = " + Player2Dead);
+            //Debug.Log("Game isn't over yet: Player1Dead = " + Player1Dead + " and Player2Dead = " + Player2Dead);
         }
     }     
 }
