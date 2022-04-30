@@ -9,6 +9,8 @@ public class BuddySystemManager : MonoBehaviourPunCallbacks
     private static bool Player1Dead = false;
     private static bool Player2Dead = false;
 
+    [SerializeField] private GameObject deathUI;
+
     public static void Player1Died()
     {
         Player1Dead = true;
@@ -37,10 +39,13 @@ public class BuddySystemManager : MonoBehaviourPunCallbacks
         if(Player1Dead && Player2Dead)
         {
             GameStateManager.Gameover();
+
+            //opening up the gameover panel here because the players will be deactivated
+            deathUI.SetActive(true);
         }
         else
         {
-            //Debug.Log("Game isn't over yet: Player1Dead = " + Player1Dead + " and Player2Dead = " + Player2Dead);
+            Debug.Log("Game isn't over yet: Player1Dead = " + Player1Dead + " and Player2Dead = " + Player2Dead);
         }
     }     
 }
