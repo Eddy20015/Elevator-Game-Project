@@ -25,6 +25,12 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     [SerializeField]
     private float staminaRechargeRate = 0.5f;
 
+    [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip walkingSound;
+
     private float stamina = 100f;
 
     private float maxStamina = 100f;
@@ -118,17 +124,20 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                     characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
                     stamina -= staminaDepletionRate;
                     isSprinting = true;
+                    PlaySound(walkingSound, 0.1f);
                 }
                 else if (canSprint == false)
                 {
                     characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
                     isSprinting = false;
+                    PlaySound(walkingSound, 0.3f);
                 }
             }
             else
             {
                 characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
                 isSprinting = false;
+                PlaySound(walkingSound, 0.3f);
             }
 
             //Gravity
@@ -148,5 +157,16 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     public float GetStaminaProportion()
     {
         return stamina / maxStamina;
+    }
+
+    public void PlaySound(AudioClip sound, float timeBetweenSounds)
+    {
+        float timeElapsed = 0;
+        if (timeElapsed > timeBetweenSounds)
+        {
+            audioSource.PlayOneShot(sound);
+            timeElapsed = 0;
+        }
+        timeElapsed += Time.deltaTime;
     }
 }
