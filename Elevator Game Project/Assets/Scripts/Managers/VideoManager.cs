@@ -13,11 +13,13 @@ public class VideoManager : MonoBehaviourPunCallbacks
     [SerializeField] private VideoClip JumpScare2Setter;
     [SerializeField] private VideoPlayer VidPlayerSetter;
     [SerializeField] private GameObject VidImageSetter;
+    [SerializeField] private GameObject JumpScare1AudioSetter;
 
     private static VideoClip JumpScare1;
     private static VideoClip JumpScare2;
     private static VideoPlayer VidPlayer;
     private static GameObject VidImage;
+    private static GameObject JumpScare1Audio;
 
     [SerializeField] private GameObject GameOverPanel;
 
@@ -46,8 +48,10 @@ public class VideoManager : MonoBehaviourPunCallbacks
         JumpScare2 = JumpScare2Setter;
         VidPlayer = VidPlayerSetter;
         VidImage = VidImageSetter;
+        //JumpScare1Audio = JumpScare1AudioSetter;
 
         VidImage.SetActive(false);
+        //JumpScare1Audio.SetActive(false);
 
         StartVideo = false;
         Playing = false;
@@ -69,7 +73,8 @@ public class VideoManager : MonoBehaviourPunCallbacks
                 //when it is inactive, you must start the video
                 if(!TempBool)
                 {
-                    //VidImage.SetActive(true);
+                    VidImage.SetActive(true);
+                    //JumpScare1Audio.SetActive(true);
                     VidPlayer.Play();
                     Playing = true;
                     TempBool = true;
@@ -80,6 +85,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
                     Completed = true;
                     StartVideo = false;
                     //VidImage.SetActive(false);
+                    //JumpScare1Audio.SetActive(false);
                     TempBool = false;
 
                 }
