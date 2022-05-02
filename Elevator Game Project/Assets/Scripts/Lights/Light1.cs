@@ -7,9 +7,11 @@ public class Light1 : MonoBehaviourPunCallbacks
 {
     //Tim Kashani
 
-    [SerializeField] GameObject l;
+    [SerializeField] GameObject lightObject;
 
     [SerializeField] GameObject pointLight;
+
+    [SerializeField] AudioSource audio;
 
     //temporary if I think of a better solution
     private GameObject player;
@@ -36,6 +38,8 @@ public class Light1 : MonoBehaviourPunCallbacks
                 playerView = player.GetPhotonView();
             }
         }
+
+        audio.enabled = false;
     }
 
     // Update is called once per frame
@@ -58,7 +62,8 @@ public class Light1 : MonoBehaviourPunCallbacks
     {
         if (other.tag == "Monster")
         {
-            l.SetActive(false);
+            lightObject.SetActive(false);
+            audio.enabled = true;
         }
     }
 
@@ -73,6 +78,7 @@ public class Light1 : MonoBehaviourPunCallbacks
     IEnumerator TurnLightOn()
     {
         yield return new WaitForSeconds(3);
-        l.SetActive(true);
+        lightObject.SetActive(true);
+        audio.enabled = false;
     }
 }
