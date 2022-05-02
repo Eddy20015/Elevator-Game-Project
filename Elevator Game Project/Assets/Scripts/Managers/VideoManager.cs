@@ -36,6 +36,8 @@ public class VideoManager : MonoBehaviourPunCallbacks
     //Set GameOver Menu to go up
     private static bool BringUpPanel;
 
+    private static bool TempBool;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -52,6 +54,8 @@ public class VideoManager : MonoBehaviourPunCallbacks
         Completed = false;
         AfterTheOther = false;
         BringUpPanel = false;
+
+        TempBool = false;
     }
 
     // Turns off the video
@@ -63,18 +67,20 @@ public class VideoManager : MonoBehaviourPunCallbacks
             if (!Playing)
             {
                 //when it is inactive, you must start the video
-                if(VidImage.activeInHierarchy == false)
+                if(!TempBool)
                 {
-                    VidImage.SetActive(true);
+                    //VidImage.SetActive(true);
                     VidPlayer.Play();
                     Playing = true;
+                    TempBool = true;
                 }
                 //when it is active, you must end the video
                 else
                 {
                     Completed = true;
                     StartVideo = false;
-                    VidImage.SetActive(false);
+                    //VidImage.SetActive(false);
+                    TempBool = false;
 
                 }
             }

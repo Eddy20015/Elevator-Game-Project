@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2253,9 +2253,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 32900000, guid: d89cbb5602894a749a05a4875ae397d8, type: 3}
     - target: {fileID: 5348759675979292056, guid: 1b02c946a49877044adcc1d852ac0e5a, type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5348759675979292056, guid: 1b02c946a49877044adcc1d852ac0e5a, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5348759675979292056, guid: 1b02c946a49877044adcc1d852ac0e5a, type: 3}
+      propertyPath: m_TargetCamera
+      value: 
+      objectReference: {fileID: 2011947348}
     - target: {fileID: 5348759675979292056, guid: 1b02c946a49877044adcc1d852ac0e5a, type: 3}
       propertyPath: m_TargetTexture
       value: 
@@ -25368,7 +25376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 135213952127551239, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -62.2
       objectReference: {fileID: 0}
     - target: {fileID: 135213952127551239, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -25376,7 +25384,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 135213952127551239, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -91.2
       objectReference: {fileID: 0}
     - target: {fileID: 135213952127551239, guid: e21016d0a9c2a410e86af78a14233df8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -136791,6 +136799,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 230d02d951d1e904790a34c88db3eeb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!20 &2011947348 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4184284204783078465, guid: 4b8aa59e2bd1240c4919e7f99ece5859, type: 3}
+  m_PrefabInstance: {fileID: 2011947345}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2014286100
 GameObject:
   m_ObjectHideFlags: 0
