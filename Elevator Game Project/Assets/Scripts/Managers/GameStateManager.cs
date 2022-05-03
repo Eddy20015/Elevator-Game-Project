@@ -86,15 +86,6 @@ public class GameStateManager : MonoBehaviourPunCallbacks
         Time.timeScale = 0f;
     }
 
-    public static void Victory()
-    {
-        GameState = GAMESTATE.VICTORY;
-
-        //this is so that the game freezes when it's gameover
-        //can be removed if we don't like the look
-        Time.timeScale = 0f;
-    }
-
     //returns the current GameState
     public static GAMESTATE GetGameState()
     {
@@ -149,13 +140,10 @@ public class GameStateManager : MonoBehaviourPunCallbacks
 
         //this is so that the game freezes when it's gameover
         //can be removed if we don't like the look
-        Time.timeScale = 0f;
-    }
-
-    //starts the current scene again
-    public static void Restart()
-    {
-        Start(SceneManager.GetActiveScene().name);
+        if(PlayState == PLAYSTATE.LOCAL)
+        {
+            Time.timeScale = 0f;
+        }
     }
 
     //set GameState to PLAYING
@@ -164,6 +152,12 @@ public class GameStateManager : MonoBehaviourPunCallbacks
     {
         GameState = GAMESTATE.PLAYING;
         Time.timeScale = 1f;
+    }
+
+    //starts the current scene again
+    public static void Restart()
+    {
+        Start(SceneManager.GetActiveScene().name);
     }
     
     //set the GameState to desired state
@@ -196,5 +190,13 @@ public class GameStateManager : MonoBehaviourPunCallbacks
 
         //this can be removed if Gameover() will not set timescale to 0
         Time.timeScale = 1f;
+    }
+    public static void Victory()
+    {
+        GameState = GAMESTATE.VICTORY;
+
+        //this is so that the game freezes when it's gameover
+        //can be removed if we don't like the look
+        Time.timeScale = 0f;
     }
 }

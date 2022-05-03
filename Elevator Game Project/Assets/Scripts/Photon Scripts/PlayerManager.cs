@@ -5,7 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 
 //Written by Ed
-public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
+public class PlayerManager : MonoBehaviourPunCallbacks//, IPunObservable
 {
     [SerializeField] private GameObject Prefab;
     [SerializeField] private string PrefabName;
@@ -14,121 +14,115 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private PhotonView view;
 
-    private bool TagsSetUp;
+    private GameStateManager.GAMESTATE LastState = GameStateManager.GAMESTATE.PLAYING;    
+
+    private bool CinematicsFix;
 
     private void Awake()
     {
         view = GetComponent<PhotonView>();
-        TagsSetUp = false;
+        CinematicsFix = false;
 
         if (view.IsMine)
         {
             CreateController();
         }
+
+        GameStateManager.Play();
     }
-
-    /*private void Start()
-    {
-        if (view.IsMine)
-        {
-            CreateController();
-        }
-    }*/
 
     private void CreateController()
     {
         bool Master = PhotonNetwork.IsMasterClient; 
         GameObject InstantiatedPlayer = SpawnManager.Instance.OnlineSpawn(Master, PrefabName);
         Debug.Log("Spawned in CreateController");
-
-        /*if (PhotonNetwork.IsMasterClient)
-        {
-            InstantiatedPlayer.tag = MasterTag;
-            view.RPC("RPC_SetMasterTag", RpcTarget.Others);
-        }*/
     }
 
-    //if doesn't work as intended, just use update
-    /*[PunRPC]
-    private void RPC_SetMasterTag()
-    {
-        GameObject[] Players = GameObject.FindGameObjectsWithTag(PlayerTag);
-        foreach (GameObject _Player in Players)
-        {
-            if (!_Player.GetComponent<PhotonView>().IsMine)
-            {
-                _Player.tag = MasterTag;
-                TagsSetUp = true;
-                break;
-            }
-        }
-    }*/
-
     //this shares information between the two players on line
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    /*public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.IsWriting)
+        Debug.LogError("In PhotonSerializedView");
+
+        if (view.IsMine)
         {
-            //this section shares the GameState
-            if(GameStateManager.GetGameState() != GameStateManager.GAMESTATE.MENU)
+            if (stream.IsWriting)
             {
-                stream.SendNext(GameStateManager.GetGameState());
-            }
-            else if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.MENU)
-            {
-                GameStateManager.SetGameState(GameStateManager.GAMESTATE.PLAYING);
+                Debug.LogError("In PhotonSerializedView if");
+
+                //this section shares the GameState
+                if (GameStateManager.GetGameState() != GameStateManager.GAMESTATE.MENU)
+                {
+                    stream.SendNext(GameStateManager.GetGameState());
+                }
+                else if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.MENU)
+                {
+                    GameStateManager.SetGameState(GameStateManager.GAMESTATE.PLAYING);
+                    stream.SendNext(GameStateManager.GetGameState());
+                }
             }
             else
             {
-                //don't do anything for DEAD, we don't want to transfer that state
-            }
-        }
-        else 
-        {
-            //this way you don't try to typecast the wrong thing
-            object Received = stream.ReceiveNext();
-            if(Received is GameStateManager.GAMESTATE)
-            {
-                //this section receives the GameState
-                //this is important for GAMEOVER and PLAYING States, but NOT PAUSE, DEAD, or MENU
-                if (GameStateManager.GetGameState() != GameStateManager.GAMESTATE.PAUSE)
+                //this way you don't try to typecast the wrong thing
+                object Received = stream.ReceiveNext();
+
+                Debug.LogError("In PhotonSerializedView else");
+
+                if (Received is GameStateManager.GAMESTATE)
                 {
+                    Debug.LogError("In PhotonSerializedView Received is GameStateManager");
+
+                    //this section receives the GameState
+                    //this is important for GAMEOVER, PAUSE, and PLAYING States, but NOT CINEMATIC or MENU                
                     GameStateManager.GAMESTATE ReceivedState = (GameStateManager.GAMESTATE)Received;
                     if (ReceivedState == GameStateManager.GAMESTATE.MENU)
                     {
                         GameStateManager.SetGameState(GameStateManager.GAMESTATE.PLAYING);
                     }
                     //this condition is just as a precaution if a non transferable state sneaks through
-                    else if (ReceivedState != GameStateManager.GAMESTATE.PAUSE)
+                    else if (ReceivedState != GameStateManager.GAMESTATE.CINEMATIC)
                     {
                         GameStateManager.SetGameState(ReceivedState);
                     }
                     else
                     {
-                        //Do nothing with the ReceivedState if Paused or Dead
+                        //Do nothing with the ReceivedState if CINEMATIC
                     }
                 }
             }
         }
-    }
+    }*/
 
     //See if the RPC is cleaner
-    /*
-    private void Update()
+    
+    /*private void Update()
     {
-        //This is so that on the perspective of the nonMasterClient, the MasterClient has their MasterTag
-        if (!PhotonNetwork.IsMasterClient && !TagsSetUp)
+        if (view.IsMine)
         {
-            GameObject[] Players = GameObject.FindGameObjectsWithTag(PlayerTag);
-            foreach(GameObject Playerr in Players)
+            //LastState is the state that the gamestatemanager was in last frame
+            
+            if(LastState != GameStateManager.GetGameState())
             {
-                if (!Playerr.GetComponent<PhotonView>().IsMine)
+                LastState = GameStateManager.GetGameState();
+                if(GameStateManager.GetGameState() != GameStateManager.GAMESTATE.PAUSE ||
+                   GameStateManager.GetGameState() != GameStateManager.GAMESTATE.CINEMATIC)
                 {
-                    Playerr.tag = MasterTag;
-                    TagsSetUp = true;
-                    break;
+                    view.RPC("MakeshiftStream", RpcTarget.All, GameStateManager.GetGameState());
                 }
             }
+            else
+            {
+                //do nothing (no need to update LastState since it is literally identical already)
+            }
+
+            //this sets the received state to be what the sentstate is
+            //this sets the GameStateManager state to be the received state
         }
+    }
+
+    [PunRPC]
+    private void MakeshiftStream(GameStateManager.GAMESTATE ReceivedState)
+    {
+        LastState = ReceivedState;
+        GameStateManager.SetGameState(ReceivedState);
     }*/
 }

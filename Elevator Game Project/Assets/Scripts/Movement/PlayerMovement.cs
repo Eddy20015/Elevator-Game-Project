@@ -52,94 +52,100 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     //controls the raycast form the camera to interact with interactable objects
     private void Update()
     {
-        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
-           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
+        if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
         {
-            if (Input.GetKeyDown(KeyCode.E) && canInteract)
+            if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
+               (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
             {
-                //replace "Interaction" with whatever we name it in the Interactable script
-                interactionTarget.SendMessage("Interact");
-            }
-
-            //deals with raycast for interacting with interactable objects
-            RaycastHit hit;
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit, 2f))
-            {
-                if (hit.collider.tag == "Interactable")
+                if (Input.GetKeyDown(KeyCode.E) && canInteract)
                 {
-                    canInteract = true;
-                    interactionTarget = hit.transform.gameObject;
+                    //replace "Interaction" with whatever we name it in the Interactable script
+                    interactionTarget.SendMessage("Interact");
                 }
-            }
-            else
-            {
-                canInteract = false;
-                interactionTarget = null;
+
+                //deals with raycast for interacting with interactable objects
+                RaycastHit hit;
+                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out hit, 2f))
+                {
+                    if (hit.collider.tag == "Interactable")
+                    {
+                        canInteract = true;
+                        interactionTarget = hit.transform.gameObject;
+                    }
+                }
+                else
+                {
+                    canInteract = false;
+                    interactionTarget = null;
+                }
             }
         }
     }
 
     private void FixedUpdate()
     {
-        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
-           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
+        if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
         {
-            // player movement - forward, backward, left, right
-            float horizontal = Input.GetAxis("Horizontal") * MovementSpeed;
-            float vertical = Input.GetAxis("Vertical") * MovementSpeed;
+            if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
+               (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
+            {
+                // player movement - forward, backward, left, right
+                float horizontal = Input.GetAxis("Horizontal") * MovementSpeed;
+                float vertical = Input.GetAxis("Vertical") * MovementSpeed;
 
-            //whether or not the player can sprint
-            if (stamina <= 0)
-            {
-                stamina = 0;
-                canSprint = false;
-                //Debug.Log("Cannot sprint");
-                stamina += staminaRechargeRate;
-            }
-            else if (stamina >= maxStamina)
-            {
-                stamina = maxStamina;
-                //Debug.Log("Ready to sprint");
-                canSprint = true;
-            }
-            else if (stamina > 0 && stamina < maxStamina && isSprinting == false)
-            {
-                //Debug.Log("Recharging");
-                stamina += staminaRechargeRate;
-            }
-
-            //controls movement and whether the player is sprinting or just moving normally
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                if (canSprint)
+                //whether or not the player can sprint
+                if (stamina <= 0)
                 {
-                    characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
-                    stamina -= staminaDepletionRate;
-                    isSprinting = true;
+                    stamina = 0;
+                    canSprint = false;
+                    //Debug.Log("Cannot sprint");
+                    stamina += staminaRechargeRate;
                 }
-                else if (canSprint == false)
+                else if (stamina >= maxStamina)
+                {
+                    stamina = maxStamina;
+                    //Debug.Log("Ready to sprint");
+                    canSprint = true;
+                }
+                else if (stamina > 0 && stamina < maxStamina && isSprinting == false)
+                {
+                    //Debug.Log("Recharging");
+                    stamina += staminaRechargeRate;
+                }
+
+                //controls movement and whether the player is sprinting or just moving normally
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    if (canSprint)
+                    {
+                        characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
+                        stamina -= staminaDepletionRate;
+                        isSprinting = true;
+                    }
+                    else if (canSprint == false)
+                    {
+                        characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
+                        isSprinting = false;
+                    }
+                }
+                else
                 {
                     characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
                     isSprinting = false;
                 }
-            }
-            else
-            {
-                characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
-                isSprinting = false;
-            }
 
-            //Gravity
-            if (characterController.isGrounded)
-            {
-                velocity = 0;
-            }
-            else
-            {
-                velocity -= Gravity * Time.deltaTime;
-                characterController.Move(new Vector3(0, velocity, 0));
+                //Gravity
+                if (characterController.isGrounded)
+                {
+                    velocity = 0;
+                }
+                else
+                {
+                    velocity -= Gravity * Time.deltaTime;
+                    characterController.Move(new Vector3(0, velocity, 0));
+                }
             }
         }
     }

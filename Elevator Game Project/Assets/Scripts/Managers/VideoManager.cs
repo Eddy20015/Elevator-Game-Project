@@ -7,23 +7,25 @@ using Photon.Pun;
 
 public class VideoManager : MonoBehaviourPunCallbacks
 {
-    //public static VideoManager Instance;
-
     [SerializeField] private VideoClip JumpScare1Setter;
     [SerializeField] private VideoClip JumpScare2Setter;
     [SerializeField] private VideoPlayer VidPlayerSetter;
     [SerializeField] private GameObject VidImageSetter;
     [SerializeField] private GameObject JumpScare1AudioSetter;
+    [SerializeField] private Texture2D FirstFrameImageSetter;
+    [SerializeField] private Texture2D BlackScreenImage;
 
     private static VideoClip JumpScare1;
     private static VideoClip JumpScare2;
     private static VideoPlayer VidPlayer;
     private static GameObject VidImage;
-    private static GameObject JumpScare1Audio;
+    private static RawImage VidRawImage;
+    private static Texture2D FirstFrameImage;
+    //private static GameObject JumpScare1Audio;
 
     [SerializeField] private GameObject GameOverPanel;
 
-    //true if the coroutine should be started
+    //true if the video should be started
     private static bool StartVideo;
 
     //the video is playing (since isPlaying isn't working idk why)
@@ -38,18 +40,23 @@ public class VideoManager : MonoBehaviourPunCallbacks
     //Set GameOver Menu to go up
     private static bool BringUpPanel;
 
-    private static bool TempBool;
+    //if video play() is called
+    private static bool PlayCalled;
 
     // Start is called before the first frame update
     void Awake()
     {
-        //Instance = new VideoManager();
+        //setting static variables
         JumpScare1 = JumpScare1Setter;
         JumpScare2 = JumpScare2Setter;
         VidPlayer = VidPlayerSetter;
         VidImage = VidImageSetter;
+        FirstFrameImage = FirstFrameImageSetter;
         //JumpScare1Audio = JumpScare1AudioSetter;
 
+        //setting up vid raw image texture
+        VidRawImage = VidImage.GetComponent<RawImage>();
+        VidRawImage.texture = FirstFrameImage;
         VidImage.SetActive(false);
         //JumpScare1Audio.SetActive(false);
 
@@ -58,8 +65,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
         Completed = false;
         AfterTheOther = false;
         BringUpPanel = false;
-
-        TempBool = false;
+        PlayCalled = false;
     }
 
     // Turns off the video
@@ -70,24 +76,24 @@ public class VideoManager : MonoBehaviourPunCallbacks
             Debug.Log("Is it playing???? " + VidPlayer.isPlaying);
             if (!Playing)
             {
-                //when it is inactive, you must start the video
-                if(!TempBool)
+                //when it is play hasn't been called, you must start the video
+                if(!PlayCalled)
                 {
                     VidImage.SetActive(true);
                     //JumpScare1Audio.SetActive(true);
                     VidPlayer.Play();
                     Playing = true;
-                    TempBool = true;
+                    PlayCalled = true;
+                    GameStateManager.Cinematics();
                 }
-                //when it is active, you must end the video
+
                 else
                 {
                     Completed = true;
                     StartVideo = false;
                     //VidImage.SetActive(false);
                     //JumpScare1Audio.SetActive(false);
-                    TempBool = false;
-
+                    PlayCalled = false;
                 }
             }
             else
@@ -112,10 +118,18 @@ public class VideoManager : MonoBehaviourPunCallbacks
         {
             Debug.LogWarning("BringUpPanel is true");
 
-            GameOverPanel.SetActive(true);
-            GameStateManager.Gameover();
-            Completed = false;
-            BringUpPanel = false;
+            if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
+            {
+                GameOverPanel.GetComponent<Canvas>().enabled = true;
+                GameStateManager.Gameover();
+                Completed = false;
+                BringUpPanel = false;
+            }
+            else if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+            {
+                //then in buddy system game over stuff will be handled
+                BuddySystemManager.SecondVideoDone = true;
+            }
         }
 
         //This means that Jumpscare1 just happened in multiplayer with no Jumpscare2 coming next
@@ -123,8 +137,16 @@ public class VideoManager : MonoBehaviourPunCallbacks
         {
             Debug.LogWarning("Only Completed is true");
 
-            Completed = false;
-            VidImage.SetActive(false);
+            if(BuddySystemManager.Player1GetDeadState() && BuddySystemManager.Player2GetDeadState())
+            {
+                SetJumpScare2();
+            }
+            else
+            {
+                GameStateManager.Play();
+                Completed = false;
+                VidImage.SetActive(false);
+            }
         }
     }
 
@@ -132,6 +154,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
     public static void SetJumpScare1(bool _AfterTheOther)
     {
         Debug.LogWarning("Video1ShouldPlay");
+        VidRawImage.texture = FirstFrameImage;
         VidPlayer.clip = JumpScare1;
         AfterTheOther = _AfterTheOther;
         StartVideo = true;
@@ -149,6 +172,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
     void CheckOver(UnityEngine.Video.VideoPlayer vp)
     {
         Debug.LogWarning("Video Is Over");
+        VidRawImage.texture = BlackScreenImage;
         Playing = false;
     }
 }

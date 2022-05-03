@@ -265,6 +265,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 516bc987f8c37214c843ad4c16e8db69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseUI: {fileID: 5564352479141453364, guid: 5836f3f09c21065469fdeaa265acd130, type: 3}
+  deathUI: {fileID: 0}
 --- !u!114 &8671936964410309289
 MonoBehaviour:
   m_ObjectHideFlags: 0

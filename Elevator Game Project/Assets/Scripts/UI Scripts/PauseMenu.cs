@@ -11,12 +11,12 @@ public class PauseMenu : MonoBehaviour
     {
         GameStateManager.Play();
         Cursor.lockState = CursorLockMode.Locked;
-        pauseUI.SetActive(false);
+        pauseUI.GetComponent<Canvas>().enabled = false;
     }
 
     public void OnClickMainMenu()
     {
         GameStateManager.MainMenu();
-        pauseUI.SetActive(false);
+        pauseUI.GetComponent<Canvas>().enabled = false;
     }
 }

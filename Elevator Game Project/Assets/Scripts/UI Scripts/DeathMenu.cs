@@ -19,12 +19,12 @@ public class DeathMenu : MonoBehaviour
     {
         GameStateManager.Restart();
         Cursor.lockState = CursorLockMode.Locked;
-        deathUI.SetActive(false);
+        deathUI.GetComponent<Canvas>().enabled = false;
     }
 
     public void OnClickMainMenu()
     {
         GameStateManager.MainMenu();
-        deathUI.SetActive(false);
+        deathUI.GetComponent<Canvas>().enabled = false;
     }
 }
