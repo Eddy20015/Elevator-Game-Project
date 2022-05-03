@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             {
                 if (canSprint)
                 {
-                    characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
+                    characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
                     stamina -= staminaDepletionRate;
                     isSprinting = true;
                     PlaySound(walkingSound, 0.1f);
