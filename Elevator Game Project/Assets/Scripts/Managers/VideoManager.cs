@@ -11,9 +11,10 @@ public class VideoManager : MonoBehaviourPunCallbacks
     [SerializeField] private VideoClip JumpScare2Setter;
     [SerializeField] private VideoPlayer VidPlayerSetter;
     [SerializeField] private GameObject VidImageSetter;
-    [SerializeField] private GameObject JumpScare1AudioSetter;
     [SerializeField] private Texture2D FirstFrameImageSetter;
-    [SerializeField] private Texture2D BlackScreenImage;
+    [SerializeField] private Texture2D BlackScreenImageSetter;
+    [SerializeField] private RenderTexture VideoTextureSetter;
+    [SerializeField] private GameObject BlackScreenOtherImageSetter;
 
     private static VideoClip JumpScare1;
     private static VideoClip JumpScare2;
@@ -21,9 +22,13 @@ public class VideoManager : MonoBehaviourPunCallbacks
     private static GameObject VidImage;
     private static RawImage VidRawImage;
     private static Texture2D FirstFrameImage;
-    //private static GameObject JumpScare1Audio;
+    private static Texture2D BlackScreenImage;
+    private static RenderTexture VideoTexture;
+    private static GameObject BlackScreenOtherImage;
 
     [SerializeField] private GameObject GameOverPanel;
+
+    private PhotonView view;
 
     //true if the video should be started
     private static bool StartVideo;
@@ -31,7 +36,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
     //the video is playing (since isPlaying isn't working idk why)
     private static bool Playing;
 
-    //true if the ienumerator is complete
+    //true if the video finishes is complete
     private static bool Completed;
 
     //this is will play the other jumpscare after 1 is done
@@ -43,22 +48,31 @@ public class VideoManager : MonoBehaviourPunCallbacks
     //if video play() is called
     private static bool PlayCalled;
 
+    //true if player1 has finished their video
+    private bool P1FirstVideoDone;
+
+    //true if player2 has finished their video
+    private bool P2FirstVideoDone;
+
     // Start is called before the first frame update
     void Awake()
     {
-        //setting static variables
+        //setting static variables 
         JumpScare1 = JumpScare1Setter;
         JumpScare2 = JumpScare2Setter;
         VidPlayer = VidPlayerSetter;
         VidImage = VidImageSetter;
         FirstFrameImage = FirstFrameImageSetter;
-        //JumpScare1Audio = JumpScare1AudioSetter;
+        BlackScreenImage = BlackScreenImageSetter;
+        VideoTexture = VideoTextureSetter;
+        BlackScreenOtherImage = BlackScreenOtherImageSetter;
+
+        view = gameObject.GetPhotonView();
 
         //setting up vid raw image texture
         VidRawImage = VidImage.GetComponent<RawImage>();
         VidRawImage.texture = FirstFrameImage;
         VidImage.SetActive(false);
-        //JumpScare1Audio.SetActive(false);
 
         StartVideo = false;
         Playing = false;
@@ -71,16 +85,55 @@ public class VideoManager : MonoBehaviourPunCallbacks
     // Turns off the video
     private void Update()
     {
+        //just so that things may look a little cleaner and cover up ugly parts that should not be seen,
+        //we will use the other black image to cover that all up
+        if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.CINEMATIC)
+        {
+            BlackScreenOtherImage.SetActive(true);
+        }
+        else if(GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
+        {
+            BlackScreenOtherImage.SetActive(false);
+        }
+
+        //checks if both enemies have finished their videos (more like started truthfully)
+        if(P1FirstVideoDone && P2FirstVideoDone)
+        {
+            P1FirstVideoDone = false;
+            P2FirstVideoDone = false;
+            VidImage.SetActive(true);
+
+            //this matters if a death happened during another player's cutscene
+            if (VidPlayer.isPlaying)
+            {
+                VidPlayer.Pause();
+                Playing = false;
+                PlayCalled = false;
+                StartVideo = false;
+            }
+            VidPlayer.clip = null;
+
+            //VidRawImage.texture = BlackScreenImage this is done inside of SetJumpScare2()
+
+            SetJumpScare2();
+        }
+
+        //Debug.LogError(GameStateManager.GetGameState());
         if (StartVideo)
         {
-            Debug.Log("Is it playing???? " + VidPlayer.isPlaying);
+            //once the actual video is successfully playing, set the texture to be the VideoRenderTexture
+            if (VidPlayer.isPlaying)
+            { 
+                VidRawImage.texture = VideoTexture;
+            }
+
+            //not the same thing as isPlaying... this checks if it hasn't been called/should be playing, but even when true, isplaying might lag a little and be false,
             if (!Playing)
             {
                 //when it is play hasn't been called, you must start the video
                 if(!PlayCalled)
                 {
                     VidImage.SetActive(true);
-                    //JumpScare1Audio.SetActive(true);
                     VidPlayer.Play();
                     Playing = true;
                     PlayCalled = true;
@@ -91,8 +144,6 @@ public class VideoManager : MonoBehaviourPunCallbacks
                 {
                     Completed = true;
                     StartVideo = false;
-                    //VidImage.SetActive(false);
-                    //JumpScare1Audio.SetActive(false);
                     PlayCalled = false;
                 }
             }
@@ -106,18 +157,15 @@ public class VideoManager : MonoBehaviourPunCallbacks
         //This means that Jumpscare1 just happened and Jumpscare2 must now happen
         else if (Completed && AfterTheOther)
         {
-            Debug.LogWarning("AfterTheOther is true");
-
-            SetJumpScare2();
+            //VidRawImage.texture = BlackScreenImage is already done in CheckOver
             Completed = false;
             AfterTheOther = false;
+            SetJumpScare2();
         }
 
         //This means that Jumpscare2 just happened and the Panel needs to comeup
         else if (Completed && BringUpPanel)
         {
-            Debug.LogWarning("BringUpPanel is true");
-
             if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
             {
                 GameOverPanel.GetComponent<Canvas>().enabled = true;
@@ -135,19 +183,39 @@ public class VideoManager : MonoBehaviourPunCallbacks
         //This means that Jumpscare1 just happened in multiplayer with no Jumpscare2 coming next
         else if (Completed)
         {
-            Debug.LogWarning("Only Completed is true");
-
             if(BuddySystemManager.Player1GetDeadState() && BuddySystemManager.Player2GetDeadState())
             {
-                SetJumpScare2();
+                //this is causing the both at the same time bug
+                P1FirstVideoDone = true;
+                P2FirstVideoDone = true;
             }
             else
             {
+                if (BuddySystemManager.Player1GetDeadState())
+                {
+                    P1FirstVideoDone = true;
+                }
+                else if (BuddySystemManager.Player2GetDeadState())
+                {
+                    P2FirstVideoDone = true;
+                }
                 GameStateManager.Play();
                 Completed = false;
                 VidImage.SetActive(false);
             }
+
+            VidPlayer.clip = null;
+            view.RPC("RPC_SetFirstVideoStatus", RpcTarget.All, P1FirstVideoDone, P2FirstVideoDone);
         }
+
+        //this will set the BuddySystemVariables
+    }
+
+    [PunRPC]
+    public void RPC_SetFirstVideoStatus(bool P1, bool P2)
+    {
+        P1FirstVideoDone = P1;
+        P2FirstVideoDone = P2;
     }
 
     //Set the Clip to be Jumpscare1 and plays
@@ -156,6 +224,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
         Debug.LogWarning("Video1ShouldPlay");
         VidRawImage.texture = FirstFrameImage;
         VidPlayer.clip = JumpScare1;
+        VidImage.SetActive(true);
         AfterTheOther = _AfterTheOther;
         StartVideo = true;
     }
@@ -164,14 +233,16 @@ public class VideoManager : MonoBehaviourPunCallbacks
     public static void SetJumpScare2()
     {
         Debug.LogWarning("Video2ShouldPlay");
+        VidRawImage.texture = BlackScreenImage;
         VidPlayer.clip = JumpScare2;
+        VidImage.SetActive(true);
+        VidImage.GetComponent<AudioSource>().clip = null;
         BringUpPanel = true;
         StartVideo = true;
     }
 
     void CheckOver(UnityEngine.Video.VideoPlayer vp)
     {
-        Debug.LogWarning("Video Is Over");
         VidRawImage.texture = BlackScreenImage;
         Playing = false;
     }

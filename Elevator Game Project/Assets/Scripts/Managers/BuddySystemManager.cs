@@ -9,9 +9,9 @@ public class BuddySystemManager : MonoBehaviourPunCallbacks
     private static bool Player1Dead = false;
     private static bool Player2Dead = false;
 
-    //public static bool SecondVideoToBeCalled = false;
+    public static bool P1FirstVideoDone = false;
+    public static bool P2FirstVideoDone = false;
     public static bool SecondVideoDone = false;
-    //private static bool SecondVideoWasCalled = false;
 
     [SerializeField] private GameObject deathUI;
 
@@ -52,16 +52,17 @@ public class BuddySystemManager : MonoBehaviourPunCallbacks
         if(Player1Dead && Player2Dead)
         {
             //actually we are going to call 
-            /*if(SecondVideoToBeCalled && !SecondVideoDone && !SecondVideoWasCalled)
+            /*if(VideoManager.P1FirstVideoDoneSetter && P2FirstVideoDone)
             {
                 VideoManager.SetJumpScare2();
-            }
-            else*/ if (SecondVideoDone)
+            }*/
+            if (SecondVideoDone)
             {
                 GameStateManager.Gameover();
 
                 //opening up the gameover panel here because the players will be deactivated
-                deathUI.SetActive(true);
+                deathUI.GetComponent<Canvas>().enabled = true;
+                Cursor.lockState = CursorLockMode.None;
             }
         }
     }     
