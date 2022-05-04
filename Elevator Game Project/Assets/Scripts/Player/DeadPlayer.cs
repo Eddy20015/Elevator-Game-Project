@@ -34,7 +34,7 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
         }
 
         //for online specifically
-        else if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.CINEMATIC || GameStateManager.GetGameState() == GameStateManager.GAMESTATE.GAMEOVER)
+        else if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.CINEMATIC)
         {
             Cursor.lockState = CursorLockMode.Locked;
             pauseUI.GetComponent<Canvas>().enabled = false;

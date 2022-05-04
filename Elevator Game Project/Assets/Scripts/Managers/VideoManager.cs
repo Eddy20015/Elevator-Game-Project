@@ -13,6 +13,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject VidImageSetter;
     [SerializeField] private Texture2D FirstFrameImageSetter;
     [SerializeField] private Texture2D BlackScreenImageSetter;
+    [SerializeField] private GameObject BlackScreenOtherImageSetter;
 
     private static VideoClip JumpScare1;
     private static VideoClip JumpScare2;
@@ -21,6 +22,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
     private static RawImage VidRawImage;
     private static Texture2D FirstFrameImage;
     private static Texture2D BlackScreenImage;
+    private static GameObject BlackScreenOtherImage;
 
     [SerializeField] private GameObject GameOverPanel;
 
@@ -36,7 +38,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
     //the video is playing (since isPlaying isn't working idk why)
     private static bool Playing;
 
-    //true if the ienumerator is complete
+    //true if the video finishes is complete
     private static bool Completed;
 
     //this is will play the other jumpscare after 1 is done
@@ -64,6 +66,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
         VidImage = VidImageSetter;
         FirstFrameImage = FirstFrameImageSetter;
         BlackScreenImage = BlackScreenImageSetter;
+        BlackScreenOtherImage = BlackScreenOtherImageSetter;
 
         view = gameObject.GetPhotonView();
 
@@ -84,6 +87,17 @@ public class VideoManager : MonoBehaviourPunCallbacks
     // Turns off the video
     private void Update()
     {
+        //just so that things may look a little cleaner and cover up ugly parts that should not be seen,
+        //we will use the other black image to cover that all up
+        if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.CINEMATIC)
+        {
+            BlackScreenOtherImage.SetActive(true);
+        }
+        else if(GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
+        {
+            BlackScreenOtherImage.SetActive(false);
+        }
+
         //this will set the targetCamera to be the DeadPlayer Camera received from SetCamera
         if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
@@ -101,9 +115,18 @@ public class VideoManager : MonoBehaviourPunCallbacks
         Debug.LogError("P1FirstVideoDone is " + P1FirstVideoDone + " and P2FirstVideoDone is " + P2FirstVideoDone);
         if(P1FirstVideoDone && P2FirstVideoDone)
         {
-            SetJumpScare2();
             P1FirstVideoDone = false;
             P2FirstVideoDone = false;
+            if (VidPlayer.isPlaying)
+            {
+                VidPlayer.Pause();
+                Playing = false;
+                PlayCalled = false;
+                StartVideo = false;
+            }
+            VidPlayer.clip = null;
+
+            SetJumpScare2();
         }
 
         //Debug.LogError(GameStateManager.GetGameState());
@@ -180,6 +203,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
 
             if(BuddySystemManager.Player1GetDeadState() && BuddySystemManager.Player2GetDeadState())
             {
+                //this is causing the both at the same time bug
                 P1FirstVideoDone = true;
                 P2FirstVideoDone = true;
             }
@@ -197,10 +221,9 @@ public class VideoManager : MonoBehaviourPunCallbacks
                 Completed = false;
                 VidRawImage.enabled = true;
                 VidImage.SetActive(false);
-
-                VidPlayer.clip = null;
             }
 
+            VidPlayer.clip = null;
             view.RPC("RPC_SetFirstVideoStatus", RpcTarget.All, P1FirstVideoDone, P2FirstVideoDone);
         }
 
@@ -212,6 +235,11 @@ public class VideoManager : MonoBehaviourPunCallbacks
     {
         P1FirstVideoDone = P1;
         P2FirstVideoDone = P2;
+        if(P1 && P2)
+        {
+            VidImage.SetActive(true);
+            VidRawImage.texture = BlackScreenImage;
+        }
     }
 
     //Set the Clip to be Jumpscare1 and plays
@@ -232,6 +260,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
         VidRawImage.texture = BlackScreenImage;
         VidPlayer.clip = JumpScare2;
         VidImage.SetActive(true);
+        VidImage.GetComponent<AudioSource>().clip = null;
         BringUpPanel = true;
         StartVideo = true;
     }
