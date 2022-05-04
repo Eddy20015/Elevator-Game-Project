@@ -118,7 +118,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 //controls movement and whether the player is sprinting or just moving normally
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    if (canSprint)
+                    if (canSprint && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
                     {
                         characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
                         stamina -= staminaDepletionRate;
