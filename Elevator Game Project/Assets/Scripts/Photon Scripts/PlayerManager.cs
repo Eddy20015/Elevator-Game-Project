@@ -14,14 +14,14 @@ public class PlayerManager : MonoBehaviourPunCallbacks//, IPunObservable
 
     private PhotonView view;
 
-    private GameStateManager.GAMESTATE LastState = GameStateManager.GAMESTATE.PLAYING;    
+    //private GameStateManager.GAMESTATE LastState = GameStateManager.GAMESTATE.PLAYING;    
 
-    private bool CinematicsFix;
+    //private bool CinematicsFix;
 
     private void Awake()
     {
         view = GetComponent<PhotonView>();
-        CinematicsFix = false;
+        //CinematicsFix = false;
 
         if (view.IsMine)
         {

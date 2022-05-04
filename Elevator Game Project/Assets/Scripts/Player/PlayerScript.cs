@@ -93,7 +93,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks
                 pauseUI.GetComponent<Canvas>().enabled = false;
             }
         }
-        Debug.LogError(GameStateManager.GetGameState());
     }
 
     public void GetKilled()
@@ -116,11 +115,19 @@ public class PlayerScript : MonoBehaviourPunCallbacks
                 GameObject DeadPlayer = PhotonNetwork.Instantiate(DeadPlayerName,
                     new Vector3(transform.position.x, 0.5f, transform.position.z),
                     DeadPlayerTransform.rotation);
+
+                //sets the dead player to have access to the UI panels
                 DeadPlayer DeadPlayerScript = DeadPlayer.GetComponent<DeadPlayer>();
                 DeadPlayerScript.pauseUI = pauseUI;
                 DeadPlayerScript.deathUI = deathUI;
+
+                //allows the dead player object to know who the original was
                 DeadPlayerScript.SetMyPlayer(gameObject);
-                DeadPlayer.GetComponentInChildren<Camera>().enabled = true;
+
+                //sets the dead player cam to be current one used by everything
+                Camera DeadPlayerCam = DeadPlayer.GetComponentInChildren<Camera>();
+                VideoManager.SetCamera(DeadPlayerCam);
+                DeadPlayerCam.enabled = true;
                 gameObject.GetComponentInChildren<Camera>().enabled = false;
 
                 view.RPC("RPC_Disable", RpcTarget.All, PhotonNetwork.IsMasterClient);
