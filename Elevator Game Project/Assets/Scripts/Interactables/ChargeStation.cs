@@ -7,6 +7,8 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
 {
     [SerializeField] private float chargedAmount, maxChargeAmount, incrementAmount;
     [SerializeField] private bool isUsed, isCompleted;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip chargingSound;
     private PhotonView view;
 
     public float ChargedAmount { get => chargedAmount;}
@@ -52,6 +54,7 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
         if (chargedAmount < maxChargeAmount && Input.GetKey(KeyCode.E) && !isUsed)
         {
             chargedAmount += incrementAmount;
+            audioSource.PlayOneShot(chargingSound);
 
             if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
             {
