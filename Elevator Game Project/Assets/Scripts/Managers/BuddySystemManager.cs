@@ -9,6 +9,10 @@ public class BuddySystemManager : MonoBehaviourPunCallbacks
     private static bool Player1Dead = false;
     private static bool Player2Dead = false;
 
+    //public static bool SecondVideoToBeCalled = false;
+    public static bool SecondVideoDone = false;
+    //private static bool SecondVideoWasCalled = false;
+
     [SerializeField] private GameObject deathUI;
 
     public static void Player1Died()
@@ -31,6 +35,15 @@ public class BuddySystemManager : MonoBehaviourPunCallbacks
         Player2Dead = false;
     }
 
+    public static bool Player1GetDeadState()
+    {
+        return Player1Dead;
+    }
+    public static bool Player2GetDeadState()
+    {
+        return Player2Dead;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -38,14 +51,18 @@ public class BuddySystemManager : MonoBehaviourPunCallbacks
         //this will make the state GameOver when both players are Dead
         if(Player1Dead && Player2Dead)
         {
-            GameStateManager.Gameover();
+            //actually we are going to call 
+            /*if(SecondVideoToBeCalled && !SecondVideoDone && !SecondVideoWasCalled)
+            {
+                VideoManager.SetJumpScare2();
+            }
+            else*/ if (SecondVideoDone)
+            {
+                GameStateManager.Gameover();
 
-            //opening up the gameover panel here because the players will be deactivated
-            deathUI.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("Game isn't over yet: Player1Dead = " + Player1Dead + " and Player2Dead = " + Player2Dead);
+                //opening up the gameover panel here because the players will be deactivated
+                deathUI.SetActive(true);
+            }
         }
     }     
 }

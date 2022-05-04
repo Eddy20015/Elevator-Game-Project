@@ -9,9 +9,43 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
 
     private PhotonView view;
 
+    public GameObject pauseUI;
+    public GameObject deathUI;
+
     private void Start()
     {
         PhotonView view = gameObject.GetPhotonView();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
+        {
+            //OtherPauseMenu.CanDisplay = false;
+            GameStateManager.Pause();
+            Cursor.lockState = CursorLockMode.None;
+            pauseUI.GetComponent<Canvas>().enabled = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PAUSE && pauseUI.activeInHierarchy == true)
+        {
+            GameStateManager.Play();
+            Cursor.lockState = CursorLockMode.Locked;
+            pauseUI.GetComponent<Canvas>().enabled = false;
+        }
+
+        //for online specifically
+        else if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.CINEMATIC || GameStateManager.GetGameState() == GameStateManager.GAMESTATE.GAMEOVER)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            pauseUI.GetComponent<Canvas>().enabled = false;
+        }
+
+        //used to make sure that if revived, the pauseUI is still set to true
+        /*else if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PAUSE)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            pauseUI.SetActive(false);
+        }*/
     }
 
     //sets the variable OriginalPlayer

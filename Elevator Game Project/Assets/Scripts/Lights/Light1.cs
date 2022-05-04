@@ -7,9 +7,11 @@ public class Light1 : MonoBehaviourPunCallbacks
 {
     //Tim Kashani
 
-    [SerializeField] GameObject l;
+    [SerializeField] GameObject lightObject;
 
     [SerializeField] GameObject pointLight;
+
+    [SerializeField] AudioSource audio;
 
     //temporary if I think of a better solution
     private GameObject player;
@@ -36,6 +38,8 @@ public class Light1 : MonoBehaviourPunCallbacks
                 playerView = player.GetPhotonView();
             }
         }
+
+        audio.enabled = false;
     }
 
     // Update is called once per frame
@@ -56,15 +60,18 @@ public class Light1 : MonoBehaviourPunCallbacks
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Monster")
+        if (other.tag == "Monster" && 
+           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE || GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING))
         {
-            l.SetActive(false);
+            lightObject.SetActive(false);
+            audio.enabled = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Monster")
+        if (other.tag == "Monster" &&
+           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE || GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING))
         {
             StartCoroutine(TurnLightOn());
         }
@@ -73,6 +80,7 @@ public class Light1 : MonoBehaviourPunCallbacks
     IEnumerator TurnLightOn()
     {
         yield return new WaitForSeconds(3);
-        l.SetActive(true);
+        lightObject.SetActive(true);
+        audio.enabled = false;
     }
 }
