@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     private bool isSprinting;
 
+    private Animator animator;
+
     private PhotonView view;
 
     private void Start()
@@ -47,6 +49,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         cam = GetComponentInChildren<Camera>();
         canInteract = false;
         view = GetComponent<PhotonView>();
+        animator = GetComponentInChildren<Animator>();
     }
 
     //controls the raycast form the camera to interact with interactable objects
@@ -118,22 +121,29 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 //controls movement and whether the player is sprinting or just moving normally
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    if (canSprint)
+                    if (canSprint && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
                     {
                         characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
                         stamina -= staminaDepletionRate;
                         isSprinting = true;
+                        animator.SetFloat("Speed", 1);
                     }
                     else if (canSprint == false)
                     {
                         characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
                         isSprinting = false;
+                        animator.SetFloat("Speed", 0.5f);
                     }
                 }
-                else
+                else if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
                 {
                     characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
                     isSprinting = false;
+                    animator.SetFloat("Speed", 0.5f);
+                }
+                else
+                {
+                    animator.SetFloat("Speed", 0);
                 }
 
                 //Gravity

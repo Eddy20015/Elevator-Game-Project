@@ -16,6 +16,8 @@ public class MouseHandler : MonoBehaviour
     [SerializeField]
     private float yRotation = 0.0f;
 
+    private GameObject player;
+
     private Camera cam;
 
     private PhotonView view;
@@ -24,6 +26,7 @@ public class MouseHandler : MonoBehaviour
     private void Awake()
     {
         GameStateManager.Play();
+        player = gameObject;
     }
 
     void Start()
@@ -54,6 +57,7 @@ public class MouseHandler : MonoBehaviour
                 xRotation = Mathf.Clamp(xRotation, -90, 90);
 
                 cam.transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f);
+                player.transform.eulerAngles = new Vector3(0.0f, yRotation, 0.0f);
             }
         }
     }
