@@ -34,8 +34,10 @@ public class SprintBarUI : MonoBehaviourPunCallbacks
                 //i know this is kinda a sin, but it is only for the first frame... gimme a break
                 for(int i = 0; i < Players.Length; i++)
                 {
+                    Camera cam = Players[i].GetComponentInChildren<Camera>();
+
                     //identify the correct player based on if its camera is enabled
-                    if (Players[i].GetComponentInChildren<Camera>().enabled == true)
+                    if (cam != null && cam.enabled == true)
                     {
                         MyPlayer = Players[i].GetComponent<PlayerMovement>();
                     }

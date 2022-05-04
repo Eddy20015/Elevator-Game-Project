@@ -35,8 +35,11 @@ public class PlayerScript : MonoBehaviourPunCallbacks
             pauseUI = Panels[1];
             victoryUI = Panels[2];
 
-            deathUI.SetActive(false);
-            pauseUI.SetActive(false);
+            //this will be needed by dead player
+            deathUI.GetComponent<Canvas>().enabled = false;    //deathUI.SetActive(false);
+            pauseUI.GetComponent<Canvas>().enabled = false;    //pauseUI.SetActive(false);
+
+            //this wont be needed by dead player
             victoryUI.SetActive(false);
         }
         catch
@@ -66,22 +69,31 @@ public class PlayerScript : MonoBehaviourPunCallbacks
     //logic for pausing and unpausing
     private void Update()
     {
-        //this first if statement eliminates pause ability online (for now, but we should change that)
-        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
+        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
+          (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
         {
             if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
             {
+                //OtherPauseMenu.CanDisplay = false;
                 GameStateManager.Pause();
                 Cursor.lockState = CursorLockMode.None;
-                pauseUI.SetActive(true);
+                pauseUI.GetComponent<Canvas>().enabled = true;
             }
-            else if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PAUSE)
+            else if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PAUSE && pauseUI.activeInHierarchy == true)
             {
                 GameStateManager.Play();
                 Cursor.lockState = CursorLockMode.Locked;
-                pauseUI.SetActive(false);
+                pauseUI.GetComponent<Canvas>().enabled = false;
+            }
+
+            //for online specifically
+            else if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.CINEMATIC || GameStateManager.GetGameState() == GameStateManager.GAMESTATE.GAMEOVER)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                pauseUI.GetComponent<Canvas>().enabled = false;
             }
         }
+        Debug.LogError(GameStateManager.GetGameState());
     }
 
     public void GetKilled()
@@ -89,8 +101,8 @@ public class PlayerScript : MonoBehaviourPunCallbacks
         if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
         {
             isAlive = false;
-            GameStateManager.Gameover();
-            deathUI.SetActive(true);
+
+            VideoManager.SetJumpScare1(true);
         }
         else
         {
@@ -99,10 +111,15 @@ public class PlayerScript : MonoBehaviourPunCallbacks
             //this will create the new dead player at the current player's position then deactivate the player
             if (view.IsMine)
             {
+                VideoManager.SetJumpScare1(false);
+
                 GameObject DeadPlayer = PhotonNetwork.Instantiate(DeadPlayerName,
                     new Vector3(transform.position.x, 0.5f, transform.position.z),
                     DeadPlayerTransform.rotation);
-                DeadPlayer.GetComponent<DeadPlayer>().SetMyPlayer(gameObject);
+                DeadPlayer DeadPlayerScript = DeadPlayer.GetComponent<DeadPlayer>();
+                DeadPlayerScript.pauseUI = pauseUI;
+                DeadPlayerScript.deathUI = deathUI;
+                DeadPlayerScript.SetMyPlayer(gameObject);
                 DeadPlayer.GetComponentInChildren<Camera>().enabled = true;
                 gameObject.GetComponentInChildren<Camera>().enabled = false;
 
@@ -130,7 +147,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks
 
     public void SetPauseUIToFalse()
     {
-        pauseUI.SetActive(false);
+        pauseUI.GetComponent<Canvas>().enabled = false;
     }
 
     public void OnTriggerEnter(Collider other)
