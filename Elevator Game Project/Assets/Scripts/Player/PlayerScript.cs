@@ -126,7 +126,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks
 
                 //sets the dead player cam to be current one used by everything
                 Camera DeadPlayerCam = DeadPlayer.GetComponentInChildren<Camera>();
-                VideoManager.SetCamera(DeadPlayerCam);
                 DeadPlayerCam.enabled = true;
                 gameObject.GetComponentInChildren<Camera>().enabled = false;
 
