@@ -42,6 +42,12 @@ public class Shadowman : Monster
     // Update is called once per frame
     void Update()
     {
+        if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.GAMEOVER)
+        {
+            agent.isStopped = true;
+            agent.SetDestination(transform.position);
+        }
+
         // online, only the master client version will actually move around, the one from the persepective of not master just follows
         if ((GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING) ||
             (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient))

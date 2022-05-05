@@ -55,6 +55,7 @@ MonoBehaviour:
   - MakeShiftStream
   - MakeshiftStream
   - RPC_SetFirstVideoStatus
+  - RPC_MasterRestart
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -61,7 +61,8 @@ public class Light1 : MonoBehaviourPunCallbacks
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Monster" && 
-           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE || GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING))
+           /*(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE || GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)*/
+            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
         {
             lightObject.SetActive(false);
             audio.enabled = true;
@@ -71,7 +72,8 @@ public class Light1 : MonoBehaviourPunCallbacks
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Monster" &&
-           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE || GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING))
+            /*(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE || GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)*/
+            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
         {
             StartCoroutine(TurnLightOn());
         }
