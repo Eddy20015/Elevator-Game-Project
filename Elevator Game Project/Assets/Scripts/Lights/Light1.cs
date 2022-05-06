@@ -20,7 +20,12 @@ public class Light1 : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
+        //debug
+
+        player = GameObject.FindGameObjectWithTag("Player");
+        audio.enabled = false;
+
+        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
         {
             player = GameObject.FindGameObjectWithTag("Player");
         }
@@ -43,11 +48,11 @@ public class Light1 : MonoBehaviourPunCallbacks
     }
 
     // Update is called once per frame
-    void Update()
+     /*void Update()
     {
-        if (playerView != null)
+        if (false)
         {
-            if (Vector3.Distance(transform.position, player.transform.position) > 100)
+            if (Vector3.Distance(transform.position, player.transform.position) > 25)
             {
                 pointLight.SetActive(false);
             }
@@ -56,7 +61,7 @@ public class Light1 : MonoBehaviourPunCallbacks
                 pointLight.SetActive(true);
             }
         }
-    }
+    }*/
 
     private void OnTriggerStay(Collider other)
     {
