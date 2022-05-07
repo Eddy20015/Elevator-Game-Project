@@ -63,10 +63,12 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
         if (!PhotonNetwork.IsMasterClient)
         {
             BuddySystemManager.Player1Revived();
+            VideoManager.PlayerRevived(true);
         }
         else
         {
             BuddySystemManager.Player2Revived();
+            VideoManager.PlayerRevived(false);
         }
 
         //this will delete the dead player and reactivate the original functional alive player
@@ -93,10 +95,12 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
         if (!WasMaster)
         {
             BuddySystemManager.Player1Revived();
+            VideoManager.PlayerRevived(true);
         }
         else
         {
             BuddySystemManager.Player2Revived();
+            VideoManager.PlayerRevived(true);
         }
 
         PhotonNetwork.Destroy(gameObject);

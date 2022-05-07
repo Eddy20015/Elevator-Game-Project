@@ -49,10 +49,10 @@ public class VideoManager : MonoBehaviourPunCallbacks
     private static bool PlayCalled;
 
     //true if player1 has finished their video
-    private bool P1FirstVideoDone;
+    private static bool P1FirstVideoDone;
 
     //true if player2 has finished their video
-    private bool P2FirstVideoDone;
+    private static bool P2FirstVideoDone;
 
     // Start is called before the first frame update
     void Awake()
@@ -239,6 +239,18 @@ public class VideoManager : MonoBehaviourPunCallbacks
         VidImage.GetComponent<AudioSource>().clip = null;
         BringUpPanel = true;
         StartVideo = true;
+    }
+
+    public static void PlayerRevived(bool P1)
+    {
+        if (P1)
+        {
+            P1FirstVideoDone = false;
+        }
+        else
+        {
+            P2FirstVideoDone = false;
+        }
     }
 
     void CheckOver(UnityEngine.Video.VideoPlayer vp)
