@@ -36,6 +36,9 @@ public class Shadowman : Monster
           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient))
         {
             RandomPoint();
+        } else
+        {
+            agent.enabled = false;
         }
     }
 
