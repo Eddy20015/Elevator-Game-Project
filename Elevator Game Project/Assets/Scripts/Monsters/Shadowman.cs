@@ -158,6 +158,12 @@ public class Shadowman : Monster
         } 
     }
 
+    public override void Kill()
+    {
+        isRunning = false;
+        RandomPoint();
+    }
+
     private void OnTriggerStay(Collider other)
     {
         //Debug.LogError("IS THIS WORKING");

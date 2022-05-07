@@ -45,6 +45,11 @@ public class Monster : MonoBehaviourPunCallbacks
 
     }
 
+    public virtual void Kill()
+    {
+
+    }
+
     /*public void KillPlayer()
     {
         player.GetKilled();
