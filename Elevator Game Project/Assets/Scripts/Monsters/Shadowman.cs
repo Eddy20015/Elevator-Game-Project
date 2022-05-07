@@ -162,6 +162,7 @@ public class Shadowman : Monster
     {
         isRunning = false;
         RandomPoint();
+        player = null;
     }
 
     private void OnTriggerStay(Collider other)
