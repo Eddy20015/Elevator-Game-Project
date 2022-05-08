@@ -80,6 +80,11 @@ public class VideoManager : MonoBehaviourPunCallbacks
         AfterTheOther = false;
         BringUpPanel = false;
         PlayCalled = false;
+        P1FirstVideoDone = false;
+        P2FirstVideoDone = false;
+
+        //very important for restart if there is lag before update starts
+        BlackScreen(true);
     }
 
     // Turns off the video
@@ -89,33 +94,11 @@ public class VideoManager : MonoBehaviourPunCallbacks
         //we will use the other black image to cover that all up
         if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.CINEMATIC)
         {
-            BlackScreenOtherImage.SetActive(true);
+            BlackScreen(true);
         }
         else if(GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
         {
-            BlackScreenOtherImage.SetActive(false);
-        }
-
-        //checks if both enemies have finished their videos (more like started truthfully)
-        if(P1FirstVideoDone && P2FirstVideoDone)
-        {
-            P1FirstVideoDone = false;
-            P2FirstVideoDone = false;
-            VidImage.SetActive(true);
-
-            //this matters if a death happened during another player's cutscene
-            if (VidPlayer.isPlaying)
-            {
-                VidPlayer.Pause();
-                Playing = false;
-                PlayCalled = false;
-                StartVideo = false;
-            }
-            VidPlayer.clip = null;
-
-            //VidRawImage.texture = BlackScreenImage this is done inside of SetJumpScare2()
-
-            SetJumpScare2();
+            BlackScreen(false);
         }
 
         //Debug.LogError(GameStateManager.GetGameState());
@@ -160,6 +143,10 @@ public class VideoManager : MonoBehaviourPunCallbacks
             //VidRawImage.texture = BlackScreenImage is already done in CheckOver
             Completed = false;
             AfterTheOther = false;
+            VidPlayer.clip = null;
+
+            //Debug.LogError("SetJumpScare2 is getting called" + Time.timeScale);
+
             SetJumpScare2();
         }
 
@@ -208,8 +195,30 @@ public class VideoManager : MonoBehaviourPunCallbacks
             view.RPC("RPC_SetFirstVideoStatus", RpcTarget.All, P1FirstVideoDone, P2FirstVideoDone);
         }
 
-        //this will set the BuddySystemVariables
+        //checks if both enemies have finished their videos (more like started truthfully)
+        if (P1FirstVideoDone && P2FirstVideoDone)
+        {
+            P1FirstVideoDone = false;
+            P2FirstVideoDone = false;
+            VidImage.SetActive(true);
+
+            //this matters if a death happened during another player's cutscene
+            if (VidPlayer.isPlaying)
+            {
+                VidPlayer.Pause();
+                Playing = false;
+                PlayCalled = false;
+                StartVideo = false;
+            }
+            VidPlayer.clip = null;
+
+            //VidRawImage.texture = BlackScreenImage this is done inside of SetJumpScare2()
+
+            SetJumpScare2();
+        }
     }
+
+    //this will set the DoneVariables on both computers
 
     [PunRPC]
     public void RPC_SetFirstVideoStatus(bool P1, bool P2)
@@ -251,6 +260,11 @@ public class VideoManager : MonoBehaviourPunCallbacks
         {
             P2FirstVideoDone = false;
         }
+    }
+
+    public static void BlackScreen(bool Enable)
+    {
+        BlackScreenOtherImage.SetActive(Enable);
     }
 
     void CheckOver(UnityEngine.Video.VideoPlayer vp)

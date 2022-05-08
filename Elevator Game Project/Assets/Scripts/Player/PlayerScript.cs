@@ -69,7 +69,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks
     //logic for pausing and unpausing
     private void Update()
     {
-        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
+        if((GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL && GameStateManager.GetGameState() != GameStateManager.GAMESTATE.CINEMATIC) ||
           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
         {
             if (Input.GetKeyDown(KeyCode.Escape) && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
@@ -93,6 +93,9 @@ public class PlayerScript : MonoBehaviourPunCallbacks
                 pauseUI.GetComponent<Canvas>().enabled = false;
             }
         }
+
+        if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.GAMEOVER)
+        Debug.LogError(GameStateManager.GetGameState());
     }
 
     public void GetKilled()

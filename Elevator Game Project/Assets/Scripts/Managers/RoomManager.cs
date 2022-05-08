@@ -22,10 +22,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
             //Thinking that I will actually not be using instantiate to spawn the player
             //Instead I will add a script to the player in the scene that destroys it if it is online
             //this will disable the manager and properly spawn the player in local
-            
-            //Debug.Log("PlayState is LOCAL");
-            //SpawnManager.Instance.LocalSpawn();
-            gameObject.SetActive(false);
+
+            //gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 
@@ -48,7 +47,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
     {
         //Check if we're in the game scene
-        if(scene.name == GameSceneName)
+        if(scene.name == GameSceneName && GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
             playerManager = PhotonNetwork.Instantiate(PlayerManagerName, Vector3.zero, Quaternion.identity);
         }
