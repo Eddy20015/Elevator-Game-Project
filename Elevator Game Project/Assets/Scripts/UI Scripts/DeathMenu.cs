@@ -45,15 +45,17 @@ public class DeathMenu : MonoBehaviourPunCallbacks
         }
         else if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
-            view.RPC("RPC_MasterRestart", RpcTarget.All);
+            view.RPC("RPC_Restart", RpcTarget.All);
         }
     }
 
     [PunRPC]
-    private void RPC_MasterRestart()
+    private void RPC_Restart()
     {
         //PhotonNetwork.automaticallySyncScene = true;
         GameStateManager.Restart();
+        Cursor.lockState = CursorLockMode.Locked;
+        VideoManager.BlackScreen(true);
     }
 
     public void OnClickMainMenu()

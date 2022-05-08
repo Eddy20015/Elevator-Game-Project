@@ -6,14 +6,24 @@ using Photon.Pun;
 public class BuddySystemManager : MonoBehaviourPunCallbacks
 {
     //Conditions for if the game will end
-    private static bool Player1Dead = false;
-    private static bool Player2Dead = false;
+    private static bool Player1Dead;
+    private static bool Player2Dead;
 
-    public static bool P1FirstVideoDone = false;
-    public static bool P2FirstVideoDone = false;
-    public static bool SecondVideoDone = false;
+    public static bool P1FirstVideoDone;
+    public static bool P2FirstVideoDone;
+    public static bool SecondVideoDone;
 
     [SerializeField] private GameObject deathUI;
+
+    private void Start()
+    {
+        Player1Dead = false;
+        Player2Dead = false;
+
+        P1FirstVideoDone = false;
+        P2FirstVideoDone = false;
+        SecondVideoDone = false;
+}
 
     public static void Player1Died()
     {
@@ -65,6 +75,6 @@ public class BuddySystemManager : MonoBehaviourPunCallbacks
                 Cursor.lockState = CursorLockMode.None;
             }
         }
-        Debug.LogError("Player1Dead " + Player1Dead + " Player2Dead " + Player2Dead);
+        //Debug.LogError("Player1Dead " + Player1Dead + " Player2Dead " + Player2Dead);
     }     
 }

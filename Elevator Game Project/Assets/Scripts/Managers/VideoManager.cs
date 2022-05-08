@@ -80,6 +80,11 @@ public class VideoManager : MonoBehaviourPunCallbacks
         AfterTheOther = false;
         BringUpPanel = false;
         PlayCalled = false;
+        P1FirstVideoDone = false;
+        P2FirstVideoDone = false;
+
+        //very important for restart if there is lag before update starts
+        BlackScreen(true);
     }
 
     // Turns off the video
@@ -89,11 +94,11 @@ public class VideoManager : MonoBehaviourPunCallbacks
         //we will use the other black image to cover that all up
         if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.CINEMATIC)
         {
-            BlackScreenOtherImage.SetActive(true);
+            BlackScreen(true);
         }
         else if(GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
         {
-            BlackScreenOtherImage.SetActive(false);
+            BlackScreen(false);
         }
 
         //Debug.LogError(GameStateManager.GetGameState());
@@ -255,6 +260,11 @@ public class VideoManager : MonoBehaviourPunCallbacks
         {
             P2FirstVideoDone = false;
         }
+    }
+
+    public static void BlackScreen(bool Enable)
+    {
+        BlackScreenOtherImage.SetActive(Enable);
     }
 
     void CheckOver(UnityEngine.Video.VideoPlayer vp)

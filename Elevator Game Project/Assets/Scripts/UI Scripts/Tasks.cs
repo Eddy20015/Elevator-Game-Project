@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class Tasks : MonoBehaviour
+public class Tasks : MonoBehaviourPunCallbacks
 {
     //Tim Kashani
 
@@ -21,26 +22,36 @@ public class Tasks : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tasks = new Task[3];
-        for (int i = 0; i < tasks.Length; i++)
+        PhotonView view = gameObject.GetComponentInParent<PhotonView>();
+
+        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
+          (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
         {
-            if (tasks[i] == null)
+            tasks = new Task[3];
+            for (int i = 0; i < tasks.Length; i++)
             {
-                tasks[i] = new Task();
+                if (tasks[i] == null)
+                {
+                    tasks[i] = new Task();
+                }
             }
+            tasks[0].name = "Task 1";
+            tasks[1].name = "Task 2";
+            tasks[2].name = "Task 3";
         }
-        tasks[0].name = "Task 1";
-        tasks[1].name = "Task 2";
-        tasks[2].name = "Task 3";
+        else
+        {
+            t.enabled = false;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             CompleteTask();
-        }
+        }*/
     }
 
     public void CompleteTask()
