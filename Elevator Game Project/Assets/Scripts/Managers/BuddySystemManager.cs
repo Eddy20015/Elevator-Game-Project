@@ -65,6 +65,6 @@ public class BuddySystemManager : MonoBehaviourPunCallbacks
                 Cursor.lockState = CursorLockMode.None;
             }
         }
-        Debug.LogError(Player1Dead + " " + Player2Dead + " " + SecondVideoDone);
+        Debug.LogError("Player1Dead " + Player1Dead + " Player2Dead " + Player2Dead);
     }     
 }

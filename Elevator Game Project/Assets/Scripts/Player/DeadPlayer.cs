@@ -59,6 +59,18 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
         Debug.Log("Revived");
         PhotonView view = gameObject.GetPhotonView();
 
+        //The Master will be trying to revive P2 and vice versa on this end, will be RPCd later
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            BuddySystemManager.Player1Revived();
+            VideoManager.PlayerRevived(true);
+        }
+        else
+        {
+            BuddySystemManager.Player2Revived();
+            VideoManager.PlayerRevived(false);
+        }
+
         //this will delete the dead player and reactivate the original functional alive player
         view.RPC("RPC_Enable", RpcTarget.Others);
 
@@ -83,10 +95,12 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
         if (!WasMaster)
         {
             BuddySystemManager.Player1Revived();
+            VideoManager.PlayerRevived(true);
         }
         else
         {
             BuddySystemManager.Player2Revived();
+            VideoManager.PlayerRevived(true);
         }
 
         PhotonNetwork.Destroy(gameObject);

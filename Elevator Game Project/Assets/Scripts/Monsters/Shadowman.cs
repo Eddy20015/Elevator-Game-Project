@@ -36,6 +36,9 @@ public class Shadowman : Monster
           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient))
         {
             RandomPoint();
+        } else
+        {
+            agent.enabled = false;
         }
     }
 
@@ -159,6 +162,13 @@ public class Shadowman : Monster
                 player = null;
             }
         } 
+    }
+
+    public override void Kill()
+    {
+        isRunning = false;
+        RandomPoint();
+        player = null;
     }
 
     private void OnTriggerStay(Collider other)

@@ -164,6 +164,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks
         if (other.tag.Equals("Kill"))
         {
             Debug.Log("Works");
+            other.GetComponentInParent<Monster>().Kill();
             GetKilled();
         }
 
