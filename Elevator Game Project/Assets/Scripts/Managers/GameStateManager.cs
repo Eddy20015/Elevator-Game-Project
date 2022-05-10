@@ -12,11 +12,11 @@ public class GameStateManager : MonoBehaviourPunCallbacks
     public enum GAMESTATE
     {
         CINEMATIC,
-        DEAD,
         GAMEOVER,
         MENU,
         PAUSE,
-        PLAYING
+        PLAYING,
+        VICTORY
     }
 
     private static GAMESTATE GameState;
@@ -40,11 +40,15 @@ public class GameStateManager : MonoBehaviourPunCallbacks
     [SerializeField] private string LobbyNameSetter;
     private static string LobbyName;
 
+    private GameObject PhotonMono;
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
+            GameState = GAMESTATE.MENU;
+            PlayState = PLAYSTATE.NONE;
             DontDestroyOnLoad(Instance);
         }
         else
@@ -52,12 +56,11 @@ public class GameStateManager : MonoBehaviourPunCallbacks
             Destroy(this);
         }
 
-        GameState = GAMESTATE.MENU;
-        PlayState = PLAYSTATE.NONE;
-
         MainMenuName = MainMenuNameSetter;
         ConnectToServerName = ConnectToServerNameSetter;
         LobbyName = LobbyNameSetter;
+
+        PhotonMono = GameObject.Find("PhotonMono");
     }
 
     //sets GameState to CINEMATICS
@@ -66,12 +69,6 @@ public class GameStateManager : MonoBehaviourPunCallbacks
         GameState = GAMESTATE.CINEMATIC;
 
         Time.timeScale = 1f;
-    }
-
-    //sets GameState to DEAD
-    public static void Dead()
-    {
-        GameState = GAMESTATE.DEAD;
     }
 
     //go to the ConnectToServer scene
@@ -89,9 +86,13 @@ public class GameStateManager : MonoBehaviourPunCallbacks
 
         //this is so that the game freezes when it's gameover
         //can be removed if we don't like the look
-        Time.timeScale = 0f;
+
+        if(PlayState == PLAYSTATE.LOCAL)
+        {
+            Time.timeScale = 0f;
+        }
     }
-    
+
     //returns the current GameState
     public static GAMESTATE GetGameState()
     {
@@ -122,8 +123,9 @@ public class GameStateManager : MonoBehaviourPunCallbacks
     public static void MainMenu()
     {
         GameState = GAMESTATE.MENU;
-        PlayState = PLAYSTATE.NONE;
         SceneManager.LoadScene(MainMenuName);
+
+        Time.timeScale = 1f;
     }
 
     //sets the PlayState to NONE
@@ -146,13 +148,10 @@ public class GameStateManager : MonoBehaviourPunCallbacks
 
         //this is so that the game freezes when it's gameover
         //can be removed if we don't like the look
-        Time.timeScale = 0f;
-    }
-
-    //starts the current scene again
-    public static void Restart()
-    {
-        Start(SceneManager.GetActiveScene().name);
+        if(PlayState == PLAYSTATE.LOCAL)
+        {
+            Time.timeScale = 0f;
+        }
     }
 
     //set GameState to PLAYING
@@ -161,6 +160,12 @@ public class GameStateManager : MonoBehaviourPunCallbacks
     {
         GameState = GAMESTATE.PLAYING;
         Time.timeScale = 1f;
+    }
+
+    //starts the current scene again
+    public static void Restart()
+    {
+        Start(SceneManager.GetActiveScene().name);
     }
     
     //set the GameState to desired state
@@ -193,5 +198,15 @@ public class GameStateManager : MonoBehaviourPunCallbacks
 
         //this can be removed if Gameover() will not set timescale to 0
         Time.timeScale = 1f;
+    }
+
+    //set the GameState to VICTORY
+    public static void Victory()
+    {
+        GameState = GAMESTATE.VICTORY;
+
+        //this is so that the game freezes when it's gameover
+        //can be removed if we don't like the look
+        Time.timeScale = 0f;
     }
 }

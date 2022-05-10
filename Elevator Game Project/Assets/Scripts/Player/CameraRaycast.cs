@@ -38,6 +38,6 @@ public class CameraRaycast : MonoBehaviour
             indicator.Activate(false);
         }
 
-        Debug.Log(h.point);
+        //Debug.Log(h.point);
     }
 }

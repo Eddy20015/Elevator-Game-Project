@@ -7,7 +7,12 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
 {
     [SerializeField] private float chargedAmount, maxChargeAmount, incrementAmount;
     [SerializeField] private bool isUsed, isCompleted;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip chargingSound;
     private PhotonView view;
+
+    public float ChargedAmount { get => chargedAmount;}
+    public float MaxChargeAmount { get => maxChargeAmount;}
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +31,10 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
     //Make sure isUsed is false once you are out of it
     private void OnTriggerExit(Collider other)
     {
-        view.RPC("RPC_SetIsUsed", RpcTarget.Others, false);
+        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        {
+            view.RPC("RPC_SetIsUsed", RpcTarget.Others, false);
+        }
     }
 
     public bool getPuzzleState()
@@ -45,22 +53,33 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
         //If it isn't fully charged + they are holding E + it isn't being used by another player
         if (chargedAmount < maxChargeAmount && Input.GetKey(KeyCode.E) && !isUsed)
         {
-            view.RPC("RPC_SetIsUsed", RpcTarget.Others, true);
             chargedAmount += incrementAmount;
-            view.RPC("RPC_SetChargedAmount", RpcTarget.Others, chargedAmount);
+            audioSource.PlayOneShot(chargingSound);
+
+            if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+            {
+                view.RPC("RPC_SetIsUsed", RpcTarget.Others, true);
+                view.RPC("RPC_SetChargedAmount", RpcTarget.Others, chargedAmount);
+            }
         }
 
         //If you let go of E, it is not in use **Makes it so only one person can use it at a time
         if(Input.GetKeyUp(KeyCode.E))
         {
-            view.RPC("RPC_SetIsUsed", RpcTarget.Others, false);
+            if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+            {
+                view.RPC("RPC_SetIsUsed", RpcTarget.Others, false);
+            }
         }
 
         //Check if this station is completed
         if (chargedAmount >= maxChargeAmount)
         {
             isCompleted = true;
-            view.RPC("RPC_SetCompleted", RpcTarget.AllBuffered, isCompleted);
+            if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+            {
+                view.RPC("RPC_SetCompleted", RpcTarget.AllBuffered, isCompleted);
+            }
         }
     }
 

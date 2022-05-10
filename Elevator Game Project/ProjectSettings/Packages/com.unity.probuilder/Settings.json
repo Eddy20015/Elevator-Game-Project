@@ -4,6 +4,7 @@
     "m_Dictionary": {
         "m_DictionaryValues": [
             {
+
                 "type": "UnityEngine.ProBuilder.LogLevel, Unity.ProBuilder, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
                 "key": "log.level",
                 "value": "{\"m_Value\":3}"

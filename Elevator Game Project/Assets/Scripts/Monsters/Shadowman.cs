@@ -36,16 +36,31 @@ public class Shadowman : Monster
           (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient))
         {
             RandomPoint();
+        } else
+        {
+            agent.enabled = false;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        //online, only the master client version will actually move around, the one from the persepective of not master just follows
-        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
-          (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient))
+        if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.GAMEOVER)
         {
+            agent.isStopped = true;
+            agent.SetDestination(transform.position);
+        }
+
+        // online, only the master client version will actually move around, the one from the persepective of not master just follows
+        if ((GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL && GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING) ||
+            (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient))
+        {
+            //deactivated players are dead, so the monster should stop trying to go after them once they are deactivated
+            if (player != null && player.activeInHierarchy == false)
+            {
+                player = null;
+            }
+
             if (player != null)
             {
                 //Debug.LogError("Is view mine? " + player.GetPhotonView().IsMine);
@@ -53,7 +68,7 @@ public class Shadowman : Monster
                 eyes.transform.LookAt(player.transform);
                 eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
 
-                if (Vector3.Distance(transform.position, agent.destination) < 1.5f)
+                if (Vector3.Distance(transform.position, agent.destination) < 2.5f)
                 {
                     RandomPoint();
                 }
@@ -61,63 +76,72 @@ public class Shadowman : Monster
             else
             {
                 Patrol();
-                //Debug.LogError("Patrolling");
             }
         }
+        Patrol();
     }
 
     public override void Chase()
     {
-        //chase after player
-        agent.SetDestination(player.transform.position);
-
-        float distanceBetween = Vector3.Distance(transform.position, player.transform.position);
-
-        RaycastHit hit;
-
-        Physics.Raycast(transform.position, eyes.transform.forward, out hit);
-
-        bool foundPlayer = false;
-
-        //not sure what this does - Ed
-        if (hit.distance < findTrigger.radius)
+        if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
         {
-            if (Vector3.Distance(new Vector3(hit.point.x, player.transform.position.y, hit.point.z), player.transform.position) < 1)
+            //chase after player
+            agent.SetDestination(player.transform.position);
+
+            float distanceBetween = Vector3.Distance(transform.position, player.transform.position);
+
+            RaycastHit hit;
+
+            Physics.Raycast(transform.position, eyes.transform.forward, out hit);
+
+            bool foundPlayer = false;
+
+            //essentially if shadowman sees the player
+            if (hit.distance < findTrigger.radius)
             {
-                foundPlayer = true;
+                if (Vector3.Distance(new Vector3(hit.point.x, player.transform.position.y, hit.point.z), player.transform.position) < 1)
+                {
+                    foundPlayer = true;
+                }
             }
-        }
 
-        //Debug.LogError("foundPlayer == " + foundPlayer);
-        if (distanceBetween > findTrigger.radius || !foundPlayer)
-        {
-            agent.speed = speed;
-            isRunning = false;
-        } 
-        else
-        {
-            agent.speed = speed * 2;
-            isRunning = true;
-        }
-        //Debug.LogError("isRunning == " + isRunning);
+            //Debug.LogError("foundPlayer == " + foundPlayer);
+            if (distanceBetween > findTrigger.radius || !foundPlayer)
+            {
+                agent.speed = speed;
+                isRunning = false;
+            }
+            else
+            {
+                agent.speed = speed * 2;
+                isRunning = true;
+            }
+            //Debug.LogError("isRunning == " + isRunning);
 
-        //Debug.Log(foundPlayer);
-        //Debug.Log(h.point);
+            //Debug.Log(foundPlayer);
+            //Debug.Log(h.point);
+        }
     }
 
     void Patrol()
     {
-        if (Vector3.Distance(transform.position, agent.destination) < 1.5f && !isRunning)
+        float pleaseWork = Vector3.Distance(transform.position, agent.destination);
+
+        if (pleaseWork < 2.5f)
         {
             RandomPoint();
         }
+
+        //Debug.Log("Patrolling");
+        //Debug.Log(pleaseWork);
     }
 
     void RandomPoint()
     {
         currentPoint = (int)Random.Range(0, points.Length - 0.01f);
         agent.SetDestination(points[currentPoint]);
-        isRunning = false;
+        agent.speed = speed;
+        //Debug.Log("Changed Point To " + points[currentPoint]);
     }
 
     public override void SetPlayer(GameObject _player, bool b)
@@ -138,6 +162,13 @@ public class Shadowman : Monster
                 player = null;
             }
         } 
+    }
+
+    public override void Kill()
+    {
+        isRunning = false;
+        RandomPoint();
+        player = null;
     }
 
     private void OnTriggerStay(Collider other)
