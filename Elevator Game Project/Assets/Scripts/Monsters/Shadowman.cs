@@ -65,8 +65,8 @@ public class Shadowman : Monster
             {
                 //Debug.LogError("Is view mine? " + player.GetPhotonView().IsMine);
                 Chase();
-                eyes.transform.LookAt(player.transform);
-                eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
+                //eyes.transform.LookAt(player.transform);
+                //eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
 
                 if (Vector3.Distance(transform.position, agent.destination) < 2.5f)
                 {
