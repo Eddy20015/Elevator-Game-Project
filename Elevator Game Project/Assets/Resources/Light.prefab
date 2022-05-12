@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lightObject: {fileID: 9145094479486131353}
-  pointLight: {fileID: 1151498555890498205}
+  pointLight: {fileID: 3953667897205700245}
   audio: {fileID: 7927744274897658364}
 --- !u!54 &1317707611830180307
 Rigidbody:

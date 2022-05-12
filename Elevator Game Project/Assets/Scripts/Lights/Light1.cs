@@ -9,7 +9,7 @@ public class Light1 : MonoBehaviourPunCallbacks
 
     [SerializeField] GameObject lightObject;
 
-    [SerializeField] static Light pointLight;
+    [SerializeField] Light pointLight;
 
     [SerializeField] AudioSource audio;
 
@@ -17,12 +17,15 @@ public class Light1 : MonoBehaviourPunCallbacks
     private GameObject player;
     private PhotonView playerView;
 
-    static float intensity;
+    float intensity;
+    static float multiplier;
 
     // Start is called before the first frame update
     void Start()
     {
         //debug
+
+        multiplier = 1;
 
         player = GameObject.FindGameObjectWithTag("Player");
         audio.enabled = false;
@@ -52,20 +55,22 @@ public class Light1 : MonoBehaviourPunCallbacks
     }
 
     // Update is called once per frame
-     /*void Update()
+    void Update()
     {
-        if (false)
+        /*if (false)
         {
             if (Vector3.Distance(transform.position, player.transform.position) > 25)
             {
-                pointLight.SetActive(false);
+                //pointLight.SetActive(false);
             }
             else
             {
-                pointLight.SetActive(true);
+                //pointLight.SetActive(true);
             }
-        }
-    }*/
+        }*/
+
+        pointLight.intensity = intensity * multiplier;
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -91,7 +96,13 @@ public class Light1 : MonoBehaviourPunCallbacks
     public static void ChangeIntensity(float f)
     {
         //use a 0 to 1 scale for intensity
-        pointLight.intensity = intensity * f;
+        multiplier = f;
+    }
+
+    void ChangeIntensity2()
+    {
+        //use a 0 to 1 scale for intensity
+        //pointLight.intensity = intensity * multiplier;
     }
 
     IEnumerator TurnLightOn()
