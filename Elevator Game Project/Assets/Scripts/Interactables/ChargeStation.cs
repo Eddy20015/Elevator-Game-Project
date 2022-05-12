@@ -80,6 +80,7 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
             {
                 view.RPC("RPC_SetCompleted", RpcTarget.AllBuffered, isCompleted);
             }
+            GetComponentInChildren<Light>().color = Color.green;
         }
     }
 
