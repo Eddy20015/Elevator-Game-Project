@@ -9,13 +9,15 @@ public class Light1 : MonoBehaviourPunCallbacks
 
     [SerializeField] GameObject lightObject;
 
-    [SerializeField] GameObject pointLight;
+    [SerializeField] static Light pointLight;
 
     [SerializeField] AudioSource audio;
 
     //temporary if I think of a better solution
     private GameObject player;
     private PhotonView playerView;
+
+    static float intensity;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +47,8 @@ public class Light1 : MonoBehaviourPunCallbacks
         }
 
         audio.enabled = false;
+
+        intensity = pointLight.intensity;
     }
 
     // Update is called once per frame
@@ -82,6 +86,12 @@ public class Light1 : MonoBehaviourPunCallbacks
         {
             StartCoroutine(TurnLightOn());
         }
+    }
+
+    public static void ChangeIntensity(float f)
+    {
+        //use a 0 to 1 scale for intensity
+        pointLight.intensity = intensity * f;
     }
 
     IEnumerator TurnLightOn()
