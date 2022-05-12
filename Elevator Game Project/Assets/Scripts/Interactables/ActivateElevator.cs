@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Opens the door when game starts
+/// Closes the door when all players are in the elevator and the puzzles are done
+/// </summary>
 public class ActivateElevator : MonoBehaviour
 {
     [SerializeField] private GameObject leftDoor, rightDoor;
@@ -16,13 +20,10 @@ public class ActivateElevator : MonoBehaviour
         StartCoroutine(OpenRightDoor());
     }
 
-    private void Update()
+    public void CloseDoors()
     {
-        if(ChargingStationManager.chargingStationManager.GetPuzzleState())
-        {
-            StartCoroutine(CloseLeftDoor());
-            StartCoroutine(CloseRightDoor());
-        }
+        StartCoroutine(CloseLeftDoor());
+        StartCoroutine(CloseRightDoor());
     }
 
     private IEnumerator OpenLeftDoor()
