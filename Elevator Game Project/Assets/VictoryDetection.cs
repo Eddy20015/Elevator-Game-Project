@@ -6,7 +6,7 @@ public class VictoryDetection : MonoBehaviour
 {
     [SerializeField]
     private GameObject victoryUI;
-
+    [SerializeField] private ActivateElevator elevatorAnims;
     private int playersInArea = 0;
 
     private void OnTriggerStay(Collider other)
@@ -19,6 +19,8 @@ public class VictoryDetection : MonoBehaviour
                 GameStateManager.Victory();
                 victoryUI.SetActive(true);
                 Cursor.lockState = CursorLockMode.None;
+                //Elevator anims
+                elevatorAnims.CloseDoors();
             }
             else if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && ChargingStationManager.chargingStationManager.IsCompleted)
             {
@@ -27,6 +29,8 @@ public class VictoryDetection : MonoBehaviour
                     GameStateManager.Victory();
                     victoryUI.SetActive(true);
                     Cursor.lockState = CursorLockMode.None;
+                    //Elevator anims
+                    elevatorAnims.CloseDoors();
                 }
             }
         }
