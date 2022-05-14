@@ -21,6 +21,8 @@ public class Shadowman : Monster
     [SerializeField] Vector3[] points;
     int currentPoint;
 
+    [SerializeField] private float speedIncrease;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -203,5 +205,10 @@ public class Shadowman : Monster
             //Debug.LogError("player is now null");
         }
         //Debug.LogError("Exited the Trigger");
+    }
+
+    public void IncreaseSpeed()
+    {
+        this.speed += speedIncrease;
     }
 }

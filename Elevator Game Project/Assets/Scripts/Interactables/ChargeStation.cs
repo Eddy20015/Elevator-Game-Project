@@ -9,6 +9,7 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
     [SerializeField] private bool isUsed, isCompleted;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip chargingSound;
+    [SerializeField] private Shadowman shadowMan;
     private PhotonView view;
 
     public float ChargedAmount { get => chargedAmount;}
@@ -73,9 +74,10 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
         }
 
         //Check if this station is completed
-        if (chargedAmount >= maxChargeAmount)
+        if (chargedAmount >= maxChargeAmount && isCompleted == false)
         {
             isCompleted = true;
+            shadowMan.IncreaseSpeed();
             if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
             {
                 view.RPC("RPC_SetCompleted", RpcTarget.AllBuffered, isCompleted);
