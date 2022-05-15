@@ -34,6 +34,7 @@ public class ActivateElevator : MonoBehaviour
             leftDoor.transform.position = Vector3.Lerp(leftDoor.transform.position, leftOpenDoorPosition.transform.position, elapsedTime / timeToOpenAndClose);
             elapsedTime += howSmooth;
             yield return new WaitForSeconds(howSmooth);
+            Debug.Log(elapsedTime / timeToOpenAndClose);
         }
     }
 
