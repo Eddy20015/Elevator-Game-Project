@@ -143249,3 +143249,60 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5185876155102696055, guid: 2e18ffbab9df0a34a8a59ed793a0824e, type: 3}
   m_PrefabInstance: {fileID: 5185876154920834624}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5564417402824751587
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5564417402622132604, guid: 921358d5358bf4e0e9357db85c51bab3, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564417402622132604, guid: 921358d5358bf4e0e9357db85c51bab3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564417402622132604, guid: 921358d5358bf4e0e9357db85c51bab3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564417402622132604, guid: 921358d5358bf4e0e9357db85c51bab3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564417402622132604, guid: 921358d5358bf4e0e9357db85c51bab3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564417402622132604, guid: 921358d5358bf4e0e9357db85c51bab3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564417402622132604, guid: 921358d5358bf4e0e9357db85c51bab3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564417402622132604, guid: 921358d5358bf4e0e9357db85c51bab3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564417402622132604, guid: 921358d5358bf4e0e9357db85c51bab3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564417402622132604, guid: 921358d5358bf4e0e9357db85c51bab3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564417402622132604, guid: 921358d5358bf4e0e9357db85c51bab3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5564417402622132605, guid: 921358d5358bf4e0e9357db85c51bab3, type: 3}
+      propertyPath: m_Name
+      value: Doomba Furnishing - Tim
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 921358d5358bf4e0e9357db85c51bab3, type: 3}
