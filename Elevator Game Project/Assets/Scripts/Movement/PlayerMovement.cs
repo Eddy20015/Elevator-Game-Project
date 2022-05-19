@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
                (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
             {
-                if (Input.GetKeyDown(KeyCode.E) && canInteract)
+                if (Input.GetKey(KeyCode.E) && canInteract)
                 {
                     //replace "Interaction" with whatever we name it in the Interactable script
                     interactionTarget.SendMessage("Interact");
