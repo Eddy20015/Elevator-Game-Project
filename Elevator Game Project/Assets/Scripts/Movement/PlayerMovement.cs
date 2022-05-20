@@ -39,7 +39,9 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     private bool isSprinting;
 
-    private Animator animator;
+    [SerializeField] private Animator animator;
+
+    [SerializeField] private GameObject model;
 
     private PhotonView view;
 
@@ -49,7 +51,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         cam = GetComponentInChildren<Camera>();
         canInteract = false;
         view = GetComponent<PhotonView>();
-        animator = GetComponentInChildren<Animator>();
+        model.GetComponent<Rigidbody>().freezeRotation = true;
     }
 
     //controls the raycast form the camera to interact with interactable objects
@@ -123,23 +125,23 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 {
                     if (canSprint && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
                     {
+                        animator.SetFloat("Speed", 1);
                         characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
                         stamina -= staminaDepletionRate;
                         isSprinting = true;
-                        animator.SetFloat("Speed", 1);
                     }
                     else if (canSprint == false)
                     {
+                        animator.SetFloat("Speed", 0.5f);
                         characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
                         isSprinting = false;
-                        animator.SetFloat("Speed", 0.5f);
                     }
                 }
-                else if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+                else if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) && !(Input.GetKey(KeyCode.LeftShift)))
                 {
+                    animator.SetFloat("Speed", 0.5f);
                     characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
                     isSprinting = false;
-                    animator.SetFloat("Speed", 0.5f);
                 }
                 else
                 {
