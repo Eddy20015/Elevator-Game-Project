@@ -9,7 +9,8 @@ public class VictoryDetection : MonoBehaviour
     [SerializeField] private ActivateElevator elevatorAnims;
     private int playersInArea = 0;
 
-    private void OnTriggerStay(Collider other)
+
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
@@ -34,6 +35,7 @@ public class VictoryDetection : MonoBehaviour
                 }
             }
         }
+        Debug.Log(playersInArea);
     }
 
     private void OnTriggerExit(Collider other)
