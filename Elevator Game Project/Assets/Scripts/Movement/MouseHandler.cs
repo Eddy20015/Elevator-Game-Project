@@ -18,6 +18,8 @@ public class MouseHandler : MonoBehaviour
 
     private GameObject player;
 
+    [SerializeField] private GameObject model;
+
     private Camera cam;
 
     private PhotonView view;
@@ -58,6 +60,7 @@ public class MouseHandler : MonoBehaviour
 
                 cam.transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f);
                 player.transform.eulerAngles = new Vector3(0.0f, yRotation, 0.0f);
+                model.transform.rotation = player.transform.rotation;
             }
         }
     }
