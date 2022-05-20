@@ -29,7 +29,7 @@ public class ActivateElevator : MonoBehaviour
     private IEnumerator OpenLeftDoor()
     {
         float elapsedTime = 0;
-        while(elapsedTime < timeToOpenAndClose)
+        while(elapsedTime < timeToOpenAndClose/10)
         {
             leftDoor.transform.position = Vector3.Lerp(leftDoor.transform.position, leftOpenDoorPosition.transform.position, elapsedTime / timeToOpenAndClose);
             elapsedTime += howSmooth;
@@ -41,7 +41,7 @@ public class ActivateElevator : MonoBehaviour
     private IEnumerator OpenRightDoor()
     {
         float elapsedTime = 0;
-        while(elapsedTime < timeToOpenAndClose)
+        while(elapsedTime < timeToOpenAndClose / 10)
         {
             rightDoor.transform.position = Vector3.Lerp(rightDoor.transform.position, rightOpenDoorPosition.transform.position, elapsedTime / timeToOpenAndClose);
             elapsedTime += howSmooth;
@@ -52,7 +52,7 @@ public class ActivateElevator : MonoBehaviour
     private IEnumerator CloseLeftDoor()
     {
         float elapsedTime = 0;
-        while (elapsedTime < timeToOpenAndClose)
+        while (elapsedTime < timeToOpenAndClose / 10)
         {
             leftDoor.transform.position = Vector3.Lerp(leftDoor.transform.position, initialLeftDoorPosition, elapsedTime / timeToOpenAndClose);
             elapsedTime += howSmooth;
@@ -63,7 +63,7 @@ public class ActivateElevator : MonoBehaviour
     private IEnumerator CloseRightDoor()
     {
         float elapsedTime = 0;
-        while (elapsedTime < timeToOpenAndClose)
+        while (elapsedTime < timeToOpenAndClose / 10)
         {
             rightDoor.transform.position = Vector3.Lerp(rightDoor.transform.position, initialRightDoorPosition, elapsedTime / timeToOpenAndClose);
             elapsedTime += howSmooth;
