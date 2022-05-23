@@ -10,7 +10,7 @@ public class Doomba : MonoBehaviour
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private GameObject[] patrolPoints;
     [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private float range, chaseSpeed, patrolSpeed, thickness;
+    [SerializeField] private float range, chaseSpeed, patrolSpeed;
     private bool patrolling;
     private PhotonView view;
     private RaycastHit hit;
@@ -36,13 +36,17 @@ public class Doomba : MonoBehaviour
             //Checks if a player is in line of sight, if they go out of line of sight, go back to patrolling
             if (Physics.Raycast(transform.position, transform.forward, out hit, range, playerLayer))
             {
-                if (hit.transform.tag == "Player")
+                if (hit.transform.tag == "Player" && ChargingStationManager.chargingStationManager.NumOfCompletedStations >= 1)
                 {
                     Chase();
+                    //Animation Code would be here for beginning to chase
+
                 }
                 else if (patrolling == false)
                 {
                     Patrol();
+                    //Animation Code would be here to go back to patrolling
+
                 }
                 else
                 {
@@ -70,13 +74,17 @@ public class Doomba : MonoBehaviour
                 //Checks if a player is in line of sight, if they go out of line of sight, go back to patrolling
                 if (Physics.Raycast(transform.position, transform.forward, out hit, range, playerLayer))
                 {
-                    if (hit.transform.tag == "Player")
+                    if (hit.transform.tag == "Player" && ChargingStationManager.chargingStationManager.NumOfCompletedStations >= 1)
                     {
                         Chase();
+                        //Animation Code would be here for beginning to chase
+
                     }
                     else if (patrolling == false)
                     {
                         Patrol();
+                        //Animation Code would be here to go back to patrolling
+
                     }
                 }
                 else
