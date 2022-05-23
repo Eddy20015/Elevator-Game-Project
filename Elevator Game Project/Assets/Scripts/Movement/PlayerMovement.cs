@@ -167,4 +167,9 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     {
         return stamina / maxStamina;
     }
+
+    public bool IsSprinting()
+    {
+        return isSprinting;
+    }
 }
