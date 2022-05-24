@@ -660,6 +660,22 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 9476f944060c3479fb63dede474386b8, type: 2}
+--- !u!54 &8733058690351582255
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6307013849906175382}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!114 &2692528023903122897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -681,22 +697,6 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
---- !u!54 &8733058690351582255
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6307013849906175382}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!1001 &3781164826212188379
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -972,7 +972,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 50243f0c242621a4f832a5c6faa2600f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.902
+      value: -0.987
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 50243f0c242621a4f832a5c6faa2600f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1274,6 +1274,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: acec1448ffd37e44b8f02ecec1265855, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 50243f0c242621a4f832a5c6faa2600f, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6240431318503031700, guid: 50243f0c242621a4f832a5c6faa2600f, type: 3}
       propertyPath: m_Layer
       value: 0
