@@ -13,6 +13,8 @@ public class Light1 : MonoBehaviourPunCallbacks
 
     [SerializeField] AudioSource audio;
 
+    AudioSource buzz;
+
     //temporary if I think of a better solution
     private GameObject player;
     private PhotonView playerView;
@@ -55,9 +57,9 @@ public class Light1 : MonoBehaviourPunCallbacks
     }
 
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
-        /*if (false)
+        if (false)
         {
             if (Vector3.Distance(transform.position, player.transform.position) > 25)
             {
@@ -67,10 +69,12 @@ public class Light1 : MonoBehaviourPunCallbacks
             {
                 //pointLight.SetActive(true);
             }
-        }*/
+        }
 
         pointLight.intensity = intensity * multiplier;
-    }
+
+        
+    }*/
 
     private void OnTriggerStay(Collider other)
     {
@@ -79,6 +83,7 @@ public class Light1 : MonoBehaviourPunCallbacks
             GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
         {
             lightObject.SetActive(false);
+            buzz.enabled = false;
             audio.enabled = true;
         }
     }
@@ -110,5 +115,6 @@ public class Light1 : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(3);
         lightObject.SetActive(true);
         audio.enabled = false;
+        buzz.enabled = true;
     }
 }

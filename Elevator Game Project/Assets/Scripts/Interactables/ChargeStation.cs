@@ -25,7 +25,7 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
     {
         if(other.tag == "Player")
         {
-            Interact();
+            //Interact();
         }
     }
 
@@ -84,6 +84,11 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
             }
             GetComponentInChildren<Light>().color = Color.green;
         }
+    }
+
+    public void LookAway()
+    {
+        view.RPC("RPC_SetIsUsed", RpcTarget.Others, false);
     }
 
     //Multiplayer code
