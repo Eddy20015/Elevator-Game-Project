@@ -123,9 +123,17 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 //controls movement and whether the player is sprinting or just moving normally
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    if (canSprint && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+                    if (canSprint && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S)))
                     {
-                        animator.SetFloat("Speed", 1);
+                        if (Input.GetKey(KeyCode.W))
+                        {
+                            animator.SetFloat("Speed", 1f);
+                        }
+                        else if (Input.GetKey(KeyCode.S))
+                        {
+                            animator.SetFloat("Speed", -1f);
+                        }
+
                         characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
                         stamina -= staminaDepletionRate;
                         isSprinting = true;
@@ -136,10 +144,21 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                         characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
                         isSprinting = false;
                     }
+                    else
+                    {
+                        animator.SetFloat("Speed", 0);
+                    }
                 }
-                else if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D) && !(Input.GetKey(KeyCode.LeftShift)))
+                else if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S)) && !(Input.GetKey(KeyCode.LeftShift)))
                 {
-                    animator.SetFloat("Speed", 0.5f);
+                    if (Input.GetKey(KeyCode.W))
+                    {
+                        animator.SetFloat("Speed", 0.5f);
+                    }
+                    else if (Input.GetKey(KeyCode.S))
+                    {
+                        animator.SetFloat("Speed", -0.5f);
+                    }
                     characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
                     isSprinting = false;
                 }

@@ -19,6 +19,10 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
     void Start()
     {
         view = GetComponent<PhotonView>();
+        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        {
+            incrementAmount = (incrementAmount * 2) / 3;
+        }
     }
 
     private void OnTriggerStay(Collider other)
