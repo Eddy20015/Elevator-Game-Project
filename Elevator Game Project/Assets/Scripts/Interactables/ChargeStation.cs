@@ -25,6 +25,14 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
         }
     }
 
+    private void Update()
+    {
+        if(isCompleted)
+        {
+            GetComponentInChildren<Light>().color = Color.green;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if(other.tag == "Player")
@@ -86,9 +94,10 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
             {
                 view.RPC("RPC_SetCompleted", RpcTarget.AllBuffered, isCompleted);
             }
-            GetComponentInChildren<Light>().color = Color.green;
         }
     }
+
+    
 
     public void LookAway()
     {
