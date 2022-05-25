@@ -7,6 +7,8 @@ public class VictoryDetection : MonoBehaviour
     [SerializeField]
     private GameObject victoryUI;
     [SerializeField] private ActivateElevator elevatorAnims;
+    [SerializeField] private GameObject invisibleCollider;
+    [SerializeField] private FadingScript fadingScript;
     private int playersInArea = 0;
 
 
@@ -17,25 +19,37 @@ public class VictoryDetection : MonoBehaviour
             playersInArea += 1;
             if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL && ChargingStationManager.chargingStationManager.IsCompleted)
             {
-                GameStateManager.Victory();
-                victoryUI.SetActive(true);
-                Cursor.lockState = CursorLockMode.None;
-                //Elevator anims
-                elevatorAnims.CloseDoors();
+                StartCoroutine(EndGame());
             }
             else if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && ChargingStationManager.chargingStationManager.IsCompleted)
             {
                 if (playersInArea == 2)
                 {
-                    GameStateManager.Victory();
-                    victoryUI.SetActive(true);
-                    Cursor.lockState = CursorLockMode.None;
-                    //Elevator anims
-                    elevatorAnims.CloseDoors();
+                    StartCoroutine(EndGame());
                 }
             }
         }
         Debug.Log(playersInArea);
+    }
+
+    private IEnumerator EndGame()
+    {
+        //Activate the collider
+        invisibleCollider.SetActive(true);
+
+        yield return new WaitForSeconds(1f);
+        //Close the elevators 
+        elevatorAnims.CloseDoors();
+        
+        yield return new WaitForSeconds(0.5f);
+        //Fade In
+        fadingScript.FadeIn();
+
+        yield return new WaitForSeconds(1f);
+        //Show the UI
+        GameStateManager.Victory();
+        victoryUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void OnTriggerExit(Collider other)
