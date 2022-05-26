@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298232691478541017}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5347818, y: 0.027507663, z: -2.2410114}
+  m_LocalPosition: {x: 0.5, y: 0, z: -2}
   m_LocalScale: {x: 1.5, y: 3, z: 0.09}
   m_Children: []
   m_Father: {fileID: 298232692998987735}
@@ -122,7 +122,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298232691775541875}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.960218, y: 0.027507663, z: -2.2410114}
+  m_LocalPosition: {x: -4, y: 0, z: -2}
   m_LocalScale: {x: 1.5, y: 3, z: 0.09}
   m_Children: []
   m_Father: {fileID: 298232692998987735}
@@ -217,7 +217,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298232692622599245}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.95721817, y: 0.027507663, z: -2.2410114}
+  m_LocalPosition: {x: -1, y: 0, z: -2}
   m_LocalScale: {x: 1.5, y: 3, z: 0.09}
   m_Children: []
   m_Father: {fileID: 298232692998987735}
@@ -338,7 +338,7 @@ MonoBehaviour:
   rightOpenDoorPosition: {fileID: 298232691478541017}
   initialLeftDoorPosition: {x: 0, y: 0, z: 0}
   initialRightDoorPosition: {x: 0, y: 0, z: 0}
-  timeToOpenAndClose: 15
+  timeToOpenAndClose: 5
   howSmooth: 0.01
 --- !u!1 &298232693543058159
 GameObject:
@@ -367,7 +367,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298232693543058159}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.4566984, y: 0.027507663, z: -2.2410114}
+  m_LocalPosition: {x: -2.5, y: 0, z: -2}
   m_LocalScale: {x: 1.5, y: 3, z: 0.09}
   m_Children: []
   m_Father: {fileID: 298232692998987735}

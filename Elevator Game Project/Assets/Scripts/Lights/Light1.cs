@@ -9,18 +9,25 @@ public class Light1 : MonoBehaviourPunCallbacks
 
     [SerializeField] GameObject lightObject;
 
-    [SerializeField] GameObject pointLight;
+    [SerializeField] Light pointLight;
 
     [SerializeField] AudioSource audio;
+
+    AudioSource buzz;
 
     //temporary if I think of a better solution
     private GameObject player;
     private PhotonView playerView;
 
+    float intensity;
+    static float multiplier;
+
     // Start is called before the first frame update
     void Start()
     {
         //debug
+
+        multiplier = 1;
 
         player = GameObject.FindGameObjectWithTag("Player");
         audio.enabled = false;
@@ -45,22 +52,28 @@ public class Light1 : MonoBehaviourPunCallbacks
         }
 
         audio.enabled = false;
+
+        intensity = pointLight.intensity;
     }
 
     // Update is called once per frame
-     /*void Update()
+    /*void Update()
     {
         if (false)
         {
             if (Vector3.Distance(transform.position, player.transform.position) > 25)
             {
-                pointLight.SetActive(false);
+                //pointLight.SetActive(false);
             }
             else
             {
-                pointLight.SetActive(true);
+                //pointLight.SetActive(true);
             }
         }
+
+        pointLight.intensity = intensity * multiplier;
+
+        
     }*/
 
     private void OnTriggerStay(Collider other)
@@ -70,6 +83,7 @@ public class Light1 : MonoBehaviourPunCallbacks
             GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
         {
             lightObject.SetActive(false);
+            buzz.enabled = false;
             audio.enabled = true;
         }
     }
@@ -84,10 +98,23 @@ public class Light1 : MonoBehaviourPunCallbacks
         }
     }
 
+    public static void ChangeIntensity(float f)
+    {
+        //use a 0 to 1 scale for intensity
+        multiplier = f;
+    }
+
+    void ChangeIntensity2()
+    {
+        //use a 0 to 1 scale for intensity
+        //pointLight.intensity = intensity * multiplier;
+    }
+
     IEnumerator TurnLightOn()
     {
         yield return new WaitForSeconds(3);
         lightObject.SetActive(true);
         audio.enabled = false;
+        buzz.enabled = true;
     }
 }

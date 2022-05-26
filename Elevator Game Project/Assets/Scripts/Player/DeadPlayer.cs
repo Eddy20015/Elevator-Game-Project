@@ -5,12 +5,16 @@ using Photon.Pun;
 
 public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
 {
+    [SerializeField] private float chargedAmount, maxChargeAmount, incrementAmount;
     private GameObject OriginalPlayer;
 
     private PhotonView view;
 
     public GameObject pauseUI;
     public GameObject deathUI;
+
+    public float ChargedAmount { get => chargedAmount; }
+    public float MaxChargeAmount { get => maxChargeAmount; }
 
     private void Start()
     {
@@ -51,7 +55,17 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
     public void Interact()
     {
         Debug.Log("Interact was called");
-        Revive();
+        if (chargedAmount < maxChargeAmount && Input.GetKey(KeyCode.E))
+        {
+            chargedAmount += incrementAmount;
+            Debug.Log(chargedAmount);
+        }
+
+        if (chargedAmount >= maxChargeAmount)
+        {
+            Debug.Log("Done!");
+            Revive();
+        }
     }
 
     public void Revive()

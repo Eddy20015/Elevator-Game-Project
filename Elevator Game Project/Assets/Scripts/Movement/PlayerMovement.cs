@@ -39,7 +39,9 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     private bool isSprinting;
 
-    private Animator animator;
+    [SerializeField] private Animator animator;
+
+    [SerializeField] private GameObject model;
 
     private PhotonView view;
 
@@ -49,7 +51,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         cam = GetComponentInChildren<Camera>();
         canInteract = false;
         view = GetComponent<PhotonView>();
-        animator = GetComponentInChildren<Animator>();
+        model.GetComponent<Rigidbody>().freezeRotation = true;
     }
 
     //controls the raycast form the camera to interact with interactable objects
@@ -60,7 +62,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
                (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
             {
-                if (Input.GetKeyDown(KeyCode.E) && canInteract)
+                if (Input.GetKey(KeyCode.E) && canInteract)
                 {
                     //replace "Interaction" with whatever we name it in the Interactable script
                     interactionTarget.SendMessage("Interact");
@@ -121,25 +123,44 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 //controls movement and whether the player is sprinting or just moving normally
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    if (canSprint && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D)))
+                    if (canSprint && (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S)))
                     {
+                        if (Input.GetKey(KeyCode.W))
+                        {
+                            animator.SetFloat("Speed", 1f);
+                        }
+                        else if (Input.GetKey(KeyCode.S))
+                        {
+                            animator.SetFloat("Speed", -1f);
+                        }
+
                         characterController.Move((cam.transform.right * horizontal * SprintMultiplier + cam.transform.forward * vertical * SprintMultiplier) * Time.deltaTime);
                         stamina -= staminaDepletionRate;
                         isSprinting = true;
-                        animator.SetFloat("Speed", 1);
                     }
                     else if (canSprint == false)
                     {
+                        animator.SetFloat("Speed", 0.5f);
                         characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
                         isSprinting = false;
-                        animator.SetFloat("Speed", 0.5f);
+                    }
+                    else
+                    {
+                        animator.SetFloat("Speed", 0);
                     }
                 }
-                else if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+                else if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S)) && !(Input.GetKey(KeyCode.LeftShift)))
                 {
+                    if (Input.GetKey(KeyCode.W))
+                    {
+                        animator.SetFloat("Speed", 0.5f);
+                    }
+                    else if (Input.GetKey(KeyCode.S))
+                    {
+                        animator.SetFloat("Speed", -0.5f);
+                    }
                     characterController.Move((cam.transform.right * horizontal + cam.transform.forward * vertical) * Time.deltaTime);
                     isSprinting = false;
-                    animator.SetFloat("Speed", 0.5f);
                 }
                 else
                 {
@@ -164,5 +185,10 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     public float GetStaminaProportion()
     {
         return stamina / maxStamina;
+    }
+
+    public bool IsSprinting()
+    {
+        return isSprinting;
     }
 }
