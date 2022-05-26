@@ -51,13 +51,13 @@ public class Doomba : MonoBehaviour
                 else
                 {
                     Debug.DrawRay(transform.position, transform.forward * range, Color.white);
-                    Debug.Log("Did not Hit");
+                    //Debug.Log("Did not Hit");
                 }
             }
             else
             {
                 Debug.DrawRay(transform.position, transform.forward * range, Color.white);
-                Debug.Log("Did not Hit");
+                //Debug.Log("Did not Hit");
             }
         }
         else if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
@@ -90,7 +90,7 @@ public class Doomba : MonoBehaviour
                 else
                 {
                     Debug.DrawRay(transform.position, transform.forward * range, Color.white);
-                    Debug.Log("Did not Hit");
+                    //Debug.Log("Did not Hit");
                 }
             }
         }
