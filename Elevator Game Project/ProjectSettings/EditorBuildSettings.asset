@@ -6,13 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Ed Scenes/MainMenu.unity
+    path: Assets/Scenes/Main Game/MainMenu.unity
     guid: d633e6a93c58f2745b8aac938c82e9ac
   - enabled: 1
-    path: Assets/Scenes/Ed Scenes/ConnectToServer.unity
+    path: Assets/Scenes/Main Game/ConnectToServer.unity
     guid: 4b2ef3fa036c74941a139808d86b2611
   - enabled: 1
-    path: Assets/Scenes/Ed Scenes/Lobby.unity
+    path: Assets/Scenes/Main Game/Lobby.unity
     guid: 6f79679ca4fd5bb43a9f17ef0bf8a0a9
   - enabled: 1
     path: Assets/Scenes/Photon Scene.unity
@@ -24,6 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Matt Scenes/Greyblocking Testing.unity
     guid: 37585b7e90568014d9bbcfa1818137e8
   - enabled: 1
-    path: Assets/Scenes/Tim Scenes/Level 1.unity
+    path: Assets/Scenes/Main Game/Level 2.unity
     guid: 05bc8d12399ea40d38b46439bf5260bc
   m_configObjects: {}

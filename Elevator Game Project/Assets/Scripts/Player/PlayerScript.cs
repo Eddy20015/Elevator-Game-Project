@@ -117,7 +117,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks
 
                 GameObject DeadPlayer = PhotonNetwork.Instantiate(DeadPlayerName,
                     new Vector3(transform.position.x, 0.5f, transform.position.z),
-                    DeadPlayerTransform.rotation);
+                    Quaternion.identity);
 
                 //sets the dead player to have access to the UI panels
                 DeadPlayer DeadPlayerScript = DeadPlayer.GetComponent<DeadPlayer>();

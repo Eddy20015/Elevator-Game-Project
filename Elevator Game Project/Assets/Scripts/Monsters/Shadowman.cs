@@ -21,6 +21,8 @@ public class Shadowman : Monster
     [SerializeField] Vector3[] points;
     int currentPoint;
 
+    [SerializeField] private float speedIncrease;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,8 +67,8 @@ public class Shadowman : Monster
             {
                 //Debug.LogError("Is view mine? " + player.GetPhotonView().IsMine);
                 Chase();
-                eyes.transform.LookAt(player.transform);
-                eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
+                //eyes.transform.LookAt(player.transform);
+                //eyes.transform.eulerAngles = new Vector3(0, eyes.transform.eulerAngles.y, 0);
 
                 if (Vector3.Distance(transform.position, agent.destination) < 2.5f)
                 {
@@ -203,5 +205,10 @@ public class Shadowman : Monster
             //Debug.LogError("player is now null");
         }
         //Debug.LogError("Exited the Trigger");
+    }
+
+    public void IncreaseSpeed()
+    {
+        this.speed += speedIncrease;
     }
 }
