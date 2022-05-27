@@ -12,6 +12,7 @@ public class HeadAI : MonoBehaviour
     [SerializeField] private float chaseSpeed, followSpeed, patrolSpeed;
     [SerializeField] private float followRange, chaseRange, farthestRange;
     private bool patrolling, following, chasing;
+    private float chaseTime;
     private RaycastHit hit;
     // Start is called before the first frame update
     void Start()
@@ -30,7 +31,11 @@ public class HeadAI : MonoBehaviour
             agent.isStopped = true;
             agent.SetDestination(transform.position);
         }
-
+        //After 10 seconds of chasing go back to patrol
+        if(chasing == true && Time.time - chaseTime > 10f)
+        {
+            Patrol();
+        }
         //Patrol
         //Reached a destination, go to the next one
         if (agent.destination.x == agent.transform.position.x && agent.destination.z == agent.transform.position.z)
@@ -60,6 +65,7 @@ public class HeadAI : MonoBehaviour
             {
                 player = hit.transform.gameObject;
                 Chase();
+                chaseTime = Time.time;
                 //Debug.Log(Vector3.Distance(transform.position, player.transform.position));
             }
         }

@@ -434,7 +434,7 @@ MonoBehaviour:
   patrolSpeed: 5
   followRange: 25
   chaseRange: 8
-  farthestRange: 25
+  farthestRange: 26
 --- !u!195 &610541018
 NavMeshAgent:
   m_ObjectHideFlags: 0
