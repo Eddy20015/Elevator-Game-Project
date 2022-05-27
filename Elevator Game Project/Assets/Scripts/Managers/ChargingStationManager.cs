@@ -53,7 +53,12 @@ public class ChargingStationManager : MonoBehaviour
 
         //Debug.Log(isCompleted);
 
-        Light1.ChangeIntensity(Mathf.Lerp(1, 0.25f, numOfCompletedStations / 4));
+        foreach (Light1 l in FindObjectsOfType<Light1>())
+        {
+            l.ChangeIntensity2(Mathf.Lerp(1, 0.25f, numOfCompletedStations / 4));
+        }
+
+        //Light1.ChangeIntensity(Mathf.Lerp(1, 0.25f, numOfCompletedStations / 4));
     }
 
     //Gets the puzzle state, if completed, then all puzzles are completed

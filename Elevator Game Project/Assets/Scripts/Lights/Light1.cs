@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class Light1 : MonoBehaviourPunCallbacks
 {
@@ -14,6 +15,8 @@ public class Light1 : MonoBehaviourPunCallbacks
     [SerializeField] AudioSource audio;
 
     AudioSource buzz;
+
+    bool canTurnOff;
 
     //temporary if I think of a better solution
     private GameObject player;
@@ -54,6 +57,8 @@ public class Light1 : MonoBehaviourPunCallbacks
         audio.enabled = false;
 
         intensity = pointLight.intensity;
+
+        canTurnOff = SceneManager.GetActiveScene().name == "Level 2";
     }
 
     // Update is called once per frame
@@ -80,7 +85,7 @@ public class Light1 : MonoBehaviourPunCallbacks
     {
         if (other.tag == "Monster" && 
            /*(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE || GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)*/
-            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
+            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER && canTurnOff)
         {
             lightObject.SetActive(false);
             buzz.enabled = false;
@@ -92,7 +97,7 @@ public class Light1 : MonoBehaviourPunCallbacks
     {
         if (other.tag == "Monster" &&
             /*(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE || GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)*/
-            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
+            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER && canTurnOff)
         {
             StartCoroutine(TurnLightOn());
         }
@@ -104,10 +109,11 @@ public class Light1 : MonoBehaviourPunCallbacks
         multiplier = f;
     }
 
-    void ChangeIntensity2()
+    public void ChangeIntensity2(float f)
     {
         //use a 0 to 1 scale for intensity
-        //pointLight.intensity = intensity * multiplier;
+        multiplier = f;
+        pointLight.intensity = intensity * multiplier;
     }
 
     IEnumerator TurnLightOn()
