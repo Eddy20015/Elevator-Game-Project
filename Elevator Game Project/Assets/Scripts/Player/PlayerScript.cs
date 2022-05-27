@@ -26,14 +26,12 @@ public class PlayerScript : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        GameObject[] Panels = GameObject.FindGameObjectsWithTag("Panel");
-
         //this needs to be editted if the order is changed
         //not great but good enough
         try{
-            deathUI = Panels[0];
-            pauseUI = Panels[1];
-            victoryUI = Panels[2];
+            deathUI = GameObject.Find("DeathMenu");
+            pauseUI = GameObject.Find("PauseMenu");
+            victoryUI = GameObject.Find("VictoryMenu");
 
             //this will be needed by dead player
             deathUI.GetComponent<Canvas>().enabled = false;    //deathUI.SetActive(false);

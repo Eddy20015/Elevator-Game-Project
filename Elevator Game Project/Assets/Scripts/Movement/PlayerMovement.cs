@@ -66,6 +66,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 {
                     //replace "Interaction" with whatever we name it in the Interactable script
                     interactionTarget.SendMessage("Interact");
+                    animator.SetBool("Charging", true);
                 }
 
                 //deals with raycast for interacting with interactable objects
@@ -138,6 +139,11 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                         stamina -= staminaDepletionRate;
                         isSprinting = true;
                     }
+                    else if (canSprint && !(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.S)))
+                    {
+                        stamina += staminaRechargeRate;
+                        animator.SetFloat("Speed", 0);
+                    }
                     else if (canSprint == false)
                     {
                         animator.SetFloat("Speed", 0.5f);
@@ -166,6 +172,8 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 {
                     animator.SetFloat("Speed", 0);
                 }
+
+                
 
                 //Gravity
                 if (characterController.isGrounded)
