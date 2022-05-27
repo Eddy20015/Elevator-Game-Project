@@ -109,10 +109,11 @@ public class Light1 : MonoBehaviourPunCallbacks
         multiplier = f;
     }
 
-    void ChangeIntensity2()
+    public void ChangeIntensity2(float f)
     {
         //use a 0 to 1 scale for intensity
-        //pointLight.intensity = intensity * multiplier;
+        multiplier = f;
+        pointLight.intensity = intensity * multiplier;
     }
 
     IEnumerator TurnLightOn()
