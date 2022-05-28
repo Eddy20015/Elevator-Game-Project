@@ -17,15 +17,22 @@ public class Doomba : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        view = GetComponent<PhotonView>();
         agent = GetComponent<NavMeshAgent>();
         Patrol();
     }
 
     // Update is called once per frame
     void Update()
-    {     
+    {
+        if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.GAMEOVER)
+        {
+            agent.isStopped = true;
+            agent.SetDestination(transform.position);
+        }
+
         //Checks if destination has been reached before going to the next destination
-        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
+        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
         {
             //Reached a destination, go to the next one
             if (agent.destination.x == agent.transform.position.x && agent.destination.z == agent.transform.position.z)
