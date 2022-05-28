@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class HeadAI : MonoBehaviour
 {
@@ -11,12 +12,14 @@ public class HeadAI : MonoBehaviour
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float chaseSpeed, followSpeed, patrolSpeed;
     [SerializeField] private float followRange, chaseRange, farthestRange;
+    private PhotonView view;
     private bool patrolling, following, chasing;
     private float chaseTime;
     private RaycastHit hit;
     // Start is called before the first frame update
     void Start()
     {
+        view = GetComponent<PhotonView>();
         agent = GetComponent<NavMeshAgent>();
         Patrol();
         player = null;
