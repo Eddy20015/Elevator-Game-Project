@@ -17,6 +17,7 @@ public class Doomba : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        view = GetComponent<PhotonView>();
         agent = GetComponent<NavMeshAgent>();
         Patrol();
     }
