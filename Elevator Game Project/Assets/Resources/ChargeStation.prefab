@@ -4965,7 +4965,7 @@ GameObject:
   - component: {fileID: 7517667455191846185}
   - component: {fileID: 25185665222469959}
   m_Layer: 0
-  m_Name: Charged Audio (1)
+  m_Name: Ambient Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4999,7 +4999,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -5430,8 +5430,8 @@ MonoBehaviour:
   incrementAmount: 0.15
   isUsed: 0
   isCompleted: 0
-  audioSource: {fileID: 0}
-  chargingSound: {fileID: 0}
+  audioSource: {fileID: 1128377898677261652}
+  chargingSound: {fileID: 8300000, guid: acdba144ae27f2a4e8f51bbbbc4c23cd, type: 3}
 --- !u!114 &5422913485805782755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5601,7 +5601,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7286635711572567623}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: acdba144ae27f2a4e8f51bbbbc4c23cd, type: 3}
