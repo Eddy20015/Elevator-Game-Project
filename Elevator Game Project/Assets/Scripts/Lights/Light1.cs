@@ -14,7 +14,7 @@ public class Light1 : MonoBehaviourPunCallbacks
 
     [SerializeField] AudioSource audio;
 
-    AudioSource buzz;
+    [SerializeField] AudioSource buzz;
 
     bool canTurnOff;
 
