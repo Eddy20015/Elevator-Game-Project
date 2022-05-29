@@ -1348,6 +1348,7 @@ MonoBehaviour:
   lightObject: {fileID: 2267057715509417005}
   pointLight: {fileID: 6941627642299540763}
   audio: {fileID: 1124443504009685320}
+  buzz: {fileID: 5120629050153027588}
 --- !u!54 &8347037173104513383
 Rigidbody:
   m_ObjectHideFlags: 0
