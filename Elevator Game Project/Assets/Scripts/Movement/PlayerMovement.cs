@@ -57,8 +57,6 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     //controls the raycast form the camera to interact with interactable objects
     private void Update()
     {
-        Debug.Log(animator.GetBool("Charging"));
-
         if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
         {
             if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||

@@ -48,7 +48,6 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
         {
             view.RPC("RPC_SetIsUsed", RpcTarget.Others, false);
         }
-        other.GetComponent<Animator>().SetBool("Charging", false);
     }
 
     public bool getPuzzleState()

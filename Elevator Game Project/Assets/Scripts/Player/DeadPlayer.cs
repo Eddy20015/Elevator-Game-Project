@@ -19,7 +19,7 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
     private void Start()
     {
         PhotonView view = gameObject.GetPhotonView();
-        this.GetComponent<Animator>().SetBool("Is Dead", true);
+        gameObject.GetComponentInChildren<Animator>().SetBool("Is Dead", true);
     }
 
     private void Update()
@@ -44,6 +44,7 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
             Cursor.lockState = CursorLockMode.Locked;
             pauseUI.GetComponent<Canvas>().enabled = false;
         }
+        Debug.LogWarning(transform.rotation);
     }
 
     //sets the variable OriginalPlayer
@@ -65,14 +66,23 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
         if (chargedAmount >= maxChargeAmount)
         {
             Debug.Log("Done!");
-            Revive();
+            StartCoroutine(PlayAnim());
         }
+    }
+
+    public IEnumerator PlayAnim()
+    {
+        gameObject.transform.position = new Vector3(transform.position.x, transform.position.y + .1f, transform.position.z);
+        gameObject.GetComponentInChildren<Animator>().SetBool("Is Dead", false);
+        yield return new WaitForSecondsRealtime(2.7f);
+        Revive();
     }
 
     public void Revive()
     {
         Debug.Log("Revived");
-        this.GetComponent<Animator>().SetBool("Is Dead", false);
+        
+
         PhotonView view = gameObject.GetPhotonView();
 
         //The Master will be trying to revive P2 and vice versa on this end, will be RPCd later
