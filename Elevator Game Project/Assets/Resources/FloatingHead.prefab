@@ -725,7 +725,7 @@ MonoBehaviour:
   player: {fileID: 0}
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 9
   patrolPoints: []
   agent: {fileID: 4721079363544350655}
   chaseSpeed: 5
