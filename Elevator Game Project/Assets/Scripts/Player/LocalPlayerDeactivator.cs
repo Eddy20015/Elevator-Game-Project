@@ -6,9 +6,9 @@ public class LocalPlayerDeactivator : MonoBehaviour
 {
     void Awake()
     {
-        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
+        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
-            gameObject.SetActive(true);
+            gameObject.SetActive(false);
         }
     }
 }
