@@ -186,6 +186,8 @@ public class GameStateManager : MonoBehaviourPunCallbacks
 
         GameState = GAMESTATE.PLAYING;
 
+        TitleScreenMusic.Destroy();
+
         //not sure if this is necessary just cuz this is for local
         if(PlayState == PLAYSTATE.LOCAL)
         {
