@@ -17,6 +17,7 @@ public class VictoryDetection : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             playersInArea += 1;
+            Debug.Log("ADDED");
             if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL && ChargingStationManager.chargingStationManager.IsCompleted)
             {
                 StartCoroutine(EndGame());

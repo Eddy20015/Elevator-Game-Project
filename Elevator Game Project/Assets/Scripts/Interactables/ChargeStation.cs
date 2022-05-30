@@ -15,6 +15,8 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
     public float ChargedAmount { get => chargedAmount;}
     public float MaxChargeAmount { get => maxChargeAmount;}
 
+    bool isGreen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,9 +29,12 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
 
     private void Update()
     {
-        if(isCompleted)
+        if(isCompleted && !isGreen)
         {
             GetComponentInChildren<Light>().color = Color.green;
+            //Did this instead of playOneShot because it was repeating
+            audioSource.enabled = true;
+            isGreen = true;
         }
     }
 
