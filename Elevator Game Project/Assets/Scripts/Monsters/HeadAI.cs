@@ -23,11 +23,6 @@ public class HeadAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         Patrol();
         player = null;
-
-        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
-        {
-            player = FindObjectOfType<PlayerScript>().gameObject;
-        }
     }
 
     // Update is called once per frame
@@ -58,12 +53,10 @@ public class HeadAI : MonoBehaviour
                 player = hit.transform.gameObject;
                 Follow();
             }
-
-            Debug.Log(hit.transform.position);
         }
         if(player != null)
         //Keep following if they are still in distance
-        if (Vector3.Distance(transform.position, player.transform.position) < followRange)
+        if (Vector3.Distance(transform.position, player.transform.position) < followRange && following == true)
         {
             //Debug.Log(agent.speed);
             Follow();
@@ -81,7 +74,7 @@ public class HeadAI : MonoBehaviour
         }
         if (player != null)
             //Keep chasing if they are still in distance
-            if (Vector3.Distance(transform.position, player.transform.position) < chaseRange)
+            if (Vector3.Distance(transform.position, player.transform.position) < chaseRange && chasing == true)
             {
                 Chase();
             }
