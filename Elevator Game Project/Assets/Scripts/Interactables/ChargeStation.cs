@@ -37,7 +37,7 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
     {
         if(other.tag == "Player")
         {
-            //Interact();
+            
         }
     }
 
@@ -48,6 +48,7 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
         {
             view.RPC("RPC_SetIsUsed", RpcTarget.Others, false);
         }
+        other.GetComponent<Animator>().SetBool("Charging", false);
     }
 
     public bool getPuzzleState()

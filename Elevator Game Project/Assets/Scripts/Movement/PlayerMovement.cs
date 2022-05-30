@@ -57,6 +57,8 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     //controls the raycast form the camera to interact with interactable objects
     private void Update()
     {
+        Debug.Log(animator.GetBool("Charging"));
+
         if (GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)
         {
             if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
@@ -66,7 +68,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 {
                     //replace "Interaction" with whatever we name it in the Interactable script
                     interactionTarget.SendMessage("Interact");
-                    animator.SetBool("Charging", true);
+                    //animator.SetBool("Charging", true);
                 }
 
                 //deals with raycast for interacting with interactable objects
@@ -171,6 +173,11 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 else
                 {
                     animator.SetFloat("Speed", 0);
+                }
+
+                if (Input.GetKey(KeyCode.E))
+                {
+                    animator.SetBool("Charging", true);
                 }
 
                 

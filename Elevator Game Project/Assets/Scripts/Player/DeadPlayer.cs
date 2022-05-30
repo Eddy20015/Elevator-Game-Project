@@ -19,6 +19,7 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
     private void Start()
     {
         PhotonView view = gameObject.GetPhotonView();
+        this.GetComponent<Animator>().SetBool("Is Dead", true);
     }
 
     private void Update()
@@ -71,6 +72,7 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
     public void Revive()
     {
         Debug.Log("Revived");
+        this.GetComponent<Animator>().SetBool("Is Dead", false);
         PhotonView view = gameObject.GetPhotonView();
 
         //The Master will be trying to revive P2 and vice versa on this end, will be RPCd later
