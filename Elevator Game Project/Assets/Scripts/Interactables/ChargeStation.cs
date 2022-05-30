@@ -42,7 +42,7 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
     {
         if(other.tag == "Player")
         {
-            //Interact();
+            
         }
     }
 

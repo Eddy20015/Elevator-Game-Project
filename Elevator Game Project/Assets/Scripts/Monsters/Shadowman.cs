@@ -23,6 +23,10 @@ public class Shadowman : Monster
 
     [SerializeField] private float speedIncrease;
 
+    [SerializeField] private ChargingStationManager chargeManager;
+
+    private int numCompletedGenerators = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -81,6 +85,12 @@ public class Shadowman : Monster
             }
         }
         Patrol();
+ 
+        if (numCompletedGenerators < chargeManager.NumOfCompletedStations)
+        {
+            this.speed += speedIncrease;
+            numCompletedGenerators += 1;
+        }
     }
 
     public override void Chase()

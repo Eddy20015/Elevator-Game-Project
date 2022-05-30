@@ -114,8 +114,8 @@ public class PlayerScript : MonoBehaviourPunCallbacks
                 VideoManager.SetJumpScare1(false);
 
                 GameObject DeadPlayer = PhotonNetwork.Instantiate(DeadPlayerName,
-                    new Vector3(transform.position.x, 0.5f, transform.position.z),
-                    Quaternion.identity);
+                    new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
+                Debug.Log(transform.rotation);
 
                 //sets the dead player to have access to the UI panels
                 DeadPlayer DeadPlayerScript = DeadPlayer.GetComponent<DeadPlayer>();

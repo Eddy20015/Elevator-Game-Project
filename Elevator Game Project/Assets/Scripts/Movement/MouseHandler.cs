@@ -59,8 +59,13 @@ public class MouseHandler : MonoBehaviour
                 xRotation = Mathf.Clamp(xRotation, -90, 90);
 
                 cam.transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f);
-                player.transform.eulerAngles = new Vector3(0.0f, yRotation, 0.0f);
-                model.transform.rotation = player.transform.rotation;
+
+                //to check if player is dead
+                if (model != null)
+                {
+                    player.transform.eulerAngles = new Vector3(0.0f, yRotation, 0.0f);
+                    model.transform.rotation = player.transform.rotation;
+                }
             }
         }
     }

@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 {
                     //replace "Interaction" with whatever we name it in the Interactable script
                     interactionTarget.SendMessage("Interact");
-                    animator.SetBool("Charging", true);
+                    //animator.SetBool("Charging", true);
                 }
 
                 //deals with raycast for interacting with interactable objects
@@ -171,6 +171,11 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 else
                 {
                     animator.SetFloat("Speed", 0);
+                }
+
+                if (Input.GetKey(KeyCode.E))
+                {
+                    animator.SetBool("Charging", true);
                 }
 
                 
