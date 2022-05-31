@@ -13,6 +13,7 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] private int levelNumber;
     public void LoadScene()
     {
+        GameStateManager.Play();
         if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
         {
             SceneManager.LoadScene(sceneName);
