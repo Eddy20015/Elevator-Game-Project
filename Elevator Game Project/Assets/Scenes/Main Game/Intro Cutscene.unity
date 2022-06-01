@@ -157,6 +157,7 @@ MonoBehaviour:
   LeftVersion: {fileID: 32900000, guid: b73adc455e89f194c89fb35fb633eb2c, type: 3}
   VidPlayer: {fileID: 65651682}
   Loader: {fileID: 652292169}
+  BlackScreen: {fileID: 426189915}
 --- !u!328 &65651682
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -169,7 +170,7 @@ VideoPlayer:
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: e1e90199c1526b54d87d319a1125e9bf, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: _MainTex
@@ -487,7 +488,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6b9eaf30c51f2430e89b93fc08975ea6, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -623,7 +624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 490cb57423e503e45b7c13eb0a0e4d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Level1
+  sceneName: Level 1
   levelNumber: 6
 --- !u!4 &652292170
 Transform:
@@ -716,7 +717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7777814471222024267, guid: 765c2a69aa98f6c448c387678e471101, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 7777814471222024267, guid: 765c2a69aa98f6c448c387678e471101, type: 3}
       propertyPath: m_LocalRotation.w
@@ -880,6 +881,7 @@ GameObject:
   - component: {fileID: 1816397303}
   - component: {fileID: 1816397302}
   - component: {fileID: 1816397301}
+  - component: {fileID: 1816397304}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -952,6 +954,38 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1816397304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816397300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &1972498661
 GameObject:
   m_ObjectHideFlags: 0
