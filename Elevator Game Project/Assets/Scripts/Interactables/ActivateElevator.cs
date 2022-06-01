@@ -11,23 +11,29 @@ public class ActivateElevator : MonoBehaviour
     [SerializeField] private GameObject leftDoor, rightDoor;
     [SerializeField] private GameObject leftOpenDoorPosition, rightOpenDoorPosition;
     [SerializeField] private Vector3 initialLeftDoorPosition, initialRightDoorPosition;
-    [SerializeField] private float timeToOpenAndClose, howSmooth;
+    [SerializeField] private float timeToOpenAndClose, howSmooth, BeforeDoorsOpen;
+    [SerializeField] private AudioSource OpenDoorsAudio;
+    [SerializeField] private AudioSource CloseDoorsAudio;
     private void Start()
     {
         initialLeftDoorPosition = leftDoor.transform.position;
         initialRightDoorPosition = rightDoor.transform.position;
+        OpenDoorsAudio.Play();
         StartCoroutine(OpenLeftDoor());
         StartCoroutine(OpenRightDoor());
     }
 
     public void CloseDoors()
     {
+        CloseDoorsAudio.Play();
+        timeToOpenAndClose /= 2.5f;
         StartCoroutine(CloseLeftDoor());
         StartCoroutine(CloseRightDoor());
     }
 
     private IEnumerator OpenLeftDoor()
     {
+        yield return new WaitForSeconds(BeforeDoorsOpen);
         float elapsedTime = 0;
         while(elapsedTime < timeToOpenAndClose/10)
         {
@@ -40,6 +46,7 @@ public class ActivateElevator : MonoBehaviour
 
     private IEnumerator OpenRightDoor()
     {
+        yield return new WaitForSeconds(BeforeDoorsOpen);
         float elapsedTime = 0;
         while(elapsedTime < timeToOpenAndClose / 10)
         {

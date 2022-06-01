@@ -9,6 +9,7 @@ public class VictoryDetection : MonoBehaviour
     [SerializeField] private ActivateElevator elevatorAnims;
     [SerializeField] private GameObject invisibleCollider;
     [SerializeField] private FadingScript fadingScript;
+    [SerializeField] private SceneLoader Loader;
     private int playersInArea = 0;
 
 
@@ -47,10 +48,11 @@ public class VictoryDetection : MonoBehaviour
         fadingScript.FadeIn();
 
         yield return new WaitForSeconds(1f);
-        //Show the UI
-        GameStateManager.Victory();
-        victoryUI.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
+
+        //LoadTheNextLevel
+        Loader.LoadScene();
+
+        //Cursor.lockState = CursorLockMode.None;
     }
 
     private void OnTriggerExit(Collider other)

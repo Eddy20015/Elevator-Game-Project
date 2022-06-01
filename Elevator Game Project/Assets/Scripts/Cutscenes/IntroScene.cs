@@ -10,12 +10,11 @@ public class IntroScene : MonoBehaviourPunCallbacks
     [SerializeField] private VideoClip LeftVersion;
     [SerializeField] private VideoPlayer VidPlayer;
     [SerializeField] private SceneLoader Loader;
+    [SerializeField] private GameObject BlackScreen;
 
     private PhotonView view;
 
-    //these are important for all
-    private bool HadStartedPlaying;
-    private bool CheckOverCalled;
+    private bool HasPlayed;
 
     //these are important for online
     private bool MasterComplete;
@@ -52,14 +51,15 @@ public class IntroScene : MonoBehaviourPunCallbacks
         //isPlaying doesnt start right away, so use HadStartedPlaying to determine if it is just lagging or actually the end of the clip
         if (VidPlayer.isPlaying)
         {
-            HadStartedPlaying = true;
+            BlackScreen.SetActive(false);
+            HasPlayed = true;
         }
-        else if (HadStartedPlaying)
+        else
         {
-            if (!CheckOverCalled)
+            BlackScreen.SetActive(true);
+            if (HasPlayed)
             {
-                VidPlayer.loopPointReached += CheckOver;
-                CheckOverCalled = true;
+                VideoEnded();
             }
         }
 
@@ -74,8 +74,9 @@ public class IntroScene : MonoBehaviourPunCallbacks
     }
 
     //will be called when the clip is over
-    void CheckOver(UnityEngine.Video.VideoPlayer vp)
+    private void VideoEnded()
     {
+        Debug.LogError("Got into checkover");
         if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
             if(view.IsMine && PhotonNetwork.IsMasterClient)
@@ -90,6 +91,7 @@ public class IntroScene : MonoBehaviourPunCallbacks
         //offline players just need to load the scene when they finish
         else
         {
+            Debug.LogError("In Checkover calling LoadScene");
             Loader.LoadScene();
         }
     }
