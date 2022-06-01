@@ -14,6 +14,9 @@ public class ActivateElevator : MonoBehaviour
     [SerializeField] private float timeToOpenAndClose, howSmooth, BeforeDoorsOpen;
     [SerializeField] private AudioSource OpenDoorsAudio;
     [SerializeField] private AudioSource CloseDoorsAudio;
+
+    private bool ClosedDoorsStarted;
+
     private void Start()
     {
         initialLeftDoorPosition = leftDoor.transform.position;
@@ -26,7 +29,7 @@ public class ActivateElevator : MonoBehaviour
     public void CloseDoors()
     {
         CloseDoorsAudio.Play();
-        timeToOpenAndClose /= 2.5f;
+        ClosedDoorsStarted = true;
         StartCoroutine(CloseLeftDoor());
         StartCoroutine(CloseRightDoor());
     }
@@ -37,6 +40,10 @@ public class ActivateElevator : MonoBehaviour
         float elapsedTime = 0;
         while(elapsedTime < timeToOpenAndClose/10)
         {
+            if (ClosedDoorsStarted)
+            {
+                break;
+            }
             leftDoor.transform.position = Vector3.Lerp(leftDoor.transform.position, leftOpenDoorPosition.transform.position, elapsedTime / timeToOpenAndClose);
             elapsedTime += howSmooth;
             yield return new WaitForSeconds(howSmooth);
@@ -50,6 +57,10 @@ public class ActivateElevator : MonoBehaviour
         float elapsedTime = 0;
         while(elapsedTime < timeToOpenAndClose / 10)
         {
+            if (ClosedDoorsStarted)
+            {
+                break;
+            }
             rightDoor.transform.position = Vector3.Lerp(rightDoor.transform.position, rightOpenDoorPosition.transform.position, elapsedTime / timeToOpenAndClose);
             elapsedTime += howSmooth;
             yield return new WaitForSeconds(howSmooth);
@@ -63,6 +74,7 @@ public class ActivateElevator : MonoBehaviour
         {
             leftDoor.transform.position = Vector3.Lerp(leftDoor.transform.position, initialLeftDoorPosition, elapsedTime / timeToOpenAndClose);
             elapsedTime += howSmooth;
+            Debug.Log(elapsedTime);
             yield return new WaitForSeconds(howSmooth);
         }
     }

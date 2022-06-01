@@ -1103,7 +1103,7 @@ MonoBehaviour:
   rightOpenDoorPosition: {fileID: 7859742101672671563}
   initialLeftDoorPosition: {x: 0, y: 0, z: 0}
   initialRightDoorPosition: {x: 0, y: 0, z: 0}
-  timeToOpenAndClose: 25
+  timeToOpenAndClose: 50
   howSmooth: 0.01
   BeforeDoorsOpen: 3.2
   OpenDoorsAudio: {fileID: 0}
