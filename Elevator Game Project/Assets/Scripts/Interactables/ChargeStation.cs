@@ -106,7 +106,14 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
 
     public void LookAway()
     {
-        view.RPC("RPC_SetIsUsed", RpcTarget.Others, false);
+        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        {
+            view.RPC("RPC_SetIsUsed", RpcTarget.Others, false);
+        }
+        else
+        {
+            isUsed = false;
+        }
     }
 
     //Multiplayer code
