@@ -209,6 +209,6 @@ public class GameStateManager : MonoBehaviourPunCallbacks
 
         //this is so that the game freezes when it's gameover
         //can be removed if we don't like the look
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
     }
 }
