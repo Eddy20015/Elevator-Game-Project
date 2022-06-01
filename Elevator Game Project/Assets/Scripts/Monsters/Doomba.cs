@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
 
-public class Doomba : MonoBehaviour
+public class Doomba : Monster
 {
     [SerializeField] private GameObject player;
     [SerializeField] private LayerMask playerLayer;
@@ -135,5 +135,10 @@ public class Doomba : MonoBehaviour
         }
         
         //Debug.Log("Did Hit");
+    }
+
+    public override void Kill()
+    {
+        base.Kill();
     }
 }
