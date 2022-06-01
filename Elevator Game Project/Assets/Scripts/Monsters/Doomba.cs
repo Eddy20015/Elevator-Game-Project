@@ -14,6 +14,7 @@ public class Doomba : MonoBehaviour
     private bool patrolling;
     private PhotonView view;
     private RaycastHit hit;
+    [SerializeField] GameObject head;
     // Start is called before the first frame update
     void Start()
     {
@@ -89,7 +90,7 @@ public class Doomba : MonoBehaviour
                     }
                     else if (patrolling == false)
                     {
-                        Patrol();
+                        //Patrol();
                         //Animation Code would be here to go back to patrolling
 
                     }
@@ -109,15 +110,24 @@ public class Doomba : MonoBehaviour
         agent.speed = patrolSpeed;
         agent.SetDestination(patrolPoints[Random.Range(0, patrolPoints.Length)].transform.position);
         transform.LookAt(agent.destination);
+        if (head.activeSelf)
+        {
+            head.SetActive(false);
+        }
     }
 
     public void Chase()
     {
         patrolling = false;
-        Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.yellow);
+        //Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.yellow);
         transform.LookAt(hit.transform.position);
         agent.speed = chaseSpeed;
         agent.SetDestination(hit.transform.position);
+        if (!head.activeSelf)
+        {
+            head.SetActive(true);
+        }
+        
         //Debug.Log("Did Hit");
     }
 }
