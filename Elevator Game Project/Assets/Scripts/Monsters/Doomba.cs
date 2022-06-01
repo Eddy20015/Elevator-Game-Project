@@ -102,6 +102,11 @@ public class Doomba : MonoBehaviour
                 }
             }
         }
+
+        if (patrolling)
+        {
+            Debug.Log(agent.destination);
+        }
     }
 
     public void Patrol()
@@ -114,6 +119,7 @@ public class Doomba : MonoBehaviour
         {
             head.SetActive(false);
         }
+        Debug.Log(agent.destination);
     }
 
     public void Chase()
