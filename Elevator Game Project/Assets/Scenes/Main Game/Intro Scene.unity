@@ -1040,7 +1040,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7859742100139660356, guid: d143b20112ec643b3a60200339fee20f, type: 3}
       propertyPath: m_Name
-      value: ElevatorDoors (1)
+      value: ElevatorDoors
       objectReference: {fileID: 0}
     - target: {fileID: 7859742100139660357, guid: d143b20112ec643b3a60200339fee20f, type: 3}
       propertyPath: m_RootOrder
@@ -1087,6 +1087,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7859742100139660410, guid: d143b20112ec643b3a60200339fee20f, type: 3}
+      propertyPath: howSmooth
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7859742100139660410, guid: d143b20112ec643b3a60200339fee20f, type: 3}
       propertyPath: OpenDoorsAudio
       value: 
       objectReference: {fileID: 5875582420260818845}
@@ -1094,6 +1098,10 @@ PrefabInstance:
       propertyPath: CloseDoorsAudio
       value: 
       objectReference: {fileID: 754812966}
+    - target: {fileID: 7859742100139660410, guid: d143b20112ec643b3a60200339fee20f, type: 3}
+      propertyPath: timeToOpenAndClose
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d143b20112ec643b3a60200339fee20f, type: 3}
 --- !u!1 &1519895185
