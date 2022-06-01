@@ -26,7 +26,6 @@ public class ActivateElevator : MonoBehaviour
     public void CloseDoors()
     {
         CloseDoorsAudio.Play();
-        timeToOpenAndClose /= 2.5f;
         StartCoroutine(CloseLeftDoor());
         StartCoroutine(CloseRightDoor());
     }
@@ -63,6 +62,7 @@ public class ActivateElevator : MonoBehaviour
         {
             leftDoor.transform.position = Vector3.Lerp(leftDoor.transform.position, initialLeftDoorPosition, elapsedTime / timeToOpenAndClose);
             elapsedTime += howSmooth;
+            Debug.Log(elapsedTime);
             yield return new WaitForSeconds(howSmooth);
         }
     }
