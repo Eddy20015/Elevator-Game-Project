@@ -44,7 +44,7 @@ public class Doomba : Monster
             //Checks if a player is in line of sight, if they go out of line of sight, go back to patrolling
             if (Physics.Raycast(transform.position, transform.forward, out hit, range, playerLayer))
             {
-                if (hit.transform.tag == "Player" && ChargingStationManager.chargingStationManager.NumOfCompletedStations >= 1)
+                if (hit.transform.tag == "Player" && ChargingStationManager.chargingStationManager.NumOfCompletedStations >= 2)
                 {
                     Chase();
                     //Animation Code would be here for beginning to chase
