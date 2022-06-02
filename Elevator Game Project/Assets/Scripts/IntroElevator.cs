@@ -29,7 +29,10 @@ public class IntroElevator : MonoBehaviourPunCallbacks
             print("Loader is null");
         }
 
-        if(!PhotonIEnumeratorCalled & MasterIn & FollowIn)
+        print("MasterComplete is " + MasterIn);
+        print("FollowComplete is " + FollowIn);
+
+        if (!PhotonIEnumeratorCalled & MasterIn & FollowIn)
         {
             PhotonIEnumeratorCalled = true;
             StartCoroutine(BeginGame());
@@ -46,7 +49,10 @@ public class IntroElevator : MonoBehaviourPunCallbacks
             }
             else
             {
-                view.RPC("RPC_SetPhotonBool", RpcTarget.All, PhotonNetwork.IsMasterClient, true);
+                if (view.IsMine)
+                {
+                    view.RPC("RPC_SetPhotonBool", RpcTarget.All, PhotonNetwork.IsMasterClient, true);
+                }
             }
         }
     }
@@ -81,6 +87,7 @@ public class IntroElevator : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1.5f);
         //Close the elevators 
         elevatorAnims.CloseDoors();
+        GameStateManager.Cinematics();
 
         yield return new WaitForSeconds(3.5f);
         //Fade In
