@@ -58,7 +58,7 @@ public class HeadAI : Monster
         }
         if(player != null)
         //Keep following if they are still in distance
-        if (Vector3.Distance(transform.position, player.transform.position) < followRange && following == true)
+        if (Vector3.Distance(transform.position, player.transform.position) < followRange)
         {
             //Debug.Log(agent.speed);
             Follow();
@@ -76,7 +76,7 @@ public class HeadAI : Monster
         }
         if (player != null)
             //Keep chasing if they are still in distance
-            if (Vector3.Distance(transform.position, player.transform.position) < chaseRange && chasing == true)
+            if (Vector3.Distance(transform.position, player.transform.position) < chaseRange)
             {
                 Chase();
             }
