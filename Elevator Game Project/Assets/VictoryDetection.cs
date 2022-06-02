@@ -10,6 +10,7 @@ public class VictoryDetection : MonoBehaviour
     [SerializeField] private GameObject invisibleCollider;
     [SerializeField] private FadingScript fadingScript;
     [SerializeField] private SceneLoader Loader;
+    [SerializeField] private string NextLevelName;
     private int playersInArea = 0;
 
 
@@ -50,7 +51,15 @@ public class VictoryDetection : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         //LoadTheNextLevel
-        Loader.LoadScene();
+        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
+        {
+            Loader.LoadScene();
+        }
+        else
+        {
+            GameStateManager.Start(NextLevelName);
+        }
+
 
         //Cursor.lockState = CursorLockMode.None;
     }

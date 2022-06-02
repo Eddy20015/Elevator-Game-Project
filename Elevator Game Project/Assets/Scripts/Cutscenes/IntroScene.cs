@@ -70,11 +70,13 @@ public class IntroScene : MonoBehaviourPunCallbacks
         {
             print("MasterComplete is " + MasterComplete);
             print("FollowComplete is " + FollowComplete);
+
             //when the game is online, make sure that both clips have ended before going to the next scene
             if (!LoadCalled && MasterComplete && FollowComplete)
             {
-                Loader.LoadScene();
                 LoadCalled = true;
+                GameStateManager.Start("Level 1");
+                //view.RPC("RPC_Start", RpcTarget.All);
             }
         }
     }
@@ -92,6 +94,7 @@ public class IntroScene : MonoBehaviourPunCallbacks
             else
             {
                 view.RPC("RPC_FollowDone", RpcTarget.All);
+                //FollowComplete = true;
             }
         }
         //offline players just need to load the scene when they finish
@@ -112,4 +115,10 @@ public class IntroScene : MonoBehaviourPunCallbacks
     {
         FollowComplete = true;
     }
+
+    /*[PunRPC]
+    private void RPC_Start()
+    {
+        GameStateManager.Start("Level 1");
+    }*/
 }
