@@ -49,13 +49,16 @@ public class IntroElevator : MonoBehaviourPunCallbacks
             }
             else
             {
-                if (view.IsMine)
+                if (other.gameObject.GetPhotonView().IsMine == true)
                 {
-                    view.RPC("RPC_SetPhotonBool", RpcTarget.All, true, true);
-                }
-                else
-                {
-                    view.RPC("RPC_SetPhotonBool", RpcTarget.All, false, true);
+                    if (view.IsMine)
+                    {
+                        view.RPC("RPC_SetPhotonBool", RpcTarget.All, true, true);
+                    }
+                    else
+                    {
+                        view.RPC("RPC_SetPhotonBool", RpcTarget.All, false, true);
+                    }
                 }
             }
         }
@@ -68,11 +71,11 @@ public class IntroElevator : MonoBehaviourPunCallbacks
         {
             if (view.IsMine)
             {
-                view.RPC("RPC_SetPhotonBool", RpcTarget.All, true, true);
+                view.RPC("RPC_SetPhotonBool", RpcTarget.All, true, false);
             }
             else
             {
-                view.RPC("RPC_SetPhotonBool", RpcTarget.All, false, true);
+                view.RPC("RPC_SetPhotonBool", RpcTarget.All, false, false);
             }
         }
     }
