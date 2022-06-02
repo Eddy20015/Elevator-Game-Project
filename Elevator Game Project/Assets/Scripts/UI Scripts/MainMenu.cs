@@ -9,6 +9,8 @@ public class MainMenu : MonoBehaviourPunCallbacks
 
     [SerializeField] private string SingleplayerLevel;
 
+    [SerializeField] string[] levels;
+
     private bool OneFrame = false;
 
     private void Update()
@@ -38,6 +40,12 @@ public class MainMenu : MonoBehaviourPunCallbacks
     {
         GameStateManager.Local();
         GameStateManager.Start(SingleplayerLevel);
+    }
+
+    public void OnClickContinue()
+    {
+        GameStateManager.Local();
+        GameStateManager.Start(levels[PlayerPrefs.GetInt("Level")]);
     }
 
     //Enter the Lobby
