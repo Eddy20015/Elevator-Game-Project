@@ -62,7 +62,7 @@ Transform:
   m_LocalScale: {x: 0.073953, y: 0.073953, z: 0.073953}
   m_Children: []
   m_Father: {fileID: 6196095406374785672}
-  m_RootOrder: 1
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &5107155990515999372
 MeshFilter:
@@ -156,7 +156,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5888341229919094050}
-  m_RootOrder: 7
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &4629839110232782137
 AudioSource:
@@ -264,6 +264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6822433814486052139}
   - component: {fileID: 2855641510848637955}
+  - component: {fileID: 6366518092557497630}
   m_Layer: 0
   m_Name: doomba body ani_114 (2)
   m_TagString: Untagged
@@ -282,8 +283,8 @@ Transform:
   m_LocalPosition: {x: -0.099998474, y: 0.53999996, z: 0.1499939}
   m_LocalScale: {x: 0.17017582, y: 0.1701758, z: 0.1701758}
   m_Children: []
-  m_Father: {fileID: 5888341229919094050}
-  m_RootOrder: 2
+  m_Father: {fileID: 6196095406374785672}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -71.987, y: 356.153, z: -56.778}
 --- !u!212 &2855641510848637955
 SpriteRenderer:
@@ -336,6 +337,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &6366518092557497630
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2903662887561498017}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 874333fc2b30214489da81f5277014ac, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3776897641578161256
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,6 +366,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2665599838638399420}
   - component: {fileID: 4759687052708550565}
+  - component: {fileID: 5834079606174019337}
   m_Layer: 0
   m_Name: doomba body ani_114 (1)
   m_TagString: Untagged
@@ -362,10 +383,10 @@ Transform:
   m_GameObject: {fileID: 3776897641578161256}
   m_LocalRotation: {x: 0.5038128, y: 0.30315614, z: 0.40182182, w: -0.70200306}
   m_LocalPosition: {x: -0.09000015, y: -0.100000024, z: -0.05999756}
-  m_LocalScale: {x: 0.11738693, y: 0.11738691, z: 0.11738691}
+  m_LocalScale: {x: 0.11738695, y: 0.117386885, z: 0.11738687}
   m_Children: []
-  m_Father: {fileID: 5888341229919094050}
-  m_RootOrder: 1
+  m_Father: {fileID: 6196095406374785672}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -71.987, y: 356.153, z: -56.778}
 --- !u!212 &4759687052708550565
 SpriteRenderer:
@@ -418,6 +439,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &5834079606174019337
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3776897641578161256}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0c127782191d14e4b94dbaeff4603c9d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4481684118576092773
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,6 +468,7 @@ GameObject:
   m_Component:
   - component: {fileID: 942316207486387073}
   - component: {fileID: 3662383440180871572}
+  - component: {fileID: 5900228512238732439}
   m_Layer: 0
   m_Name: doomba body ani_114 (4)
   m_TagString: Untagged
@@ -446,8 +487,8 @@ Transform:
   m_LocalPosition: {x: 0.11999893, y: 2.13, z: 0.94999695}
   m_LocalScale: {x: 0.21157175, y: 0.21157175, z: 0.26490897}
   m_Children: []
-  m_Father: {fileID: 5888341229919094050}
-  m_RootOrder: 4
+  m_Father: {fileID: 6196095406374785672}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: -44.572, y: 378.318, z: -76.241}
 --- !u!212 &3662383440180871572
 SpriteRenderer:
@@ -500,6 +541,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &5900228512238732439
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4481684118576092773}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b18c7925e5d8def419dc6c365b120246, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5397876163664263297
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,7 +589,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5888341229919094050}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &4097709381168746194
 AudioSource:
@@ -663,8 +723,14 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3084120917105650690}
-  - {fileID: 5917207560789687067}
+  - {fileID: 2566143544968766318}
+  - {fileID: 2665599838638399420}
+  - {fileID: 6822433814486052139}
+  - {fileID: 4542542785654170251}
+  - {fileID: 942316207486387073}
+  - {fileID: 7722098857382683605}
   - {fileID: 5888341229919094050}
+  - {fileID: 5917207560789687067}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -765,6 +831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19a6a4a0bc15cbf409ba3e7b31b3486e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 0
   player: {fileID: 0}
   playerLayer:
     serializedVersion: 2
@@ -923,6 +990,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2566143544968766318}
   - component: {fileID: 2918103974272360424}
+  - component: {fileID: 2723620088634273411}
   m_Layer: 0
   m_Name: doomba body ani_114
   m_TagString: Untagged
@@ -941,8 +1009,8 @@ Transform:
   m_LocalPosition: {x: -0.08000183, y: -0.53, z: -0.19999695}
   m_LocalScale: {x: 0.08529167, y: 0.08529166, z: 0.08529166}
   m_Children: []
-  m_Father: {fileID: 5888341229919094050}
-  m_RootOrder: 0
+  m_Father: {fileID: 6196095406374785672}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -71.987, y: 356.153, z: -56.778}
 --- !u!212 &2918103974272360424
 SpriteRenderer:
@@ -995,6 +1063,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &2723620088634273411
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7187880413721850220}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3a894d86d4673f5419ee72adc32ebb46, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7650910671897103376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,6 +1092,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4542542785654170251}
   - component: {fileID: 1889075260177581098}
+  - component: {fileID: 2887605260112874648}
   m_Layer: 0
   m_Name: doomba body ani_114 (3)
   m_TagString: Untagged
@@ -1021,10 +1109,10 @@ Transform:
   m_GameObject: {fileID: 7650910671897103376}
   m_LocalRotation: {x: 0.44962108, y: 0.21300825, z: 0.46165892, w: -0.73439735}
   m_LocalPosition: {x: -0.060001373, y: 1.1600001, z: 0.32000732}
-  m_LocalScale: {x: 0.18549164, y: 0.18549164, z: 0.23225409}
+  m_LocalScale: {x: 0.18549164, y: 0.18549164, z: 0.23225413}
   m_Children: []
-  m_Father: {fileID: 5888341229919094050}
-  m_RootOrder: 3
+  m_Father: {fileID: 6196095406374785672}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: -58.99, y: 371.451, z: -70.801}
 --- !u!212 &1889075260177581098
 SpriteRenderer:
@@ -1077,6 +1165,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &2887605260112874648
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7650910671897103376}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 165ef30a084a72a4e81a5f07ebffa71e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8447102193698383626
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,6 +1194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7722098857382683605}
   - component: {fileID: 8517754474215515563}
+  - component: {fileID: 4993601283912353673}
   m_Layer: 0
   m_Name: doomba head ani2
   m_TagString: Untagged
@@ -1103,10 +1211,10 @@ Transform:
   m_GameObject: {fileID: 8447102193698383626}
   m_LocalRotation: {x: -0.09218102, y: -0.06864698, z: -0.037630044, w: 0.99266016}
   m_LocalPosition: {x: -0.3199997, y: 2.07, z: 2.0200043}
-  m_LocalScale: {x: 0.34472796, y: 0.34472793, z: 0.34472793}
+  m_LocalScale: {x: 0.34472805, y: 0.34472793, z: 0.34472793}
   m_Children: []
-  m_Father: {fileID: 5888341229919094050}
-  m_RootOrder: 5
+  m_Father: {fileID: 6196095406374785672}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: -10.846, y: -7.568, z: -3.622}
 --- !u!212 &8517754474215515563
 SpriteRenderer:
@@ -1159,6 +1267,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4993601283912353673
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8447102193698383626}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0f3cdbabc0343364a9ff1f47a72f3de8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &9180538694958197280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,20 +1310,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9180538694958197280}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2566143544968766318}
-  - {fileID: 2665599838638399420}
-  - {fileID: 6822433814486052139}
-  - {fileID: 4542542785654170251}
-  - {fileID: 942316207486387073}
-  - {fileID: 7722098857382683605}
   - {fileID: 168762780154392387}
   - {fileID: 898307507891195054}
   m_Father: {fileID: 6196095406374785672}
-  m_RootOrder: 2
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &4864344467895073659
 SphereCollider:
@@ -1209,8 +1330,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2
-  m_Center: {x: 0, y: 2, z: 1}
+  m_Radius: 2.5928497
+  m_Center: {x: -0.335083, y: 2, z: 1.4332428}
 --- !u!1001 &2730271320573548586
 PrefabInstance:
   m_ObjectHideFlags: 0
