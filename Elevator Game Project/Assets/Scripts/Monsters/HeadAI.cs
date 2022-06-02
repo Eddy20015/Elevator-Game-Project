@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
 
-public class HeadAI : MonoBehaviour
+public class HeadAI : Monster
 {
     [SerializeField] private GameObject player;
     [SerializeField] private LayerMask playerLayer;

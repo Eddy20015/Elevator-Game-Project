@@ -109,6 +109,7 @@ public class Light1 : MonoBehaviourPunCallbacks
         multiplier = f;
     }
 
+    [PunRPC]
     public void ChangeIntensity2(float f)
     {
         //use a 0 to 1 scale for intensity
