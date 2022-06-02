@@ -2699,7 +2699,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SingleplayerLevel: Intro Scene
-  levels: []
+  levels:
+  - Intro Scene
+  - Level 1
+  - Level 2
+  - Level3
 --- !u!1 &1598241767
 GameObject:
   m_ObjectHideFlags: 0
