@@ -117,6 +117,7 @@ public class GameStateManager : MonoBehaviourPunCallbacks
     public static void Local()
     {
         PlayState = PLAYSTATE.LOCAL;
+        TitleScreenMusic.Destroy();
     }
 
     //set GameState to MENU, Multiplay to NONE and Load Main Menu
@@ -138,6 +139,7 @@ public class GameStateManager : MonoBehaviourPunCallbacks
     public static void Online()
     {
         PlayState = PLAYSTATE.ONLINE;
+        TitleScreenMusic.Destroy();
     }
 
     //sets GameState to PAUSE
@@ -160,6 +162,7 @@ public class GameStateManager : MonoBehaviourPunCallbacks
     {
         GameState = GAMESTATE.PLAYING;
         Time.timeScale = 1f;
+        TitleScreenMusic.Destroy();
     }
 
     //starts the current scene again
