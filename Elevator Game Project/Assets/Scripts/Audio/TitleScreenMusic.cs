@@ -32,8 +32,11 @@ public class TitleScreenMusic : MonoBehaviour
     {
         //Destroys music when starting a level
 
-        GameObject g = titleScreenMusic.gameObject;
-        titleScreenMusic = null;
-        Destroy(g);
+        if (titleScreenMusic != null)
+        {
+            GameObject g = titleScreenMusic.gameObject;
+            titleScreenMusic = null;
+            Destroy(g);
+        }
     }
 }

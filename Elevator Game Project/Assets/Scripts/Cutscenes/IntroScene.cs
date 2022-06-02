@@ -11,18 +11,21 @@ public class IntroScene : MonoBehaviourPunCallbacks
     [SerializeField] private VideoPlayer VidPlayer;
     [SerializeField] private SceneLoader Loader;
     [SerializeField] private GameObject BlackScreen;
-
-    private PhotonView view;
+    [SerializeField] private PhotonView view;
 
     private bool HasPlayed;
 
     //these are important for online
+    private bool LoadCalled;
     private bool MasterComplete;
     private bool FollowComplete;
 
     void Awake()
     {
         GameStateManager.Cinematics();
+
+        MasterComplete = false;
+        FollowComplete = false;
 
         //if you game is online and you are the masterer, then play the right version. Otherwise, play the left version
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient)
@@ -65,10 +68,15 @@ public class IntroScene : MonoBehaviourPunCallbacks
 
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
+            print("MasterComplete is " + MasterComplete);
+            print("FollowComplete is " + FollowComplete);
+
             //when the game is online, make sure that both clips have ended before going to the next scene
-            if (MasterComplete && FollowComplete)
+            if (!LoadCalled && MasterComplete && FollowComplete)
             {
-                Loader.LoadScene();
+                LoadCalled = true;
+                GameStateManager.Start("Level 1");
+                //view.RPC("RPC_Start", RpcTarget.All);
             }
         }
     }
@@ -76,22 +84,22 @@ public class IntroScene : MonoBehaviourPunCallbacks
     //will be called when the clip is over
     private void VideoEnded()
     {
-        Debug.LogError("Got into checkover");
+        Debug.LogError("Got into VideoEnded");
         if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
-            if(view.IsMine && PhotonNetwork.IsMasterClient)
+            if(view.IsMine)
             {
                 view.RPC("RPC_MasterDone", RpcTarget.All);
             }
-            else if(view.IsMine && !PhotonNetwork.IsMasterClient)
+            else
             {
                 view.RPC("RPC_FollowDone", RpcTarget.All);
+                //FollowComplete = true;
             }
         }
         //offline players just need to load the scene when they finish
         else
         {
-            Debug.LogError("In Checkover calling LoadScene");
             Loader.LoadScene();
         }
     }
@@ -107,4 +115,10 @@ public class IntroScene : MonoBehaviourPunCallbacks
     {
         FollowComplete = true;
     }
+
+    /*[PunRPC]
+    private void RPC_Start()
+    {
+        GameStateManager.Start("Level 1");
+    }*/
 }

@@ -35,6 +35,7 @@ public class PauseMenu : MonoBehaviourPunCallbacks
         GameStateManager.Play();
         Cursor.lockState = CursorLockMode.Locked;
         pauseUI.GetComponent<Canvas>().enabled = false;
+        AudioListener.pause = true;
     }
 
     public void OnClickMainMenu()
@@ -42,5 +43,6 @@ public class PauseMenu : MonoBehaviourPunCallbacks
         Cursor.lockState = CursorLockMode.None;
         GameStateManager.MainMenu();
         pauseUI.GetComponent<Canvas>().enabled = false;
+        AudioListener.pause = false;
     }
 }

@@ -171,6 +171,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                 else
                 {
                     animator.SetFloat("Speed", 0);
+                    isSprinting = false;
                 }
 
                 if (Input.GetKey(KeyCode.E))

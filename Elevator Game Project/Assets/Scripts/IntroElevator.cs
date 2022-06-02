@@ -29,7 +29,10 @@ public class IntroElevator : MonoBehaviourPunCallbacks
             print("Loader is null");
         }
 
-        if(!PhotonIEnumeratorCalled & MasterIn & FollowIn)
+        print("MasterIn is " + MasterIn);
+        print("FollowIn is " + FollowIn);
+
+        if (!PhotonIEnumeratorCalled & MasterIn & FollowIn)
         {
             PhotonIEnumeratorCalled = true;
             StartCoroutine(BeginGame());
@@ -46,7 +49,17 @@ public class IntroElevator : MonoBehaviourPunCallbacks
             }
             else
             {
-                view.RPC("RPC_SetPhotonBool", RpcTarget.All, PhotonNetwork.IsMasterClient, true);
+                if (other.gameObject.GetPhotonView().IsMine == true)
+                {
+                    if (view.IsMine)
+                    {
+                        view.RPC("RPC_SetPhotonBool", RpcTarget.All, true, true);
+                    }
+                    else
+                    {
+                        view.RPC("RPC_SetPhotonBool", RpcTarget.All, false, true);
+                    }
+                }
             }
         }
     }
@@ -54,16 +67,23 @@ public class IntroElevator : MonoBehaviourPunCallbacks
     //if online players leave, it has to reflect in the bools
     private void OnTriggerExit(Collider other)
     {
-        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
-            view.RPC("RPC_SetPhotonBool", RpcTarget.All, PhotonNetwork.IsMasterClient, false);
+            if (view.IsMine)
+            {
+                view.RPC("RPC_SetPhotonBool", RpcTarget.All, true, false);
+            }
+            else
+            {
+                view.RPC("RPC_SetPhotonBool", RpcTarget.All, false, false);
+            }
         }
     }
 
     [PunRPC]
-    private void RPC_SetPhotonBool(bool IsMaster, bool EnterStatus)
+    private void RPC_SetPhotonBool(bool IsMine, bool EnterStatus)
     {
-        if (IsMaster)
+        if (IsMine)
         {
             MasterIn = EnterStatus;
         }
@@ -81,6 +101,7 @@ public class IntroElevator : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1.5f);
         //Close the elevators 
         elevatorAnims.CloseDoors();
+        GameStateManager.Cinematics();
 
         yield return new WaitForSeconds(3.5f);
         //Fade In
