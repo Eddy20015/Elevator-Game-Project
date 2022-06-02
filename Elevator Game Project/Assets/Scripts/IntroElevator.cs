@@ -66,7 +66,7 @@ public class IntroElevator : MonoBehaviourPunCallbacks
     [PunRPC]
     private void RPC_SetPhotonBool(bool IsMine, bool EnterStatus)
     {
-        if (IsMaster)
+        if (IsMine)
         {
             MasterIn = EnterStatus;
         }
