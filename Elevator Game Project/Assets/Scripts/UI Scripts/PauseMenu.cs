@@ -28,6 +28,14 @@ public class PauseMenu : MonoBehaviourPunCallbacks
                 }
             }
         }
+        if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PAUSE)
+        {
+            AudioListener.pause = true;
+        }
+        else
+        {
+            AudioListener.pause = false;
+        }
     }
 
     public void OnClickResume()
@@ -35,7 +43,7 @@ public class PauseMenu : MonoBehaviourPunCallbacks
         GameStateManager.Play();
         Cursor.lockState = CursorLockMode.Locked;
         pauseUI.GetComponent<Canvas>().enabled = false;
-        AudioListener.pause = true;
+        AudioListener.pause = false;
     }
 
     public void OnClickMainMenu()

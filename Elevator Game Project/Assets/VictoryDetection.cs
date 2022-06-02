@@ -43,12 +43,13 @@ public class VictoryDetection : MonoBehaviour
         yield return new WaitForSeconds(1f);
         //Close the elevators 
         elevatorAnims.CloseDoors();
-        
-        yield return new WaitForSeconds(0.5f);
+        GameStateManager.Cinematics();
+
+        yield return new WaitForSeconds(3.5f);
         //Fade In
         fadingScript.FadeIn();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         //LoadTheNextLevel
         if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
