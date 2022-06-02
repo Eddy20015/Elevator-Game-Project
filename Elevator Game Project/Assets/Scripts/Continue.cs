@@ -9,7 +9,11 @@ public class Continue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PlayerPrefs.SetInt("Level", level);
+        if (GameStateManager.GetPlayState() != GameStateManager.PLAYSTATE.ONLINE)
+        {
+            PlayerPrefs.SetInt("Level", level);
+        }
+        
     }
 
     // Update is called once per frame
