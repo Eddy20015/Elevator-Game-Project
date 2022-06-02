@@ -80,14 +80,14 @@ public class IntroScene : MonoBehaviourPunCallbacks
     //will be called when the clip is over
     private void VideoEnded()
     {
-        Debug.LogError("Got into checkover");
+        Debug.LogError("Got into VideoEnded");
         if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
-            if(view.IsMine && PhotonNetwork.IsMasterClient)
+            if(view.IsMine)
             {
                 view.RPC("RPC_MasterDone", RpcTarget.All);
             }
-            else if(view.IsMine && !PhotonNetwork.IsMasterClient)
+            else
             {
                 view.RPC("RPC_FollowDone", RpcTarget.All);
             }

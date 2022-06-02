@@ -49,7 +49,14 @@ public class IntroElevator : MonoBehaviourPunCallbacks
             }
             else
             {
-                view.RPC("RPC_SetPhotonBool", RpcTarget.All, view.IsMine, true);
+                if (view.IsMine)
+                {
+                    view.RPC("RPC_SetPhotonBool", RpcTarget.All, true, true);
+                }
+                else
+                {
+                    view.RPC("RPC_SetPhotonBool", RpcTarget.All, false, true);
+                }
             }
         }
     }
@@ -57,9 +64,16 @@ public class IntroElevator : MonoBehaviourPunCallbacks
     //if online players leave, it has to reflect in the bools
     private void OnTriggerExit(Collider other)
     {
-        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
-            view.RPC("RPC_SetPhotonBool", RpcTarget.All, PhotonNetwork.IsMasterClient, false);
+            if (view.IsMine)
+            {
+                view.RPC("RPC_SetPhotonBool", RpcTarget.All, true, true);
+            }
+            else
+            {
+                view.RPC("RPC_SetPhotonBool", RpcTarget.All, false, true);
+            }
         }
     }
 
