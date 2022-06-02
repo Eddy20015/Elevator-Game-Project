@@ -29,8 +29,8 @@ public class IntroElevator : MonoBehaviourPunCallbacks
             print("Loader is null");
         }
 
-        print("MasterComplete is " + MasterIn);
-        print("FollowComplete is " + FollowIn);
+        print("MasterIn is " + MasterIn);
+        print("FollowIn is " + FollowIn);
 
         if (!PhotonIEnumeratorCalled & MasterIn & FollowIn)
         {
@@ -49,10 +49,7 @@ public class IntroElevator : MonoBehaviourPunCallbacks
             }
             else
             {
-                if (view.IsMine)
-                {
-                    view.RPC("RPC_SetPhotonBool", RpcTarget.All, PhotonNetwork.IsMasterClient, true);
-                }
+                view.RPC("RPC_SetPhotonBool", RpcTarget.All, view.IsMine, true);
             }
         }
     }
@@ -67,7 +64,7 @@ public class IntroElevator : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void RPC_SetPhotonBool(bool IsMaster, bool EnterStatus)
+    private void RPC_SetPhotonBool(bool IsMine, bool EnterStatus)
     {
         if (IsMaster)
         {
