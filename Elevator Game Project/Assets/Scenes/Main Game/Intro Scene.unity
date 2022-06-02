@@ -863,6 +863,71 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3703fd793fd548d9a81fbd78a2ebc0e, type: 3}
+--- !u!1001 &787225112
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2143225292812282707, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: m_RootOrder
+      value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143225292812282707, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143225292812282707, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143225292812282707, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143225292812282707, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143225292812282707, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143225292812282707, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143225292812282707, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143225292812282707, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143225292812282707, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143225292812282707, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361483605506270237, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: GameSceneName
+      value: Intro Scene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2361483605506270237, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: PlayerManagerName
+      value: PlayerManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6157486151252016250, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
+      propertyPath: m_Name
+      value: RoomManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5296cd3f3d75e1646a6a8f7b986e48df, type: 3}
 --- !u!1001 &887319797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1873,6 +1938,7 @@ GameObject:
   - component: {fileID: 5476354590255283434}
   - component: {fileID: 5476354590255283437}
   - component: {fileID: 5476354590255283440}
+  - component: {fileID: 5476354590255283441}
   m_Layer: 0
   m_Name: 'Intro '
   m_TagString: Untagged
@@ -1895,8 +1961,30 @@ MonoBehaviour:
   elevatorAnims: {fileID: 1878984225}
   invisibleCollider: {fileID: 7395084267095468775}
   fadingScript: {fileID: 4334096073027652031}
-  Loader: {fileID: 0}
-  view: {fileID: 0}
+  Loader: {fileID: 1125806313}
+  view: {fileID: 5476354590255283441}
+--- !u!114 &5476354590255283441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5476354590255283439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 4
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!4 &5875582420260818844
 Transform:
   m_ObjectHideFlags: 0

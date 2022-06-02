@@ -11,8 +11,7 @@ public class IntroScene : MonoBehaviourPunCallbacks
     [SerializeField] private VideoPlayer VidPlayer;
     [SerializeField] private SceneLoader Loader;
     [SerializeField] private GameObject BlackScreen;
-
-    private PhotonView view;
+    [SerializeField] private PhotonView view;
 
     private bool HasPlayed;
 
@@ -23,6 +22,9 @@ public class IntroScene : MonoBehaviourPunCallbacks
     void Awake()
     {
         GameStateManager.Cinematics();
+
+        MasterComplete = false;
+        FollowComplete = false;
 
         //if you game is online and you are the masterer, then play the right version. Otherwise, play the left version
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && PhotonNetwork.IsMasterClient)
@@ -66,6 +68,8 @@ public class IntroScene : MonoBehaviourPunCallbacks
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
             //when the game is online, make sure that both clips have ended before going to the next scene
+            print("MasterComplete is " + MasterComplete);
+            print("FollowComplete is " + FollowComplete);
             if (MasterComplete && FollowComplete)
             {
                 Loader.LoadScene();
@@ -91,7 +95,6 @@ public class IntroScene : MonoBehaviourPunCallbacks
         //offline players just need to load the scene when they finish
         else
         {
-            Debug.LogError("In Checkover calling LoadScene");
             Loader.LoadScene();
         }
     }
