@@ -139,7 +139,7 @@ public class GameStateManager : MonoBehaviourPunCallbacks
     public static void Online()
     {
         PlayState = PLAYSTATE.ONLINE;
-        TitleScreenMusic.Destroy();
+        //TitleScreenMusic.Destroy();
     }
 
     //sets GameState to PAUSE
