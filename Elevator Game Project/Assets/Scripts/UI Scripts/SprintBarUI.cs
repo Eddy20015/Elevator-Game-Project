@@ -53,7 +53,7 @@ public class SprintBarUI : MonoBehaviourPunCallbacks
         //Here we will simply set the Bar's value to the StaminaProportion since it will always be between 0 and 1
         if (MyPlayer != null)
         {
-            Bar.value = MyPlayer.GetStaminaProportion();
+            Bar.value = 1 - MyPlayer.GetStaminaProportion();
         }
     }
 }
