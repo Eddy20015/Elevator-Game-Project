@@ -85,7 +85,8 @@ public class Light1 : MonoBehaviourPunCallbacks
     {
         if (other.tag == "Monster" && 
            /*(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE || GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)*/
-            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER && canTurnOff)
+            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER &&
+            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.CINEMATIC && canTurnOff)
         {
             lightObject.SetActive(false);
             buzz.enabled = false;
@@ -97,7 +98,8 @@ public class Light1 : MonoBehaviourPunCallbacks
     {
         if (other.tag == "Monster" &&
             /*(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE || GameStateManager.GetGameState() == GameStateManager.GAMESTATE.PLAYING)*/
-            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER && canTurnOff)
+            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER &&
+            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.CINEMATIC && canTurnOff)
         {
             StartCoroutine(TurnLightOn());
         }

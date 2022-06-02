@@ -12,6 +12,7 @@ public class HeadAI : Monster
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float chaseSpeed, followSpeed, patrolSpeed;
     [SerializeField] private float followRange, chaseRange, farthestRange;
+    [SerializeField] AudioSource[] audioSources;
     private PhotonView view;
     private bool patrolling, following, chasing;
     private float chaseTime;
@@ -108,5 +109,13 @@ public class HeadAI : Monster
         agent.speed = patrolSpeed;
         agent.SetDestination(patrolPoints[Random.Range(0, patrolPoints.Length)].transform.position);
         transform.LookAt(agent.destination);
+    }
+
+    public override void Kill()
+    {
+        foreach (AudioSource a in audioSources)
+        {
+            a.enabled = false;
+        }
     }
 }

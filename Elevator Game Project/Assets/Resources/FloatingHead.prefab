@@ -711,6 +711,10 @@ MonoBehaviour:
   followRange: 15
   chaseRange: 5
   farthestRange: 0
+  audioSources:
+  - {fileID: 6818003483950783841}
+  - {fileID: 166438314325832724}
+  - {fileID: 955483818932268539}
 --- !u!1 &4756859169994500234
 GameObject:
   m_ObjectHideFlags: 0
