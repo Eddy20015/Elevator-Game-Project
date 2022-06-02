@@ -16,6 +16,7 @@ public class IntroScene : MonoBehaviourPunCallbacks
     private bool HasPlayed;
 
     //these are important for online
+    private bool LoadCalled;
     private bool MasterComplete;
     private bool FollowComplete;
 
@@ -70,9 +71,10 @@ public class IntroScene : MonoBehaviourPunCallbacks
             print("MasterComplete is " + MasterComplete);
             print("FollowComplete is " + FollowComplete);
             //when the game is online, make sure that both clips have ended before going to the next scene
-            if (MasterComplete && FollowComplete)
+            if (!LoadCalled && MasterComplete && FollowComplete)
             {
                 Loader.LoadScene();
+                LoadCalled = true;
             }
         }
     }
