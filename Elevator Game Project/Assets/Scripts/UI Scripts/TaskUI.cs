@@ -2,10 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TaskUI : MonoBehaviour
 {
-    [SerializeField] private Text taskUI;
+    [SerializeField] private GameObject task;
+    private GameObject specificTask;
+    private TextMeshProUGUI taskUI;
+
+    private void Awake()
+    {
+        taskUI = task.GetComponent<TextMeshProUGUI>();
+    }
 
     // Update is called once per frame
     void Update()
