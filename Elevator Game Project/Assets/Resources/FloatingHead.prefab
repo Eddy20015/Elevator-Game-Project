@@ -43,7 +43,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 40738508f1636434db56908cdf355098, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -266,7 +266,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 65ba63a320539412a96e6dc0985bda80, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -705,9 +705,9 @@ MonoBehaviour:
     m_Bits: 0
   patrolPoints: []
   agent: {fileID: 4721079363544350655}
-  chaseSpeed: 5
-  followSpeed: 3
-  patrolSpeed: 1
+  chaseSpeed: 8
+  followSpeed: 5
+  patrolSpeed: 3
   followRange: 15
   chaseRange: 5
   farthestRange: 0
@@ -929,7 +929,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3935ebd7d7848584eb80d68ef1dbf9a2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
