@@ -22,7 +22,9 @@ public class HeadAI : Monster
         view = GetComponent<PhotonView>();
         agent = GetComponent<NavMeshAgent>();
         Patrol();
-        player = null;
+        //player = null;
+
+
     }
 
     // Update is called once per frame
