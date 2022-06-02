@@ -48,15 +48,18 @@ public class ChargingStationManager : MonoBehaviour
         }
         //Updates all the clients
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        { 
             view.RPC("RPC_SetIsCompleted", RpcTarget.AllBuffered, isCompleted);
+            view.RPC("ChangeIntensity", RpcTarget.All, numOfCompletedStations);
+        } else
+        {
+            ChangeIntensity(numOfCompletedStations);
+        }
 
 
         //Debug.Log(isCompleted);
 
-        foreach (Light1 l in FindObjectsOfType<Light1>())
-        {
-            l.ChangeIntensity2(Mathf.Lerp(1, 0.25f, numOfCompletedStations / 4));
-        }
+
 
         //Light1.ChangeIntensity(Mathf.Lerp(1, 0.25f, numOfCompletedStations / 4));
     }
@@ -71,5 +74,14 @@ public class ChargingStationManager : MonoBehaviour
     void RPC_SetIsCompleted(bool status)
     {
         isCompleted = status;
+    }
+
+    [PunRPC]
+    void ChangeIntensity(float f)
+    {
+        foreach (Light1 l in FindObjectsOfType<Light1>())
+        {
+            l.ChangeIntensity2(Mathf.Lerp(1, 0.25f, f / 4));
+        }
     }
 }
