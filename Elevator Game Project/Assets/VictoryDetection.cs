@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class VictoryDetection : MonoBehaviour
+public class VictoryDetection : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private GameObject victoryUI;
@@ -58,7 +59,10 @@ public class VictoryDetection : MonoBehaviour
         }
         else
         {
-            GameStateManager.Start(NextLevelName);
+            if (PhotonNetwork.IsMasterClient)
+            {
+                GameStateManager.Start(NextLevelName);
+            }
         }
 
 

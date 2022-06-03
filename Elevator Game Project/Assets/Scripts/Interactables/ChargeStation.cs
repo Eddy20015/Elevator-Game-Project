@@ -71,7 +71,7 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
         //If it isn't fully charged + they are holding E + it isn't being used by another player
         if (chargedAmount < maxChargeAmount && Input.GetKey(KeyCode.E) && !isUsed)
         {
-            chargedAmount += incrementAmount;
+            chargedAmount += incrementAmount * Time.deltaTime * 60;
             audioSource.PlayOneShot(chargingSound);
 
             if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)

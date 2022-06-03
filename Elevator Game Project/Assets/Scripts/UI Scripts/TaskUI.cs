@@ -23,6 +23,14 @@ public class TaskUI : MonoBehaviour
 
     public void UpdateUI()
     {
+        if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.CINEMATIC)
+        {
+            GetComponent<Canvas>().enabled = false;
+        }
+        else
+        {
+            GetComponent<Canvas>().enabled = true;
+        }
         if (taskUI != null)
         {
             taskUI.text = ChargingStationManager.chargingStationManager.NumOfCompletedStations.ToString("0") + "/" + ChargingStationManager.chargingStationManager.MaxNumOfStations.ToString("0");
