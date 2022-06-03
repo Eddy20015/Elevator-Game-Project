@@ -75,7 +75,10 @@ public class IntroScene : MonoBehaviourPunCallbacks
             if (!LoadCalled && MasterComplete && FollowComplete)
             {
                 LoadCalled = true;
-                GameStateManager.Start("Level 1");
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    GameStateManager.Start("Level 1");
+                }
                 //view.RPC("RPC_Start", RpcTarget.All);
             }
         }
