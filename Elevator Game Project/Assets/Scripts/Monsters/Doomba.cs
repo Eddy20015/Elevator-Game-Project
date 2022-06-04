@@ -105,7 +105,7 @@ public class Doomba : Monster
 
         if (patrolling)
         {
-            Debug.Log(agent.destination);
+            //Debug.Log(agent.destination);
         }
     }
 
