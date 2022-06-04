@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Video;
 using Photon.Pun;
 
-public class IntroScene : MonoBehaviourPunCallbacks
+public class IntroCutscene : MonoBehaviourPunCallbacks
 {
     [SerializeField] private VideoClip RightVersion;
     [SerializeField] private VideoClip LeftVersion;
@@ -81,6 +81,12 @@ public class IntroScene : MonoBehaviourPunCallbacks
                 }
                 //view.RPC("RPC_Start", RpcTarget.All);
             }
+        }
+
+        //skip cutscene
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            VideoEnded();
         }
     }
 
