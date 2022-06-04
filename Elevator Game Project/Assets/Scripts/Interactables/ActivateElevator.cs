@@ -11,7 +11,7 @@ public class ActivateElevator : MonoBehaviour
     [SerializeField] private GameObject leftDoor, rightDoor;
     [SerializeField] private GameObject leftOpenDoorPosition, rightOpenDoorPosition;
     [SerializeField] private Vector3 initialLeftDoorPosition, initialRightDoorPosition;
-    [SerializeField] private float timeToOpenAndClose, howSmooth, BeforeDoorsOpen;
+    [SerializeField] private float timeToOpenAndClose, BeforeDoorsOpen;
     [SerializeField] private AudioSource OpenDoorsAudio;
     [SerializeField] private AudioSource CloseDoorsAudio;
 
@@ -38,56 +38,60 @@ public class ActivateElevator : MonoBehaviour
     {
         yield return new WaitForSeconds(BeforeDoorsOpen);
         float elapsedTime = 0;
-        while(elapsedTime < timeToOpenAndClose/10)
+        while(elapsedTime < timeToOpenAndClose)
         {
             if (ClosedDoorsStarted)
             {
                 break;
             }
-            leftDoor.transform.position = Vector3.Lerp(leftDoor.transform.position, leftOpenDoorPosition.transform.position, elapsedTime / timeToOpenAndClose);
-            elapsedTime += howSmooth;
-            yield return new WaitForSeconds(howSmooth);
+            leftDoor.transform.position = Vector3.Lerp(initialLeftDoorPosition, leftOpenDoorPosition.transform.position, elapsedTime / timeToOpenAndClose);
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
             //Debug.Log(elapsedTime / timeToOpenAndClose);
         }
+        leftDoor.transform.position = leftOpenDoorPosition.transform.position;
     }
 
     private IEnumerator OpenRightDoor()
     {
         yield return new WaitForSeconds(BeforeDoorsOpen);
         float elapsedTime = 0;
-        while(elapsedTime < timeToOpenAndClose / 10)
+        while(elapsedTime < timeToOpenAndClose )
         {
             if (ClosedDoorsStarted)
             {
                 break;
             }
-            rightDoor.transform.position = Vector3.Lerp(rightDoor.transform.position, rightOpenDoorPosition.transform.position, elapsedTime / timeToOpenAndClose);
-            elapsedTime += howSmooth;
-            yield return new WaitForSeconds(howSmooth);
+            rightDoor.transform.position = Vector3.Lerp(initialRightDoorPosition, rightOpenDoorPosition.transform.position, elapsedTime / timeToOpenAndClose);
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
         }
+        rightDoor.transform.position = rightOpenDoorPosition.transform.position;
     }
 
     private IEnumerator CloseLeftDoor()
     {
         float elapsedTime = 0;
-        while (elapsedTime < timeToOpenAndClose / 10)
+        while (elapsedTime < timeToOpenAndClose)
         {
-            leftDoor.transform.position = Vector3.Lerp(leftDoor.transform.position, initialLeftDoorPosition, elapsedTime / timeToOpenAndClose);
-            elapsedTime += howSmooth;
+            leftDoor.transform.position = Vector3.Lerp(leftOpenDoorPosition.transform.position, initialLeftDoorPosition, elapsedTime / timeToOpenAndClose);
+            elapsedTime += Time.deltaTime;
             //Debug.Log(elapsedTime);
-            yield return new WaitForSeconds(howSmooth);
+            yield return new WaitForSeconds(Time.deltaTime);
         }
+        leftDoor.transform.position = initialLeftDoorPosition;
     }
 
     private IEnumerator CloseRightDoor()
     {
         float elapsedTime = 0;
-        while (elapsedTime < timeToOpenAndClose / 10)
+        while (elapsedTime < timeToOpenAndClose )
         {
-            rightDoor.transform.position = Vector3.Lerp(rightDoor.transform.position, initialRightDoorPosition, elapsedTime / timeToOpenAndClose);
-            elapsedTime += howSmooth;
-            yield return new WaitForSeconds(howSmooth);
+            rightDoor.transform.position = Vector3.Lerp(rightOpenDoorPosition.transform.position, initialRightDoorPosition, elapsedTime / timeToOpenAndClose);
+            elapsedTime += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
         }
+        rightDoor.transform.position = initialRightDoorPosition;
     }
 
 
