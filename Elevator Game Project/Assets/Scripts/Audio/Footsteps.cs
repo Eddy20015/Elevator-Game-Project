@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Footsteps : MonoBehaviour
+public class Footsteps : MonoBehaviourPunCallbacks
 {
     [SerializeField] float delayTime;
 
@@ -14,30 +15,38 @@ public class Footsteps : MonoBehaviour
 
     PlayerMovement playerMovement;
 
+    PhotonView view;
+
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         playerMovement = GetComponent<PlayerMovement>();
+
+        view = gameObject.GetComponent<PhotonView>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL ||
+          (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine))
         {
-            currentDelay -= Time.deltaTime;
-
-            if (playerMovement.IsSprinting())
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
-                currentDelay -= Time.deltaTime / 5;
-            }
-        }
+                currentDelay -= Time.deltaTime;
 
-        if (currentDelay <= 0)
-        {
-            Footstep();
-            currentDelay = delayTime;
+                if (playerMovement.IsSprinting())
+                {
+                    currentDelay -= Time.deltaTime / 5;
+                }
+            }
+
+            if (currentDelay <= 0)
+            {
+                Footstep();
+                currentDelay = delayTime;
+            }
         }
     }
 
