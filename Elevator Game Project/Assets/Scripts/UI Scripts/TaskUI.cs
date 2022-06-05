@@ -7,6 +7,7 @@ using TMPro;
 public class TaskUI : MonoBehaviour
 {
     [SerializeField] private GameObject task;
+    [SerializeField] private GameObject GoToElevator;
     private GameObject specificTask;
     private TextMeshProUGUI taskUI;
 
@@ -34,6 +35,10 @@ public class TaskUI : MonoBehaviour
         if (taskUI != null)
         {
             taskUI.text = ChargingStationManager.chargingStationManager.NumOfCompletedStations.ToString("0") + "/" + ChargingStationManager.chargingStationManager.MaxNumOfStations.ToString("0");
+            if(ChargingStationManager.chargingStationManager.NumOfCompletedStations == 4)
+            {
+                GoToElevator.SetActive(true);
+            }
         }
     }
 }
