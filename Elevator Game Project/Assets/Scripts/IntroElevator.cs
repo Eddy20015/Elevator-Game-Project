@@ -101,7 +101,7 @@ public class IntroElevator : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1.5f);
         //Close the elevators 
         elevatorAnims.CloseDoors();
-        GameStateManager.Cinematics();
+        //GameStateManager.Cinematics();
 
         yield return new WaitForSeconds(3.5f);
         //Fade In

@@ -64,6 +64,8 @@ MonoBehaviour:
   - ChangeIntensity
   - RPC_Start
   - RPC_Sync
+  - RPC_SyncNumbers
+  - SetHeadRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

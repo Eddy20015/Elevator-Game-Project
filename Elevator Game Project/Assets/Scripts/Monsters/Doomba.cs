@@ -118,6 +118,10 @@ public class Doomba : Monster
         if (head.activeSelf)
         {
             head.SetActive(false);
+            if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+            {
+                photonView.RPC("SetHeadRPC", RpcTarget.All, false);
+            }
         }
         Debug.Log(agent.destination);
     }
@@ -132,7 +136,13 @@ public class Doomba : Monster
         if (!head.activeSelf)
         {
             head.SetActive(true);
+            if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+            {
+                photonView.RPC("SetHeadRPC", RpcTarget.All, true);
+            }
         }
+
+        
         
         //Debug.Log("Did Hit");
     }
@@ -140,5 +150,14 @@ public class Doomba : Monster
     public override void Kill()
     {
         base.Kill();
+    }
+
+    [PunRPC]
+    void SetHeadRPC(bool b)
+    {
+        if (head.activeSelf != b)
+        {
+            head.SetActive(b);
+        }
     }
 }

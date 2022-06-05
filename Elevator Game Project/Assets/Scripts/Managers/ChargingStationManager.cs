@@ -41,17 +41,20 @@ public class ChargingStationManager : MonoBehaviour
             numOfCompletedStations++;
             if (stations.getPuzzleState() == false)
             {
+                Debug.Log("GetPuzzleState() is false");
                 numOfCompletedStations--;
                 temp = false;
             }
             isCompleted = temp;
         }
+        view.RPC("RPC_SyncNumbers", RpcTarget.All, numOfCompletedStations);
         //Updates all the clients
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         { 
             view.RPC("RPC_SetIsCompleted", RpcTarget.AllBuffered, isCompleted);
             view.RPC("ChangeIntensity", RpcTarget.All, numOfCompletedStations);
-        } else
+        } 
+        else
         {
             ChangeIntensity(numOfCompletedStations);
         }
@@ -83,5 +86,12 @@ public class ChargingStationManager : MonoBehaviour
         {
             l.ChangeIntensity2(Mathf.Lerp(1, 0.25f, f / 4));
         }
+    }
+
+    [PunRPC]
+    private void RPC_SyncNumbers(float num)
+    {
+        numOfCompletedStations = num;
+        //Debug.Log("In RPC and " + numOfCompletedStations + " and capital version is " + NumOfCompletedStations);
     }
 }
