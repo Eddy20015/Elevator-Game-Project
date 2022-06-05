@@ -30,6 +30,7 @@ public class ActivateElevator : MonoBehaviour
     {
         CloseDoorsAudio.Play();
         ClosedDoorsStarted = true;
+        timeToOpenAndClose *= 1.9f;
         StartCoroutine(CloseLeftDoor());
         StartCoroutine(CloseRightDoor());
     }
