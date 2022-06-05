@@ -120,7 +120,7 @@ public class Doomba : Monster
             head.SetActive(false);
             if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
             {
-                SetHeadRPC(false);
+                photonView.RPC("SetHeadRPC", RpcTarget.All, false);
             }
         }
         Debug.Log(agent.destination);
@@ -138,7 +138,7 @@ public class Doomba : Monster
             head.SetActive(true);
             if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
             {
-                SetHeadRPC(true);
+                photonView.RPC("SetHeadRPC", RpcTarget.All, true);
             }
         }
 
