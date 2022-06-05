@@ -30,6 +30,8 @@ public class Light1 : MonoBehaviourPunCallbacks
     {
         //debug
 
+        intensity = pointLight.intensity;
+
         multiplier = 1;
 
         player = GameObject.FindGameObjectWithTag("Player");
@@ -111,12 +113,12 @@ public class Light1 : MonoBehaviourPunCallbacks
         multiplier = f;
     }
 
-    [PunRPC]
     public void ChangeIntensity2(float f)
     {
         //use a 0 to 1 scale for intensity
         multiplier = f;
         pointLight.intensity = intensity * multiplier;
+        Debug.Log("Intensity: " + intensity + " Multiplier : " + multiplier + " Total: " + intensity * multiplier);
     }
 
     IEnumerator TurnLightOn()
