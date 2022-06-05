@@ -38,7 +38,14 @@ public class ChargingStationManager : MonoBehaviour
         bool temp = true;
         foreach (ChargeStation stations in chargeStations)
         {
-            numOfCompletedStations++;
+            if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
+            {
+                numOfCompletedStations++;
+            }
+            else
+            {
+                view.RPC("RPC_SyncNumbers", RpcTarget.All);
+            }
             if (stations.getPuzzleState() == false)
             {
                 numOfCompletedStations--;
@@ -51,7 +58,8 @@ public class ChargingStationManager : MonoBehaviour
         { 
             view.RPC("RPC_SetIsCompleted", RpcTarget.AllBuffered, isCompleted);
             view.RPC("ChangeIntensity", RpcTarget.All, numOfCompletedStations);
-        } else
+        } 
+        else
         {
             ChangeIntensity(numOfCompletedStations);
         }
@@ -83,5 +91,11 @@ public class ChargingStationManager : MonoBehaviour
         {
             l.ChangeIntensity2(Mathf.Lerp(1, 0.25f, f / 4));
         }
+    }
+
+    [PunRPC]
+    private void RPC_SyncNumbers()
+    {
+        numOfCompletedStations++;
     }
 }
