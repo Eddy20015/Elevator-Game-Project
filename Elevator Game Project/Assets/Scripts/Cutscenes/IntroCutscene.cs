@@ -77,7 +77,7 @@ public class IntroCutscene : MonoBehaviourPunCallbacks
                 LoadCalled = true;
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    GameStateManager.Start("Level 1");
+                    GameStateManager.Start("Level 3");
                 }
                 //view.RPC("RPC_Start", RpcTarget.All);
             }
