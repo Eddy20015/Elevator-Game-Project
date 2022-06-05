@@ -339,7 +339,7 @@ Animator:
   m_GameObject: {fileID: 3595688139938055098}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
-  m_Controller: {fileID: 9100000, guid: 5685a313913763e41855b7e8f87396e9, type: 2}
+  m_Controller: {fileID: 9100000, guid: c44de51419a964b0b9eb112368d379e2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -648,6 +648,18 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.01
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.01
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.01
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.092
       objectReference: {fileID: 0}
@@ -687,14 +699,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7489406144317743193, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eb4fc013e60134058b9aa19a3ed21c41, type: 2}
+    - target: {fileID: -4409029717466621428, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eb4fc013e60134058b9aa19a3ed21c41, type: 2}
+    - target: {fileID: -2758644878361545612, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eb4fc013e60134058b9aa19a3ed21c41, type: 2}
     - target: {fileID: 919132149155446097, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
       propertyPath: m_Name
       value: JoeWithSkinDie (1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2349082544841146359, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eb4fc013e60134058b9aa19a3ed21c41, type: 2}
+    - target: {fileID: 2671357777809745069, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eb4fc013e60134058b9aa19a3ed21c41, type: 2}
+    - target: {fileID: 4600088833764431466, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eb4fc013e60134058b9aa19a3ed21c41, type: 2}
+    - target: {fileID: 4726114362673282153, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eb4fc013e60134058b9aa19a3ed21c41, type: 2}
+    - target: {fileID: 7179952766287911660, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eb4fc013e60134058b9aa19a3ed21c41, type: 2}
+    - target: {fileID: 7905134143670162728, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: eb4fc013e60134058b9aa19a3ed21c41, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b91bda3ecbec8a4d9cd73168b2ea554, type: 3}
 --- !u!1 &3595688139938055098 stripped
