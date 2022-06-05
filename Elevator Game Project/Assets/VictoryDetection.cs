@@ -44,7 +44,7 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1f);
         //Close the elevators 
         elevatorAnims.CloseDoors();
-        GameStateManager.Cinematics();
+        //GameStateManager.Cinematics();
 
         yield return new WaitForSeconds(3.5f);
         //Fade In
