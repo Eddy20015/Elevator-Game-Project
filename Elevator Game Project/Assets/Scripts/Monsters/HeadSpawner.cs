@@ -11,6 +11,9 @@ public class HeadSpawner : MonoBehaviourPunCallbacks
     private GameObject[] HeadMonsters;
     private bool Found;
 
+    GameObject LocalHead;
+    GameObject OnlineHead;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +33,7 @@ public class HeadSpawner : MonoBehaviourPunCallbacks
             }
         }
 
-        HeadMonsters = new GameObject[2];
+        HeadMonsters = new GameObject[3];
     }
 
     // Update is called once per frame
@@ -40,19 +43,48 @@ public class HeadSpawner : MonoBehaviourPunCallbacks
         {
             HeadMonsters = GameObject.FindGameObjectsWithTag("Monster");
         }
-        if(HeadMonsters[0] != null && HeadMonsters[1] != null)
+        if(HeadMonsters[0] != null && HeadMonsters[1] != null && HeadMonsters[2] != null && !Found)
         {
             Found = true;
+            foreach(GameObject monster in HeadMonsters)
+            {
+                PhotonView MonsterView = monster.GetComponent<PhotonView>();
 
-            //this disables the monster that doesn't follow this view's player
-            if (HeadMonsters[0].GetComponent<PhotonView>().IsMine)
-            {
-                HeadMonsters[1].SetActive(false);
+                //this will identify which is the monster that is local and not spawned in
+                if(MonsterView == null)
+                {
+                    LocalHead = monster;
+                }
+
+                //this disables the monster that doesn't follow this view's player
+                else if (MonsterView.IsMine == false)
+                {
+                    //monster.SetActive(false);
+                    Destroy(monster);
+                }
+
+                //saves the monster that has the player's correct photon view
+                else
+                {
+                    OnlineHead = monster;
+                }
             }
-            else
+
+            //sets the points of the local head to the online head
+            //OnlineHead.GetComponent<HeadAI>().SetPatrolPoints(LocalHead.GetComponent<HeadAI>().GetPatrolPoints());
+            HeadAI LocalHeadAI = LocalHead.GetComponent<HeadAI>();
+            HeadAI OnlineHeadAI = OnlineHead.GetComponent<HeadAI>();
+            GameObject PointParent = GameObject.Find("Patrol Points");
+            OnlineHeadAI.patrolPoints = new GameObject[PointParent.transform.childCount];
+
+            for (int i = 0; i < LocalHeadAI.patrolPoints.Length; i++)
             {
-                HeadMonsters[1].SetActive(true);
+                OnlineHeadAI.patrolPoints[i] = PointParent.transform.GetChild(i).gameObject;
+                Debug.LogWarning("Local Head AI Points " + LocalHeadAI.patrolPoints[i]);
+                Debug.LogWarning("Patrol Point Directly " + PointParent.transform.GetChild(i).gameObject);
             }
+            LocalHead.SetActive(false);
+            //Destroy(LocalHead);
         }
     }
 }

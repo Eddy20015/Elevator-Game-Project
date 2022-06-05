@@ -8,7 +8,7 @@ public class HeadAI : Monster
 {
     [SerializeField] private GameObject player;
     [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private GameObject[] patrolPoints;
+    [SerializeField] public GameObject[] patrolPoints;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float chaseSpeed, followSpeed, patrolSpeed;
     [SerializeField] private float followRange, chaseRange, farthestRange;

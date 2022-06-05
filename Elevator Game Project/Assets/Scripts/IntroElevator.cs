@@ -107,7 +107,7 @@ public class IntroElevator : MonoBehaviourPunCallbacks
         //Fade In
         fadingScript.FadeIn();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.25f);
 
         //LOAD SCENE
         Loader.LoadScene();
