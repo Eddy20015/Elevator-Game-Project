@@ -68,8 +68,8 @@ public class IntroCutscene : MonoBehaviourPunCallbacks
 
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
-            print("MasterComplete is " + MasterComplete);
-            print("FollowComplete is " + FollowComplete);
+            //print("MasterComplete is " + MasterComplete);
+            //print("FollowComplete is " + FollowComplete);
 
             //when the game is online, make sure that both clips have ended before going to the next scene
             if (!LoadCalled && MasterComplete && FollowComplete)

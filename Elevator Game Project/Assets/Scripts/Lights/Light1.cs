@@ -118,7 +118,7 @@ public class Light1 : MonoBehaviourPunCallbacks
         //use a 0 to 1 scale for intensity
         multiplier = f;
         pointLight.intensity = intensity * multiplier;
-        Debug.Log("Intensity: " + intensity + " Multiplier : " + multiplier + " Total: " + intensity * multiplier);
+        //Debug.Log("Intensity: " + intensity + " Multiplier : " + multiplier + " Total: " + intensity * multiplier);
     }
 
     IEnumerator TurnLightOn()
