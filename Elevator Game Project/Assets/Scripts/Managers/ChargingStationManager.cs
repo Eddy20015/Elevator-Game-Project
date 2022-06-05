@@ -48,6 +48,7 @@ public class ChargingStationManager : MonoBehaviour
             }
             if (stations.getPuzzleState() == false)
             {
+                Debug.Log("GetPuzzleState() is false");
                 numOfCompletedStations--;
                 temp = false;
             }
@@ -97,5 +98,6 @@ public class ChargingStationManager : MonoBehaviour
     private void RPC_SyncNumbers()
     {
         numOfCompletedStations++;
+        Debug.Log("In RPC and " + numOfCompletedStations + " and capital version is " + NumOfCompletedStations);
     }
 }
