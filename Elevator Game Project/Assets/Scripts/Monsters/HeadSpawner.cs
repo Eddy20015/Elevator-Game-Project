@@ -43,7 +43,7 @@ public class HeadSpawner : MonoBehaviourPunCallbacks
         {
             HeadMonsters = GameObject.FindGameObjectsWithTag("Monster");
         }
-        if(HeadMonsters[0] != null/* && HeadMonsters[1] != null && HeadMonsters[2]*/ != null && !Found)
+        if(HeadMonsters.Length == 3 && HeadMonsters[0] != null && HeadMonsters[1] != null && HeadMonsters[2] != null && !Found)
         {
             Found = true;
             foreach(GameObject monster in HeadMonsters)
