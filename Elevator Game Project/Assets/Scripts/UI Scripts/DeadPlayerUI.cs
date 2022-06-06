@@ -20,7 +20,10 @@ public class DeadPlayerUI : MonoBehaviour
     void Update()
     {
         UpdateUI();
-        reviveUI.transform.LookAt(livingPlayer.transform);
+        if (livingPlayer.activeInHierarchy)
+        {
+            reviveUI.transform.LookAt(livingPlayer.transform);
+        }
     }
 
     public void UpdateUI()

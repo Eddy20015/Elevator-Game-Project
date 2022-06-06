@@ -29,8 +29,8 @@ public class IntroElevator : MonoBehaviourPunCallbacks
             print("Loader is null");
         }
 
-        print("MasterIn is " + MasterIn);
-        print("FollowIn is " + FollowIn);
+        //print("MasterIn is " + MasterIn);
+        //print("FollowIn is " + FollowIn);
 
         if (!PhotonIEnumeratorCalled & MasterIn & FollowIn)
         {

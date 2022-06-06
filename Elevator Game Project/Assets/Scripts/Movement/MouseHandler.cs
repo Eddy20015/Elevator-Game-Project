@@ -36,7 +36,7 @@ public class MouseHandler : MonoBehaviour
         cam = GetComponentInChildren<Camera>();
         view = GetComponent<PhotonView>();
         //Get rid of the camera if it is not mine
-        if (!view.IsMine)
+        if (view != null && !view.IsMine)
         {
             Destroy(cam.gameObject);
         }
