@@ -43,6 +43,9 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     [SerializeField] private GameObject model;
 
+    [SerializeField] Animator[] animators;
+    [SerializeField] GameObject[] models;
+
     private PhotonView view;
 
     private void Start()
@@ -52,6 +55,21 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         canInteract = false;
         view = GetComponent<PhotonView>();
         model.GetComponent<Rigidbody>().freezeRotation = true;
+
+        int body = PlayerPrefs.GetInt("Body");
+
+        if (body < animators.Length && body < models.Length)
+        {
+            animator = animators[body];
+            model = models[body];
+        } else
+        {
+            PlayerPrefs.SetInt("Body", 0);
+            animator = animators[0];
+            model = models[0];
+        }
+
+        model.SetActive(true);
     }
 
     //controls the raycast form the camera to interact with interactable objects
