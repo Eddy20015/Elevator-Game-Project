@@ -6,6 +6,7 @@ using Photon.Pun;
 public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
 {
     [SerializeField] private float chargedAmount, maxChargeAmount, incrementAmount;
+    [SerializeField] GameObject indicator;
     private GameObject OriginalPlayer;
 
     private PhotonView view;
@@ -15,6 +16,8 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
 
     public float ChargedAmount { get => chargedAmount; }
     public float MaxChargeAmount { get => maxChargeAmount; }
+
+    bool interact;
 
     private void Start()
     {
@@ -45,6 +48,15 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
             pauseUI.GetComponent<Canvas>().enabled = false;
         }
         Debug.LogWarning(transform.rotation);
+
+        if (interact)
+        {
+            indicator.SetActive(true);
+        } else {
+            indicator.SetActive(false);
+        }
+
+        interact = false;
     }
 
     //sets the variable OriginalPlayer
@@ -56,6 +68,8 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
     //function that will be called by pushing E by it
     public void Interact()
     {
+        interact = true;
+
         Debug.Log("Interact was called");
         if (chargedAmount < maxChargeAmount && Input.GetKey(KeyCode.E))
         {
