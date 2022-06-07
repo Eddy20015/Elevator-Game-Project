@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
             if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
             {
                 PhotonNetwork.LeaveRoom();
-                Debug.LogError("LeaveRoom Called");
+                //Debug.LogError("LeaveRoom Called");
             }
             GameStateManager.NoPlayState();
             Cursor.lockState = CursorLockMode.None;
@@ -32,7 +32,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         PhotonNetwork.Disconnect();
-        Debug.LogError("Disconnect Called");
+        //Debug.LogError("Disconnect Called");
     }
 
     //Start a New Local Game by sending player to the controller selector and changing the multiplay state to Local

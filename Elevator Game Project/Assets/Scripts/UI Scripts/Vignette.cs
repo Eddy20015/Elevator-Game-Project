@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class Vignette : MonoBehaviour
+public class Vignette : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject[] vignette;
     [SerializeField] private GameObject player, monster;
     [SerializeField] private float farthestDistance, decreaseAmount;
+
+    //player has been set online, monster has been set online, all the vignettes are off for the dead player
+    private bool OnlinePlayerFound, OnlineMonsterFound, AllAreFalse;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +21,40 @@ public class Vignette : MonoBehaviour
 
     private void Update()
     {
-        //since it is two floors, we have to make sure that the players don't see the vignette when the monster is above or below them
-        if (Mathf.Abs(monster.transform.position.y - player.transform.position.y) <= 7)
+        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
-            Debug.Log(Math.Abs(Vector3.Distance(player.transform.position, monster.transform.position)));
+            if((player == null || !player.activeInHierarchy) && !OnlinePlayerFound)
+            {
+                GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+                foreach(GameObject playerr in players)
+                {
+                    PhotonView playerView = playerr.GetComponent<PhotonView>();
+                    if(playerView != null && playerView.IsMine)
+                    {
+                        player = playerr;
+                        OnlinePlayerFound = true;
+                    }
+                }
+            }
+            if((monster == null || !monster.activeInHierarchy) && !OnlineMonsterFound)
+            {
+                GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
+                foreach (GameObject monsterr in monsters)
+                {
+                    PhotonView monsterView = monsterr.GetComponent<PhotonView>();
+                    if (monsterView != null && monsterView.IsMine)
+                    {
+                        monster = monsterr;
+                        OnlineMonsterFound = true;
+                    }
+                }
+            }
+        }
+        //since it is two floors, we have to make sure that the players don't see the vignette when the monster is above or below them
+        if ((player != null && player.activeInHierarchy) && Mathf.Abs(monster.transform.position.y - player.transform.position.y) <= 7)
+        {
+            //Debug.Log(Math.Abs(Vector3.Distance(player.transform.position, monster.transform.position)));
+            AllAreFalse = false;
             if (Math.Abs(Vector3.Distance(player.transform.position, monster.transform.position)) > farthestDistance)
             {
                 //gameObject.GetComponent<Animator>().SetInteger("Level", 0);
@@ -144,6 +178,17 @@ public class Vignette : MonoBehaviour
                 //gameObject.GetComponent<Animator>().SetInteger("Level", 17);
                 vignette[16].SetActive(false);
                 vignette[17].SetActive(true);
+            }
+        }
+        else
+        {
+            if (!AllAreFalse)
+            {
+                for(int i = 0; i < 18; i++)
+                {
+                    vignette[i].SetActive(false);
+                }
+                AllAreFalse = true;
             }
         }
     }

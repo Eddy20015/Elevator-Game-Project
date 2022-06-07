@@ -49,11 +49,12 @@ public class Light1 : MonoBehaviourPunCallbacks
                 player = players[0];
                 playerView = player.GetPhotonView();
             }
-            else if(players[0].GetPhotonView().IsMine && !PhotonNetwork.IsMasterClient)
+            /*else if(players[1].GetPhotonView().IsMine && !PhotonNetwork.IsMasterClient)
             {
                 player = players[1];
                 playerView = player.GetPhotonView();
-            }
+            }*/
+            //^^doesn't look like playerView or player is ever used
         }
 
         audio.enabled = false;

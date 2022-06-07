@@ -93,7 +93,6 @@ public class IntroCutscene : MonoBehaviourPunCallbacks
     //will be called when the clip is over
     private void VideoEnded()
     {
-        Debug.LogError("Got into VideoEnded");
         if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
             if(view.IsMine)

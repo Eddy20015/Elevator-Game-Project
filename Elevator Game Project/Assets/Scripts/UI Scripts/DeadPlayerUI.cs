@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class DeadPlayerUI : MonoBehaviour
+public class DeadPlayerUI : MonoBehaviourPunCallbacks
 {
     [SerializeField] private DeadPlayer deadPlayer;
     [SerializeField] private Image reviveUIBar;
     [SerializeField] private GameObject reviveUI;
-    private GameObject livingPlayer;
+    [SerializeField] private GameObject livingPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,10 @@ public class DeadPlayerUI : MonoBehaviour
     void Update()
     {
         UpdateUI();
-        reviveUI.transform.LookAt(livingPlayer.transform);
+        if (livingPlayer != null && livingPlayer.activeInHierarchy)
+        {
+            reviveUI.transform.LookAt(livingPlayer.transform);
+        }
     }
 
     public void UpdateUI()

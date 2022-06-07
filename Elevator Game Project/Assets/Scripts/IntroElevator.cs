@@ -29,8 +29,8 @@ public class IntroElevator : MonoBehaviourPunCallbacks
             print("Loader is null");
         }
 
-        print("MasterIn is " + MasterIn);
-        print("FollowIn is " + FollowIn);
+        //print("MasterIn is " + MasterIn);
+        //print("FollowIn is " + FollowIn);
 
         if (!PhotonIEnumeratorCalled & MasterIn & FollowIn)
         {
@@ -107,7 +107,7 @@ public class IntroElevator : MonoBehaviourPunCallbacks
         //Fade In
         fadingScript.FadeIn();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.25f);
 
         //LOAD SCENE
         Loader.LoadScene();

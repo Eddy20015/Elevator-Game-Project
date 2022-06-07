@@ -65,7 +65,7 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
         //Fade In
         fadingScript.FadeIn();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.25f);
 
         //LoadTheNextLevel
         if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)

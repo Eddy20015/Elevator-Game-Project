@@ -2448,8 +2448,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Move with WASD, look around with the mouse, and charge electrical panels
-    by holding E. You lose when you die.
+  m_text: Move with WASD, sprint with left shift, look around with the mouse, and
+    charge electrical panels by holding E. You lose when you die.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 285533ea7644c45a59589c6553e595e5, type: 2}
   m_sharedMaterial: {fileID: -2352258788418992670, guid: 285533ea7644c45a59589c6553e595e5, type: 2}

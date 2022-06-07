@@ -36,7 +36,7 @@ public class TaskUI : MonoBehaviour
 
     public void UpdateUI()
     {
-        if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.CINEMATIC)
+        if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.CINEMATIC || GameStateManager.GAMESTATE.GAMEOVER == GameStateManager.GetGameState())
         {
             GetComponent<Canvas>().enabled = false;
         }
