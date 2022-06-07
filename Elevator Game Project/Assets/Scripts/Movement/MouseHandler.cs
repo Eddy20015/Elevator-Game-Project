@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 public class MouseHandler : MonoBehaviour
@@ -29,6 +30,11 @@ public class MouseHandler : MonoBehaviour
     {
         GameStateManager.Play();
         player = gameObject;
+        if (SceneManager.GetActiveScene().name == "Level 3")
+        {
+            //gameObject.transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+            yRotation = 180;
+        }
     }
 
     void Start()
