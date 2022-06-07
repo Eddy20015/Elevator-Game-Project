@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +11,7 @@ public class TaskUI : MonoBehaviour
     private GameObject specificTask;
     private TextMeshProUGUI taskUI;
     private GameObject Background;
+    private float TotalGen;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class TaskUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        TotalGen = ChargingStationManager.chargingStationManager.MaxNumOfStations;
         UpdateUI();
         if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.CINEMATIC || GameStateManager.GAMESTATE.GAMEOVER == GameStateManager.GetGameState())
         {
@@ -45,9 +47,13 @@ public class TaskUI : MonoBehaviour
         if (taskUI != null)
         {
             taskUI.text = ChargingStationManager.chargingStationManager.NumOfCompletedStations.ToString("0") + "/" + ChargingStationManager.chargingStationManager.MaxNumOfStations.ToString("0");
-            if(ChargingStationManager.chargingStationManager.NumOfCompletedStations == 4)
+            if(ChargingStationManager.chargingStationManager.NumOfCompletedStations == TotalGen)
             {
                 GoToElevator.SetActive(true);
+            }
+            if(ChargingStationManager.chargingStationManager.NumOfCompletedStations < TotalGen)
+            {
+                GoToElevator.SetActive(false);
             }
         }
     }
