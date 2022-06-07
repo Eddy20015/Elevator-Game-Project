@@ -130,7 +130,6 @@ public class PlayerScript : MonoBehaviourPunCallbacks
                 DeadPlayerCam.enabled = true;
                 gameObject.GetComponentInChildren<Camera>().enabled = false;
 
-                Debug.LogError("is view null?" + (view == null));
                 view.RPC("RPC_Disable", RpcTarget.All, PhotonNetwork.IsMasterClient);
             }
         }
