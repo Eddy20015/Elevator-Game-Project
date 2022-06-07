@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class VictoryDetection : MonoBehaviourPunCallbacks
 {
-    [SerializeField]
-    private GameObject victoryUI;
+    [SerializeField] private GameObject victoryUI;
     [SerializeField] private ActivateElevator elevatorAnims;
     [SerializeField] private GameObject invisibleCollider;
     [SerializeField] private FadingScript fadingScript;
     [SerializeField] private SceneLoader Loader;
     [SerializeField] private string NextLevelName;
-    private int playersInArea = 0;
+    [SerializeField] private GameObject wall;
+    [SerializeField] private ChargingStationManager charge;
+    [SerializeField] private ChargeStation finalGen;
+    private int playersInArea = 0; 
 
 
     private void OnTriggerEnter(Collider other)
     {
+        charge = GetComponent<ChargingStationManager>();
         if (other.gameObject.tag == "Player")
         {
             playersInArea += 1;
@@ -46,6 +50,17 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
         elevatorAnims.CloseDoors();
         //GameStateManager.Cinematics();
 
+        if (SceneManager.GetActiveScene().name == "Level 3")
+        {
+            wall.transform.position = new Vector3(-95, 9, 51);
+
+            if (ChargingStationManager.chargingStationManager.MaxNumOfStations == 4)
+            {
+                ChargingStationManager.chargingStationManager.MaxNumOfStations += 1;
+                charge.chargeStations.Add(finalGen);
+            }
+        }
+
         yield return new WaitForSeconds(3.5f);
         //Fade In
         fadingScript.FadeIn();
@@ -64,6 +79,7 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
                 GameStateManager.Start(NextLevelName);
             }
         }
+
 
 
         //Cursor.lockState = CursorLockMode.None;

@@ -12,6 +12,7 @@ public class IntroCutscene : MonoBehaviourPunCallbacks
     [SerializeField] private SceneLoader Loader;
     [SerializeField] private GameObject BlackScreen;
     [SerializeField] private PhotonView view;
+    [SerializeField] private string Level;
 
     private bool HasPlayed;
 
@@ -77,7 +78,7 @@ public class IntroCutscene : MonoBehaviourPunCallbacks
                 LoadCalled = true;
                 if (PhotonNetwork.IsMasterClient)
                 {
-                    GameStateManager.Start("Level 3");
+                    GameStateManager.Start(Level);
                 }
                 //view.RPC("RPC_Start", RpcTarget.All);
             }

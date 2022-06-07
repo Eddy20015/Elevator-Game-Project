@@ -10,7 +10,7 @@ public class ChargingStationManager : MonoBehaviour
     //Static variable that can be called upon to check the status
     public static ChargingStationManager chargingStationManager;
 
-    [SerializeField] private List<ChargeStation> chargeStations;
+    [SerializeField] public List<ChargeStation> chargeStations;
     [SerializeField] private bool isCompleted;
     private PhotonView view;
     [SerializeField] private float numOfCompletedStations, maxNumOfStations;
@@ -36,6 +36,7 @@ public class ChargingStationManager : MonoBehaviour
     {
         numOfCompletedStations = 0;
         bool temp = true;
+        
         foreach (ChargeStation stations in chargeStations)
         {
             numOfCompletedStations++;
