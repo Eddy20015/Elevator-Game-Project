@@ -228,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPositionObject: {fileID: 6806342078072556900}
   TaskUI: {fileID: 6627437477028931004}
-  transitionTime: 1
+  transitionTime: 0.5
   initialPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &6806342078072556900
 GameObject:
