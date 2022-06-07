@@ -8,7 +8,7 @@ public class HeadAI : Monster
 {
     [SerializeField] private GameObject player;
     [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private GameObject[] patrolPoints;
+    [SerializeField] public GameObject[] patrolPoints;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float chaseSpeed, followSpeed, patrolSpeed;
     [SerializeField] private float followRange, chaseRange, farthestRange;
@@ -25,7 +25,19 @@ public class HeadAI : Monster
         Patrol();
         //player = null;
 
-
+        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        {
+            GameObject[] allPlayers = GameObject.FindGameObjectsWithTag("Player");
+            foreach(GameObject playerr in allPlayers)
+            {
+                PhotonView PlayerView = playerr.GetComponent<PhotonView>();
+                if(PlayerView != null && PlayerView.IsMine)
+                {
+                    player = playerr;
+                    break;
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -48,39 +60,41 @@ public class HeadAI : Monster
         {
             Patrol();
         }
-        //Follow
-        if (Physics.SphereCast(transform.position, followRange, transform.forward, out hit, followRange, playerLayer) && chasing == false)
+        if(player != null && player.activeInHierarchy)
         {
-            if(hit.transform.tag == "Player")
+            //Follow
+            if (Physics.SphereCast(transform.position, followRange, transform.forward, out hit, followRange, playerLayer) && chasing == false)
             {
-                player = hit.transform.gameObject;
+                if (hit.transform.tag == "Player")
+                {
+                    player = hit.transform.gameObject;
+                    Follow();
+                }
+            }
+            //Keep following if they are still in distance
+            if (Vector3.Distance(transform.position, player.transform.position) < followRange)
+            {
+                //Debug.Log(agent.speed);
                 Follow();
             }
-        }
-        if(player != null)
-        //Keep following if they are still in distance
-        if (Vector3.Distance(transform.position, player.transform.position) < followRange)
-        {
-            //Debug.Log(agent.speed);
-            Follow();
-        }
-        //Chase
-        if (Physics.SphereCast(transform.position, chaseRange, transform.forward, out hit, chaseRange, playerLayer))
-        {
-            if (hit.transform.tag == "Player")
+            //Chase
+            if (Physics.SphereCast(transform.position, chaseRange, transform.forward, out hit, chaseRange, playerLayer))
             {
-                player = hit.transform.gameObject;
-                Chase();
-                chaseTime = Time.time;
-                //Debug.Log(Vector3.Distance(transform.position, player.transform.position));
+                if (hit.transform.tag == "Player")
+                {
+                    player = hit.transform.gameObject;
+                    Chase();
+                    chaseTime = Time.time;
+                    //Debug.Log(Vector3.Distance(transform.position, player.transform.position));
+                }
             }
-        }
-        if (player != null)
-            //Keep chasing if they are still in distance
+            //if (player != null || player.activeInHierarchy)
+                //Keep chasing if they are still in distance
             if (Vector3.Distance(transform.position, player.transform.position) < chaseRange)
             {
                 Chase();
             }
+        }
     }
     public void Chase()
     {
@@ -103,12 +117,15 @@ public class HeadAI : Monster
 
     public void Patrol()
     {
-        patrolling = true;
-        following = false;
-        chasing = false;
-        agent.speed = patrolSpeed;
-        agent.SetDestination(patrolPoints[Random.Range(0, patrolPoints.Length)].transform.position);
-        transform.LookAt(agent.destination);
+        if (patrolPoints[0] != null)
+        {
+            patrolling = true;
+            following = false;
+            chasing = false;
+            agent.speed = patrolSpeed;
+            agent.SetDestination(patrolPoints[Random.Range(0, patrolPoints.Length)].transform.position);
+            transform.LookAt(agent.destination);
+        }
     }
 
     public override void Kill()

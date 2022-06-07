@@ -542,6 +542,7 @@ MonoBehaviour:
   deadPlayer: {fileID: 8056822803398952388}
   reviveUIBar: {fileID: 1409597267897700491}
   reviveUI: {fileID: 2901824984225236669}
+  livingPlayer: {fileID: 0}
 --- !u!95 &3514703982749239626
 Animator:
   serializedVersion: 3
