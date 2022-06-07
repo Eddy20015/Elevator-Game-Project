@@ -41,4 +41,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Game/Level 3.unity
     guid: 1d86b30d556320b44ac664a5b8f75b25
+  - enabled: 1
+    path: Assets/Scenes/Main Game/Credit's Scene.unity
+    guid: 393838b0f82c95d4e80c9b612ee8c9b4
+  - enabled: 1
+    path: Assets/Scenes/Main Game/End Cutscene.unity
+    guid: 92d97b1f5881cce4b9bca17a86d1f341
   m_configObjects: {}

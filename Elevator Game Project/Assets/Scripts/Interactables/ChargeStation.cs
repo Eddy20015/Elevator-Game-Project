@@ -93,11 +93,23 @@ public class ChargeStation : MonoBehaviourPunCallbacks, IInteractable
         //Check if this station is completed
         if (chargedAmount >= maxChargeAmount && isCompleted == false)
         {
+            /*
+            if (ChargingStationManager.chargingStationManager.MaxNumOfStations >= 5)
+            {
+                ChargingStationManager.chargingStationManager.NumOfCompletedStations++;
+            }
+            */
+
             isCompleted = true;
-            
+
             if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
             {
                 view.RPC("RPC_SetCompleted", RpcTarget.AllBuffered, isCompleted);
+            }
+
+            if (ChargingStationManager.chargingStationManager.MaxNumOfStations >= 5)
+            {
+                ChargingStationManager.chargingStationManager.NumOfCompletedStations++;
             }
         }
     }
