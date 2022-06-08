@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -495,6 +495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMixer: {fileID: 24100000, guid: 877a33da59f2aed42a67da36b469329a, type: 2}
   resolutionDropdown: {fileID: 1004974866}
+  volumeSlider: {fileID: 1465434617}
 --- !u!114 &240788520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3874,6 +3875,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 671c7828f9242434db9d96dfb98390ff, type: 3}
+--- !u!114 &1465434617 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3902914083160106316, guid: 671c7828f9242434db9d96dfb98390ff, type: 3}
+  m_PrefabInstance: {fileID: 1465434616}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1530632875
 GameObject:
   m_ObjectHideFlags: 0
@@ -5269,3 +5281,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMixer: {fileID: 24100000, guid: 877a33da59f2aed42a67da36b469329a, type: 2}
   resolutionDropdown: {fileID: 0}
+  volumeSlider: {fileID: 0}
