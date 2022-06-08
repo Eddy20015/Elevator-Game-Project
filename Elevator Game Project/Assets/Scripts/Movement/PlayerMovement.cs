@@ -103,6 +103,11 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                     //animator.SetBool("Charging", true);
                 }
 
+                if (canInteract)
+                {
+                    interactionTarget.SendMessage("Indicator");
+                }
+
                 //deals with raycast for interacting with interactable objects
                 RaycastHit hit;
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);

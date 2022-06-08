@@ -84,6 +84,11 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
         }
     }
 
+    public void Indicator()
+    {
+        interact = true;
+    }
+
     public IEnumerator PlayAnim()
     {
         gameObject.transform.position = new Vector3(transform.position.x, transform.position.y + .1f, transform.position.z);
