@@ -74,7 +74,12 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
-            photonView.RPC("ChangeModel", RpcTarget.All, body);
+            if (photonView.IsMine)
+            {
+                photonView.RPC("ChangeModel", RpcTarget.All, body);
+            }
+
+            
         } else
         {
             ChangeModel(body);
