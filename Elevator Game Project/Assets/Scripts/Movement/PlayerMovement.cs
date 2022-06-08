@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         cam = GetComponentInChildren<Camera>();
         canInteract = false;
         view = GetComponent<PhotonView>();
-        model.GetComponent<Rigidbody>().freezeRotation = true;
+        GetComponentInChildren<Rigidbody>().freezeRotation = true;
 
         int body = PlayerPrefs.GetInt("Body");
 
