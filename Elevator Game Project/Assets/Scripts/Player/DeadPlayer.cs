@@ -73,7 +73,7 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
         Debug.Log("Interact was called");
         if (chargedAmount < maxChargeAmount && Input.GetKey(KeyCode.E))
         {
-            chargedAmount += incrementAmount;
+            chargedAmount += incrementAmount * Time.deltaTime * 100;
             Debug.Log(chargedAmount);
         }
 
