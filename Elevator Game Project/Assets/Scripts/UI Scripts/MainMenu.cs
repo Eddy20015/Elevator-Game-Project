@@ -25,6 +25,7 @@ public class MainMenu : MonoBehaviourPunCallbacks
             }
             GameStateManager.NoPlayState();
             Cursor.lockState = CursorLockMode.None;
+            AudioListener.volume = Mathf.Clamp01(PlayerPrefs.GetFloat("Volume"));
             OneFrame = true;
         }
     }
