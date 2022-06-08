@@ -468,6 +468,7 @@ MonoBehaviour:
   Loader: {fileID: 553671142}
   BlackScreen: {fileID: 912585451}
   view: {fileID: 775182453}
+  Level: Credit's Scene
 --- !u!328 &775182455
 VideoPlayer:
   m_ObjectHideFlags: 0
