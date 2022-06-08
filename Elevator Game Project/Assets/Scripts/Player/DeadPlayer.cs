@@ -7,6 +7,9 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
 {
     [SerializeField] private float chargedAmount, maxChargeAmount, incrementAmount;
     [SerializeField] GameObject indicator;
+
+    [SerializeField] GameObject[] models;
+
     private GameObject OriginalPlayer;
 
     private PhotonView view;
@@ -22,7 +25,29 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
     private void Start()
     {
         PhotonView view = gameObject.GetPhotonView();
-        gameObject.GetComponentInChildren<Animator>().SetBool("Is Dead", true);
+        foreach (Animator a in gameObject.GetComponentsInChildren<Animator>())
+        {
+            a.SetBool("Is Dead", false);
+        }
+
+        int body = PlayerPrefs.GetInt("Body");
+
+        if (body >= models.Length)
+        {
+            body = 0;
+        }
+
+        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        {
+            if (photonView.IsMine)
+            {
+                photonView.RPC("ChangeModel", RpcTarget.All, body);
+            }
+        }
+        else
+        {
+            ChangeModel(body);
+        }
     }
 
     private void Update()
@@ -92,7 +117,10 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
     public IEnumerator PlayAnim()
     {
         gameObject.transform.position = new Vector3(transform.position.x, transform.position.y + .1f, transform.position.z);
-        gameObject.GetComponentInChildren<Animator>().SetBool("Is Dead", false);
+        foreach (Animator a in gameObject.GetComponentsInChildren<Animator>())
+        {
+            a.SetBool("Is Dead", false);
+        }
         yield return new WaitForSecondsRealtime(2.7f);
         Revive();
     }
@@ -157,5 +185,12 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
         {
             Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), collision.gameObject.GetComponent<Collider>());
         }*/
+    }
+
+    [PunRPC]
+    void ChangeModel(int i)
+    {
+        models[i].SetActive(true);
+        Debug.Log("Changed Model to " + i);
     }
 }
