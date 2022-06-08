@@ -2741,6 +2741,30 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8245892002320205225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6393020860067547814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 1
+    Name: Speed
+  - Type: 4
+    SynchronizeType: 1
+    Name: Charging
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!1 &6450012768690942979
 GameObject:
   m_ObjectHideFlags: 0
@@ -3897,13 +3921,13 @@ PrefabInstance:
       objectReference: {fileID: 1823642601448051625}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb88b3c5aaf8d554380542ca48e9e37b, type: 3}
---- !u!4 &6049251520548786204 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fb88b3c5aaf8d554380542ca48e9e37b, type: 3}
-  m_PrefabInstance: {fileID: 6087172659533068279}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6393020860067547814 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fb88b3c5aaf8d554380542ca48e9e37b, type: 3}
+  m_PrefabInstance: {fileID: 6087172659533068279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6049251520548786204 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fb88b3c5aaf8d554380542ca48e9e37b, type: 3}
   m_PrefabInstance: {fileID: 6087172659533068279}
   m_PrefabAsset: {fileID: 0}

@@ -65,11 +65,22 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         } else
         {
             PlayerPrefs.SetInt("Body", 0);
+            body = 0;
             animator = animators[0];
             model = models[0];
         }
 
-        model.SetActive(true);
+        //model.SetActive(true);
+
+        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        {
+            photonView.RPC("ChangeModel", RpcTarget.All, body);
+        } else
+        {
+            ChangeModel(body);
+        }
+
+        
     }
 
     //controls the raycast form the camera to interact with interactable objects
@@ -222,5 +233,14 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     public bool IsSprinting()
     {
         return isSprinting;
+    }
+
+    [PunRPC]
+    void ChangeModel(int i)
+    {
+        animator = animators[i];
+        model = models[i];
+        model.SetActive(true);
+        Debug.Log("Changed Model to " + i);
     }
 }

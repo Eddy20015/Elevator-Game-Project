@@ -66,6 +66,7 @@ MonoBehaviour:
   - RPC_Sync
   - RPC_SyncNumbers
   - SetHeadRPC
+  - ChangeModel
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
