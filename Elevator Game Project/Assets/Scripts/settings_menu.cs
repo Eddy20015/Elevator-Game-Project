@@ -14,7 +14,16 @@ public class settings_menu : MonoBehaviour
 
     void Start()
     {
-        resolutions = Screen.resolutions;
+        resolutions = new Resolution[3];
+
+        resolutions[0].width = 1280;
+        resolutions[0].height = 720;
+
+        resolutions[1].width = 1920;
+        resolutions[1].height = 1080;
+
+        resolutions[2].width = 3840;
+        resolutions[2].height = 2160;
 
         resolutionDropdown.ClearOptions();
 
