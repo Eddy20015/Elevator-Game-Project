@@ -15,6 +15,7 @@ TagManager:
   - PlayerCollider
   - Indicator
   - Panel
+  - ButtonNoise
   layers:
   - Default
   - TransparentFX
