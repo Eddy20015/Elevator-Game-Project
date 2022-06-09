@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4366753, g: 0.48427093, b: 0.5645238, a: 1}
+  m_IndirectSpecularColor: {r: 0.4366757, g: 0.48427194, b: 0.5645252, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1738,8 +1738,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7395084267095468775}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.02, y: 2.68, z: 0.56}
-  m_LocalScale: {x: 0.5, y: 5, z: 0.05}
+  m_LocalPosition: {x: 0.02, y: 2.68, z: 0.678}
+  m_LocalScale: {x: 0.5, y: 5, z: 0.25}
   m_Children: []
   m_Father: {fileID: 5476354590255283433}
   m_RootOrder: 0
@@ -2140,6 +2140,7 @@ GameObject:
   - component: {fileID: 8496359797394874621}
   - component: {fileID: 2217190714188144989}
   - component: {fileID: 4334911788886580720}
+  - component: {fileID: 7395084267095468776}
   m_Layer: 0
   m_Name: Invisible Collider
   m_TagString: Untagged
@@ -2147,6 +2148,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!54 &7395084267095468776
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7395084267095468775}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 2
 --- !u!33 &8496359797394874621
 MeshFilter:
   m_ObjectHideFlags: 0
