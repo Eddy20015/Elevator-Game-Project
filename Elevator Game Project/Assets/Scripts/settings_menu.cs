@@ -10,11 +10,22 @@ public class settings_menu : MonoBehaviour
 
     public Dropdown resolutionDropdown;
 
+    [SerializeField] Slider volumeSlider;
+
     Resolution[] resolutions;
 
     void Start()
     {
-        resolutions = Screen.resolutions;
+        resolutions = new Resolution[3];
+
+        resolutions[0].width = 1280;
+        resolutions[0].height = 720;
+
+        resolutions[1].width = 1920;
+        resolutions[1].height = 1080;
+
+        resolutions[2].width = 3840;
+        resolutions[2].height = 2160;
 
         resolutionDropdown.ClearOptions();
 
@@ -36,6 +47,9 @@ public class settings_menu : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
+        volumeSlider.value = PlayerPrefs.GetFloat("Volume");
+        AudioListener.volume = Mathf.Clamp01(volumeSlider.value);
     }
 
     public void SetResolution (int resolutionIndex)
@@ -46,7 +60,9 @@ public class settings_menu : MonoBehaviour
 
     public void SetVolume(float volume)
     {
-        mainMixer.SetFloat("volume", volume);
+        //mainMixer.SetFloat("volume", volume);
+        AudioListener.volume = Mathf.Clamp01(volume);
+        PlayerPrefs.SetFloat("Volume", volume);
     }
     
     public void SetFullscreen(bool isFullscreen)

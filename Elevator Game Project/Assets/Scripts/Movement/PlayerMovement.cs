@@ -74,7 +74,12 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
-            photonView.RPC("ChangeModel", RpcTarget.All, body);
+            if (photonView.IsMine)
+            {
+                photonView.RPC("ChangeModel", RpcTarget.All, body);
+            }
+
+            
         } else
         {
             ChangeModel(body);
@@ -96,6 +101,11 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
                     //replace "Interaction" with whatever we name it in the Interactable script
                     interactionTarget.SendMessage("Interact");
                     //animator.SetBool("Charging", true);
+                }
+
+                if (canInteract)
+                {
+                    interactionTarget.SendMessage("Indicator");
                 }
 
                 //deals with raycast for interacting with interactable objects
