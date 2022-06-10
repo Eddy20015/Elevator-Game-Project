@@ -58,6 +58,7 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
             {
                 ChargingStationManager.chargingStationManager.MaxNumOfStations += 1;
                 charge.chargeStations.Add(finalGen);
+                charge.isCompleted = false;
             }
         }
 
