@@ -17,11 +17,13 @@ public class HeadAI : Monster
     private bool patrolling, following, chasing;
     private float chaseTime;
     private RaycastHit hit;
+    Vector3 destination;
     // Start is called before the first frame update
     void Start()
     {
         view = GetComponent<PhotonView>();
         agent = GetComponent<NavMeshAgent>();
+        agent.enabled = false;
         Patrol();
         //player = null;
 
@@ -38,6 +40,8 @@ public class HeadAI : Monster
                 }
             }
         }
+
+        speed = patrolSpeed;
     }
 
     // Update is called once per frame
@@ -56,7 +60,7 @@ public class HeadAI : Monster
         }
         //Patrol
         //Reached a destination, go to the next one
-        if (agent.destination.x == agent.transform.position.x && agent.destination.z == agent.transform.position.z)
+        if (Vector3.Distance(transform.position, destination) < 5)
         {
             Patrol();
         }
@@ -95,6 +99,10 @@ public class HeadAI : Monster
                 Chase();
             }
         }
+
+        transform.position += speed * Time.deltaTime * transform.forward;
+
+        transform.LookAt(destination);
     }
     public void Chase()
     {
@@ -102,8 +110,8 @@ public class HeadAI : Monster
         following = false;
         chasing = true;
         transform.LookAt(player.transform.position);
-        agent.speed = chaseSpeed;
-        agent.SetDestination(player.transform.position);
+        speed = chaseSpeed;
+        destination = player.transform.position;
     }
     public void Follow()
     {
@@ -111,8 +119,8 @@ public class HeadAI : Monster
         following = true;
         chasing = false;
         transform.LookAt(player.transform.position);
-        agent.speed = followSpeed;
-        agent.SetDestination(player.transform.position);
+        speed = followSpeed;
+        destination = player.transform.position;
     }
 
     public void Patrol()
@@ -122,9 +130,9 @@ public class HeadAI : Monster
             patrolling = true;
             following = false;
             chasing = false;
-            agent.speed = patrolSpeed;
-            agent.SetDestination(patrolPoints[Random.Range(0, patrolPoints.Length)].transform.position);
-            transform.LookAt(agent.destination);
+            //agent.speed = patrolSpeed;
+            destination = patrolPoints[Random.Range(0, patrolPoints.Length)].transform.position;
+            transform.LookAt(destination);
         }
     }
 
