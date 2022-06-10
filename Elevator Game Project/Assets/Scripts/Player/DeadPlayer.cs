@@ -30,6 +30,8 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
             a.SetBool("Is Dead", false);
         }
 
+        GetComponentInChildren<Animator>().SetBool("Is Dead", false);
+
         int body = PlayerPrefs.GetInt("Body");
 
         if (body >= models.Length)
@@ -121,6 +123,9 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
         {
             a.SetBool("Is Dead", false);
         }
+
+        GetComponentInChildren<Animator>().SetBool("Is Dead", true);
+
         yield return new WaitForSecondsRealtime(2.7f);
         Revive();
     }
@@ -190,7 +195,7 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
     [PunRPC]
     void ChangeModel(int i)
     {
-        models[i].SetActive(true);
-        Debug.Log("Changed Model to " + i);
+        //models[i].SetActive(true);
+        //Debug.Log("Changed Model to " + i);
     }
 }
