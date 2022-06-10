@@ -39,7 +39,7 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
             body = 0;
         }
 
-        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        /*if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
             if (photonView.IsMine)
             {
@@ -49,7 +49,7 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
         else
         {
             ChangeModel(body);
-        }
+        }*/
     }
 
     private void Update()
@@ -195,7 +195,7 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
     [PunRPC]
     void ChangeModel(int i)
     {
-        //models[i].SetActive(true);
-        //Debug.Log("Changed Model to " + i);
+        models[i].SetActive(true);
+        Debug.Log("Changed Model to " + i);
     }
 }

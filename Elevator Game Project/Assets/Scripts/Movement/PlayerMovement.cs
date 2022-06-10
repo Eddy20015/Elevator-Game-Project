@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
         int body = PlayerPrefs.GetInt("Body");
 
-        if (body < animators.Length && body < models.Length)
+        /*if (body < animators.Length && body < models.Length)
         {
             animator = animators[body];
             model = models[body];
@@ -83,7 +83,7 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         } else
         {
             ChangeModel(body);
-        }
+        }*/
 
         
     }
