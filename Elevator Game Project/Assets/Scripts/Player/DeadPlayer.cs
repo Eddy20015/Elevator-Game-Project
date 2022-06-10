@@ -30,6 +30,8 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
             a.SetBool("Is Dead", false);
         }
 
+        GetComponentInChildren<Animator>().SetBool("Is Dead", false);
+
         int body = PlayerPrefs.GetInt("Body");
 
         if (body >= models.Length)
@@ -37,7 +39,7 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
             body = 0;
         }
 
-        if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        /*if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
         {
             if (photonView.IsMine)
             {
@@ -47,7 +49,7 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
         else
         {
             ChangeModel(body);
-        }
+        }*/
     }
 
     private void Update()
@@ -121,6 +123,9 @@ public class DeadPlayer : MonoBehaviourPunCallbacks, IInteractable
         {
             a.SetBool("Is Dead", false);
         }
+
+        GetComponentInChildren<Animator>().SetBool("Is Dead", true);
+
         yield return new WaitForSecondsRealtime(2.7f);
         Revive();
     }

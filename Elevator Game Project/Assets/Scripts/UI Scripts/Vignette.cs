@@ -51,7 +51,8 @@ public class Vignette : MonoBehaviourPunCallbacks
             }
         }
         //since it is two floors, we have to make sure that the players don't see the vignette when the monster is above or below them
-        if ((player != null && player.activeInHierarchy) && Mathf.Abs(monster.transform.position.y - player.transform.position.y) <= 7)
+        if (player != null && player.activeInHierarchy && GameStateManager.GetGameState() != GameStateManager.GAMESTATE.CINEMATIC &&
+            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
         {
             //Debug.Log(Math.Abs(Vector3.Distance(player.transform.position, monster.transform.position)));
             AllAreFalse = false;
