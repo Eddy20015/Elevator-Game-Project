@@ -24,7 +24,11 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
 
     private void OnTriggerEnter(Collider other)
     {
-        initialpos = wall.transform.position;
+        if (wall != null)
+        {
+            initialpos = wall.transform.position;
+        }
+        
         charge = GetComponent<ChargingStationManager>();
         if (other.gameObject.tag == "Player")
         {
@@ -63,9 +67,12 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
             float elapsedTime = 0;
             while (elapsedTime < topen)
             {
-                wall.transform.position = Vector3.Lerp(initialpos, open.transform.position, elapsedTime / topen);
-                elapsedTime += Time.deltaTime;
-                yield return new WaitForSeconds(Time.deltaTime);
+                if (wall != null)
+                {
+                    wall.transform.position = Vector3.Lerp(initialpos, open.transform.position, elapsedTime / topen);
+                    elapsedTime += Time.deltaTime;
+                    yield return new WaitForSeconds(Time.deltaTime);
+                } 
             }
             wall.transform.position = open.transform.position;
 
