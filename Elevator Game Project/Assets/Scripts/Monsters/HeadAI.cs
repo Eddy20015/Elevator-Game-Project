@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
+using UnityEngine.Rendering;
 
 public class HeadAI : Monster
 {
@@ -13,11 +14,13 @@ public class HeadAI : Monster
     [SerializeField] private float chaseSpeed, followSpeed, patrolSpeed;
     [SerializeField] private float followRange, chaseRange, farthestRange;
     [SerializeField] AudioSource[] audioSources;
+    [SerializeField] Volume volume;
     private PhotonView view;
     private bool patrolling, following, chasing;
     private float chaseTime;
     private RaycastHit hit;
     Vector3 destination;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -103,6 +106,8 @@ public class HeadAI : Monster
         transform.position += speed * Time.deltaTime * transform.forward;
 
         transform.LookAt(destination);
+
+        volume.weight = Mathf.Clamp01(10 / (Vector3.Distance(transform.position, player.transform.position) + 1) - 0.1f);
     }
     public void Chase()
     {
@@ -142,5 +147,7 @@ public class HeadAI : Monster
         {
             a.enabled = false;
         }
+
+        volume.enabled = false;
     }
 }
