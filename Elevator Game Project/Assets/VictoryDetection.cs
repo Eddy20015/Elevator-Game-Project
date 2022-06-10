@@ -15,12 +15,17 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject wall;
     [SerializeField] private ChargingStationManager charge;
     [SerializeField] private ChargeStation finalGen;
+    [SerializeField] private GameObject open;
+    [SerializeField] private Vector3 initialpos;
+    [SerializeField] private float topen;
+    [SerializeField] private float time;
     private int playersInArea = 0; 
 
 
     private void OnTriggerEnter(Collider other)
     {
         charge = GetComponent<ChargingStationManager>();
+        initialpos = wall.transform.position;
         if (other.gameObject.tag == "Player")
         {
             playersInArea += 1;
@@ -45,22 +50,33 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
         //Activate the collider
         invisibleCollider.SetActive(true);
 
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
         //Close the elevators 
         elevatorAnims.CloseDoors();
         //GameStateManager.Cinematics();
 
         if (SceneManager.GetActiveScene().name == "Level 3")
         {
-            wall.transform.position = new Vector3(-95, 9, 51);
+            //wall.transform.position = new Vector3(-95, 9, 51);
+            yield return new WaitForSeconds(time);
+            float elapsedTime = 0;
+            while (elapsedTime < topen)
+            {
+                wall.transform.position = Vector3.Lerp(initialpos, open.transform.position, elapsedTime / topen);
+                elapsedTime += Time.deltaTime;
+                yield return new WaitForSeconds(Time.deltaTime);
+                //Debug.Log(elapsedTime / timeToOpenAndClose);
+            }
+            wall.transform.position = open.transform.position;
 
             if (ChargingStationManager.chargingStationManager.MaxNumOfStations == 4)
             {
                 ChargingStationManager.chargingStationManager.MaxNumOfStations += 1;
                 charge.chargeStations.Add(finalGen);
+                ChargingStationManager.chargingStationManager.isCompleted = false;
             }
         }
-
+        
         yield return new WaitForSeconds(3.5f);
         //Fade In
         fadingScript.FadeIn();
