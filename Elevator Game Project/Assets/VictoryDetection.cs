@@ -15,11 +15,16 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject wall;
     [SerializeField] private ChargingStationManager charge;
     [SerializeField] private ChargeStation finalGen;
+    [SerializeField] private GameObject open;
+    [SerializeField] private Vector3 initialpos;
+    [SerializeField] private float topen;
+    [SerializeField] private float time;
     private int playersInArea = 0; 
 
 
     private void OnTriggerEnter(Collider other)
     {
+        initialpos = wall.transform.position;
         charge = GetComponent<ChargingStationManager>();
         if (other.gameObject.tag == "Player")
         {
@@ -52,13 +57,22 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
 
         if (SceneManager.GetActiveScene().name == "Level 3")
         {
-            wall.transform.position = new Vector3(-95, 9, 51);
+            //wall.transform.position = new Vector3(-95, 9, 51);
+
+            yield return new WaitForSeconds(time);
+            float elapsedTime = 0;
+            while (elapsedTime < topen)
+            {
+                wall.transform.position = Vector3.Lerp(initialpos, open.transform.position, elapsedTime / topen);
+                elapsedTime += Time.deltaTime;
+                yield return new WaitForSeconds(Time.deltaTime);
+            }
+            wall.transform.position = open.transform.position;
 
             if (ChargingStationManager.chargingStationManager.MaxNumOfStations == 4)
             {
                 ChargingStationManager.chargingStationManager.MaxNumOfStations += 1;
                 charge.chargeStations.Add(finalGen);
-                charge.isCompleted = false;
             }
         }
 
