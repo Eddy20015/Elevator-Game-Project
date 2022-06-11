@@ -46,6 +46,12 @@ public class PlayerScript : MonoBehaviourPunCallbacks
         }
 
         view = GetComponent<PhotonView>();
+
+        Camera camera = GetComponent<Camera>();
+        if(camera.enabled == false)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnEnable()
