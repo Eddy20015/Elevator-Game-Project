@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class settings_menu : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class settings_menu : MonoBehaviour
     [SerializeField] Slider volumeSlider;
 
     Resolution[] resolutions;
+
+    public Dropdown regionDropdown;
+
+    string[] regions = { "asia", "au", "cae", "eu", "in", "jp", "ru", "rue", "za", "sa", "kr", "tr", "us", "usw" };
 
     void Start()
     {
@@ -73,5 +78,11 @@ public class settings_menu : MonoBehaviour
     public void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);
+    }
+
+    public void ChangeRegion(int i)
+    {
+        PhotonNetwork.ConnectToRegion(regions[i]);
+        Debug.Log(PhotonNetwork.CloudRegion);
     }
 }
