@@ -764,11 +764,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   agent: {fileID: 4721079363544350655}
-  chaseSpeed: 8
-  followSpeed: 5
+  chaseSpeed: 7.5
+  followSpeed: 4.5
   patrolSpeed: 3
-  followRange: 15
-  chaseRange: 5
+  followRange: 25
+  chaseRange: 8
   farthestRange: 0
   audioSources:
   - {fileID: 6818003483950783841}
