@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.Audio;
 
 public class Vignette : MonoBehaviourPunCallbacks
 {
@@ -11,12 +12,15 @@ public class Vignette : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject player, monster;
     [SerializeField] private float farthestDistance, decreaseAmount;
 
+    private AudioSource source;
+
     //player has been set online, monster has been set online, all the vignettes are off for the dead player
     private bool OnlinePlayerFound, OnlineMonsterFound, AllAreFalse;
     // Start is called before the first frame update
     void Start()
     {
         //if()
+        source = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -58,12 +62,14 @@ public class Vignette : MonoBehaviourPunCallbacks
             AllAreFalse = false;
             if (Math.Abs(Vector3.Distance(player.transform.position, monster.transform.position)) > farthestDistance)
             {
+                source.Pause();
                 //gameObject.GetComponent<Animator>().SetInteger("Level", 0);
                 vignette[0].SetActive(false);
                 vignette[1].SetActive(false);
             }
             else if (Math.Abs(Vector3.Distance(player.transform.position, monster.transform.position)) > farthestDistance - decreaseAmount * 1)
             {
+                source.Play();
                 //gameObject.GetComponent<Animator>().SetInteger("Level", 1);
                 vignette[0].SetActive(false);
                 vignette[1].SetActive(true);
