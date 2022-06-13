@@ -10,6 +10,8 @@ public class PlayerScript : MonoBehaviourPunCallbacks
 
     public bool JustRevived = false;
 
+    private bool StayAlive;
+
     private GameObject deathUI;
 
     private GameObject pauseUI;
@@ -46,6 +48,22 @@ public class PlayerScript : MonoBehaviourPunCallbacks
         }
 
         view = GetComponent<PhotonView>();
+
+        Camera camera = GetComponentInChildren<Camera>();
+        if(camera.enabled)
+        {
+            StayAlive = true;
+            if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE && view.IsMine)
+            {
+                view.RPC("RPC_StayAlive", RpcTarget.Others);
+            }
+        }
+    }
+
+    [PunRPC]
+    private void RPC_StayAlive()
+    {
+        StayAlive = true;
     }
 
     private void OnEnable()
@@ -94,6 +112,11 @@ public class PlayerScript : MonoBehaviourPunCallbacks
 
         if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.GAMEOVER)
         Debug.LogError(GameStateManager.GetGameState());
+
+        if (!StayAlive)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void GetKilled()

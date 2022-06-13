@@ -15,11 +15,20 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject wall;
     [SerializeField] private ChargingStationManager charge;
     [SerializeField] private ChargeStation finalGen;
+    [SerializeField] private GameObject open;
+    [SerializeField] private Vector3 initialpos;
+    [SerializeField] private float topen;
+    [SerializeField] private float time;
     private int playersInArea = 0; 
 
 
     private void OnTriggerEnter(Collider other)
     {
+        if (wall != null)
+        {
+            initialpos = wall.transform.position;
+        }
+        
         charge = GetComponent<ChargingStationManager>();
         if (other.gameObject.tag == "Player")
         {
@@ -42,45 +51,68 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
 
     private IEnumerator EndGame()
     {
-        //Activate the collider
-        invisibleCollider.SetActive(true);
-
-        yield return new WaitForSeconds(1f);
-        //Close the elevators 
-        elevatorAnims.CloseDoors();
-        //GameStateManager.Cinematics();
-
-        if (SceneManager.GetActiveScene().name == "Level 3")
+        bool DoIt = true;
+        if (SceneManager.GetActiveScene().name == "Level 3" && ChargingStationManager.chargingStationManager.MaxNumOfStations == 5)
         {
-            wall.transform.position = new Vector3(-95, 9, 51);
-
-            if (ChargingStationManager.chargingStationManager.MaxNumOfStations == 4)
+            if(ChargingStationManager.chargingStationManager.NumOfCompletedStations != 5)
             {
-                ChargingStationManager.chargingStationManager.MaxNumOfStations += 1;
-                charge.chargeStations.Add(finalGen);
+                DoIt = false;
             }
         }
 
-        yield return new WaitForSeconds(3.5f);
-        //Fade In
-        fadingScript.FadeIn();
-
-        yield return new WaitForSeconds(2.25f);
-
-        //LoadTheNextLevel
-        if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
+        if (DoIt)
         {
-            Loader.LoadScene();
-        }
-        else
-        {
-            if (PhotonNetwork.IsMasterClient)
+            //Activate the collider
+            invisibleCollider.SetActive(true);
+
+            yield return new WaitForSeconds(1f);
+            //Close the elevators 
+            elevatorAnims.CloseDoors();
+            //GameStateManager.Cinematics();
+
+            if (SceneManager.GetActiveScene().name == "Level 3")
             {
-                GameStateManager.Start(NextLevelName);
+                //wall.transform.position = new Vector3(-95, 9, 51);
+
+                yield return new WaitForSeconds(time);
+                float elapsedTime = 0;
+                while (elapsedTime < topen)
+                {
+                    if (wall != null)
+                    {
+                        wall.transform.position = Vector3.Lerp(initialpos, open.transform.position, elapsedTime / topen);
+                        elapsedTime += Time.deltaTime;
+                        yield return new WaitForSeconds(Time.deltaTime);
+                    }
+                }
+
+                if (ChargingStationManager.chargingStationManager.MaxNumOfStations == 4)
+                {
+                    ChargingStationManager.chargingStationManager.MaxNumOfStations += 1;
+                    wall.transform.position = open.transform.position;
+                    charge.chargeStations.Add(finalGen);
+                }
+            }
+
+            yield return new WaitForSeconds(3.5f);
+            //Fade In
+            fadingScript.FadeIn();
+
+            yield return new WaitForSeconds(2.25f);
+
+            //LoadTheNextLevel
+            if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
+            {
+                Loader.LoadScene();
+            }
+            else
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    GameStateManager.Start(NextLevelName);
+                }
             }
         }
-
-
 
         //Cursor.lockState = CursorLockMode.None;
     }

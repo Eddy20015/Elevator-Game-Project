@@ -11,7 +11,7 @@ public class ChargingStationManager : MonoBehaviour
     public static ChargingStationManager chargingStationManager;
 
     [SerializeField] public List<ChargeStation> chargeStations;
-    [SerializeField] private bool isCompleted;
+    [SerializeField] public bool isCompleted;
     private PhotonView view;
     [SerializeField] private float numOfCompletedStations, maxNumOfStations;
 
