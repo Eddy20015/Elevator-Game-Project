@@ -12,6 +12,10 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
 
     private bool Connecting = false;
 
+    string[] regions = { "asia", "au", "cae", "eu", "in", "jp", "ru", "rue", "za", "sa", "kr", "tr", "us", "usw" };
+
+    int region = 12;
+
     public void OnClickConnect()
     {
         if(UsernameInput.text.Length >= 1 && UsernameInput.text.Length <= 12)
@@ -20,12 +24,16 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
             ButtonText.text = "Connecting...";
             Connecting = true;
             PhotonNetwork.AutomaticallySyncScene = true;
+            PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = regions[region];
+            Debug.Log(regions[region]);
             PhotonNetwork.ConnectUsingSettings();
         }
     }
 
     public override void OnConnectedToMaster()
     {
+        Debug.Log(PhotonNetwork.CloudRegion);
+        Debug.Log(PhotonNetwork.GetPing());
         GameStateManager.Lobby();
     }
 
@@ -35,5 +43,10 @@ public class ConnectToServer : MonoBehaviourPunCallbacks
         {
             GameStateManager.MainMenu();
         }
+    }
+
+    public void ChangeRegion(int i)
+    {
+        region = i;
     }
 }

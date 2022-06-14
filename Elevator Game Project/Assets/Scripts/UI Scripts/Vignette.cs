@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.Audio;
 
 public class Vignette : MonoBehaviourPunCallbacks
 {
@@ -11,12 +12,15 @@ public class Vignette : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject player, monster;
     [SerializeField] private float farthestDistance, decreaseAmount;
 
+    private AudioSource source;
+
     //player has been set online, monster has been set online, all the vignettes are off for the dead player
     private bool OnlinePlayerFound, OnlineMonsterFound, AllAreFalse;
     // Start is called before the first frame update
     void Start()
     {
         //if()
+        source = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -51,18 +55,21 @@ public class Vignette : MonoBehaviourPunCallbacks
             }
         }
         //since it is two floors, we have to make sure that the players don't see the vignette when the monster is above or below them
-        if ((player != null && player.activeInHierarchy) && Mathf.Abs(monster.transform.position.y - player.transform.position.y) <= 7)
+        if (player != null && player.activeInHierarchy && GameStateManager.GetGameState() != GameStateManager.GAMESTATE.CINEMATIC &&
+            GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
         {
             //Debug.Log(Math.Abs(Vector3.Distance(player.transform.position, monster.transform.position)));
             AllAreFalse = false;
             if (Math.Abs(Vector3.Distance(player.transform.position, monster.transform.position)) > farthestDistance)
             {
+                source.Pause();
                 //gameObject.GetComponent<Animator>().SetInteger("Level", 0);
                 vignette[0].SetActive(false);
                 vignette[1].SetActive(false);
             }
             else if (Math.Abs(Vector3.Distance(player.transform.position, monster.transform.position)) > farthestDistance - decreaseAmount * 1)
             {
+                source.Play();
                 //gameObject.GetComponent<Animator>().SetInteger("Level", 1);
                 vignette[0].SetActive(false);
                 vignette[1].SetActive(true);

@@ -236,6 +236,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
         Debug.LogWarning("Video1ShouldPlay");
         VidRawImage.texture = FirstFrameImage;
         VidPlayer.clip = JumpScare1;
+        VidPlayer.SetDirectAudioMute(0, true);
         VidImage.SetActive(true);
         AfterTheOther = _AfterTheOther;
         StartVideo = true;
@@ -247,6 +248,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
         Debug.LogWarning("Video2ShouldPlay");
         VidRawImage.texture = BlackScreenImage;
         VidPlayer.clip = JumpScare2;
+        VidPlayer.SetDirectAudioMute(0, false);
         VidImage.SetActive(true);
         VidImage.GetComponent<AudioSource>().clip = null;
         BringUpPanel = true;
