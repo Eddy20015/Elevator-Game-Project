@@ -357,6 +357,7 @@ MonoBehaviour:
   chaseRange: 8
   farthestRange: 26
   audioSources: []
+  volume: {fileID: 0}
 --- !u!195 &610541018
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1641,9 +1642,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 679967551699897276, guid: 813a0f82a0730ec458ae7be4b59897fd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4.95
+      objectReference: {fileID: 0}
     - target: {fileID: 679967551721044832, guid: 813a0f82a0730ec458ae7be4b59897fd, type: 3}
       propertyPath: m_Name
       value: ItemDrop
+      objectReference: {fileID: 0}
+    - target: {fileID: 679967551721044837, guid: 813a0f82a0730ec458ae7be4b59897fd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 679967551721044859, guid: 813a0f82a0730ec458ae7be4b59897fd, type: 3}
       propertyPath: m_RootOrder
@@ -1878,7 +1887,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6196095406374785672, guid: 1024041159ac0374392d95d6ffe36fcc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.565887
+      value: 8.547
       objectReference: {fileID: 0}
     - target: {fileID: 6196095406374785672, guid: 1024041159ac0374392d95d6ffe36fcc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1886,7 +1895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6196095406374785672, guid: 1024041159ac0374392d95d6ffe36fcc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.846614
+      value: 10.832
       objectReference: {fileID: 0}
     - target: {fileID: 6196095406374785672, guid: 1024041159ac0374392d95d6ffe36fcc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1921,6 +1930,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 188541357}
     - target: {fileID: 6196095406374785673, guid: 1024041159ac0374392d95d6ffe36fcc, type: 3}
+      propertyPath: xOffset
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6196095406374785673, guid: 1024041159ac0374392d95d6ffe36fcc, type: 3}
       propertyPath: patrolPoints.Array.data[0]
       value: 
       objectReference: {fileID: 1095893733}
@@ -1942,7 +1955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6196095406374785907, guid: 1024041159ac0374392d95d6ffe36fcc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1024041159ac0374392d95d6ffe36fcc, type: 3}
