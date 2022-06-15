@@ -61,7 +61,7 @@ public class Doomba : Monster
     public void RunBehavior()
     {
         //Reached a destination, go to the next one
-        if (agent.destination.x == agent.transform.position.x && agent.destination.z == agent.transform.position.z)
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
             Patrol();
         }
