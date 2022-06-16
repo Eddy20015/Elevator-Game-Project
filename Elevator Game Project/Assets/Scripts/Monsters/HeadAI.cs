@@ -26,7 +26,7 @@ public class HeadAI : Monster
     {
         view = GetComponent<PhotonView>();
         agent = GetComponent<NavMeshAgent>();
-        agent.enabled = false;
+        //agent.enabled = false;
         Patrol();
         //player = null;
 
@@ -103,9 +103,9 @@ public class HeadAI : Monster
             }
         }
 
-        transform.position += speed * Time.deltaTime * transform.forward;
+        //transform.position += speed * Time.deltaTime * transform.forward;
 
-        transform.LookAt(destination);
+        //transform.LookAt(destination);
 
         volume.weight = Mathf.Clamp01(10 / (Vector3.Distance(transform.position, player.transform.position) + 1) - 0.1f);
     }
@@ -114,18 +114,20 @@ public class HeadAI : Monster
         patrolling = false;
         following = false;
         chasing = true;
-        transform.LookAt(player.transform.position);
+        //transform.LookAt(player.transform.position);
         speed = chaseSpeed;
         destination = player.transform.position;
+        agent.SetDestination(destination);
     }
     public void Follow()
     {
         patrolling = false;
         following = true;
         chasing = false;
-        transform.LookAt(player.transform.position);
+        //transform.LookAt(player.transform.position);
         speed = followSpeed;
         destination = player.transform.position;
+        agent.SetDestination(destination);
     }
 
     public void Patrol()
@@ -135,9 +137,10 @@ public class HeadAI : Monster
             patrolling = true;
             following = false;
             chasing = false;
-            //agent.speed = patrolSpeed;
+            agent.speed = patrolSpeed;
             destination = patrolPoints[Random.Range(0, patrolPoints.Length)].transform.position;
-            transform.LookAt(destination);
+            //transform.LookAt(destination);
+            agent.SetDestination(destination);
         }
     }
 

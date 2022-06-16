@@ -8,7 +8,7 @@ using UnityEngine.Audio;
 
 public class Vignette : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private GameObject[] vignette;
+    [SerializeField] private GameObject[] vignette, monsters;
     [SerializeField] private GameObject player, monster;
     [SerializeField] private float farthestDistance, decreaseAmount;
 
@@ -54,6 +54,17 @@ public class Vignette : MonoBehaviourPunCallbacks
                 }
             }
         }
+
+        float f = Vector3.Distance(player.transform.position, monsters[0].transform.position);
+
+        if (f > Vector3.Distance(player.transform.position, monsters[1].transform.position))
+        {
+            monster = monsters[1];
+        } else
+        {
+            monster = monsters[0];
+        }
+
         //since it is two floors, we have to make sure that the players don't see the vignette when the monster is above or below them
         if (player != null && player.activeInHierarchy && GameStateManager.GetGameState() != GameStateManager.GAMESTATE.CINEMATIC &&
             GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
