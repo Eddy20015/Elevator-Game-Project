@@ -115,7 +115,7 @@ public class HeadAI : Monster
         following = false;
         chasing = true;
         //transform.LookAt(player.transform.position);
-        speed = chaseSpeed;
+        agent.speed = chaseSpeed;
         destination = player.transform.position;
         agent.SetDestination(destination);
     }
@@ -125,7 +125,7 @@ public class HeadAI : Monster
         following = true;
         chasing = false;
         //transform.LookAt(player.transform.position);
-        speed = followSpeed;
+        agent.speed = followSpeed;
         destination = player.transform.position;
         agent.SetDestination(destination);
     }
