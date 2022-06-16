@@ -13,6 +13,7 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
     [SerializeField] private SceneLoader Loader;
     [SerializeField] private string NextLevelName;
     [SerializeField] private GameObject wall;
+    [SerializeField] private AudioSource wallAudio;
     [SerializeField] private ChargingStationManager charge;
     [SerializeField] private ChargeStation finalGen;
     [SerializeField] private GameObject open;
@@ -80,6 +81,10 @@ public class VictoryDetection : MonoBehaviourPunCallbacks
                 {
                     if (wall != null)
                     {
+                        if (!wallAudio.isPlaying)
+                        {
+                            wallAudio.Play();
+                        }
                         wall.transform.position = Vector3.Lerp(initialpos, open.transform.position, elapsedTime / topen);
                         elapsedTime += Time.deltaTime;
                         yield return new WaitForSeconds(Time.deltaTime);
