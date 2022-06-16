@@ -989,7 +989,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: USA, EAST
+  m_text: USA, East
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 285533ea7644c45a59589c6553e595e5, type: 2}
   m_sharedMaterial: {fileID: -2352258788418992670, guid: 285533ea7644c45a59589c6553e595e5, type: 2}
@@ -3238,7 +3238,7 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Turkey
       m_Image: {fileID: 0}
-    - m_Text: USA, EAST
+    - m_Text: USA, East
       m_Image: {fileID: 0}
     - m_Text: USA, West
       m_Image: {fileID: 0}

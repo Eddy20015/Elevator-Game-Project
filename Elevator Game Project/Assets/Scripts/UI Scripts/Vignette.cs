@@ -10,7 +10,7 @@ public class Vignette : MonoBehaviourPunCallbacks
 {
     [SerializeField] private GameObject[] vignette, monsters;
     [SerializeField] private GameObject player, monster;
-    [SerializeField] private float farthestDistance, decreaseAmount;
+    [SerializeField] private float farthestDistance, decreaseAmount, initialDecreaseAmount;
 
     private AudioSource source;
 
@@ -21,6 +21,8 @@ public class Vignette : MonoBehaviourPunCallbacks
     {
         //if()
         source = GetComponent<AudioSource>();
+
+        initialDecreaseAmount = decreaseAmount;
     }
 
     private void Update()
@@ -40,7 +42,7 @@ public class Vignette : MonoBehaviourPunCallbacks
                     }
                 }
             }
-            if((monster == null || !monster.activeInHierarchy) && !OnlineMonsterFound)
+            if((monsters[0] == null || !monster.activeInHierarchy) && !OnlineMonsterFound)
             {
                 GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
                 foreach (GameObject monsterr in monsters)
@@ -48,22 +50,37 @@ public class Vignette : MonoBehaviourPunCallbacks
                     PhotonView monsterView = monsterr.GetComponent<PhotonView>();
                     if (monsterView != null && monsterView.IsMine)
                     {
-                        monster = monsterr;
+                        monsters[0] = monsterr;
+                        OnlineMonsterFound = true;
+                    }
+                }
+            }
+            if ((monsters[1] == null || !monster.activeInHierarchy) && !OnlineMonsterFound)
+            {
+                GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
+                foreach (GameObject monsterr in monsters)
+                {
+                    PhotonView monsterView = monsterr.GetComponent<PhotonView>();
+                    if (monsterView != null && monsterView.IsMine && monsterr != monsters[0])
+                    {
+                        monsters[1] = monsterr;
                         OnlineMonsterFound = true;
                     }
                 }
             }
         }
 
-        float f = Vector3.Distance(player.transform.position, monsters[0].transform.position);
+        float f = Mathf.Abs(player.transform.position.y - monsters[0].transform.position.y);
 
-        if (f > Vector3.Distance(player.transform.position, monsters[1].transform.position))
+        if (f > Mathf.Abs(player.transform.position.y - monsters[1].transform.position.y))
         {
             monster = monsters[1];
         } else
         {
             monster = monsters[0];
         }
+
+        //decreaseAmount = initialDecreaseAmount * Mathf.Clamp01(3 - Mathf.Abs(player.transform.position.y - monster.transform.position.y));
 
         //since it is two floors, we have to make sure that the players don't see the vignette when the monster is above or below them
         if (player != null && player.activeInHierarchy && GameStateManager.GetGameState() != GameStateManager.GAMESTATE.CINEMATIC &&
