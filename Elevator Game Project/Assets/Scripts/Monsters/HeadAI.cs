@@ -150,4 +150,22 @@ public class HeadAI : Monster
 
         volume.enabled = false;
     }
+
+    public void SetPatrolPoints(bool isUp)
+    {
+        patrolPoints = new GameObject[5];
+        GameObject PointParent = GameObject.Find("Patrol Points");
+
+        int up = 0;
+
+        if (isUp)
+        {
+            up = 5;
+        }
+
+        for (int i = 0 + up; i < 5 + up; i++)
+        {
+            patrolPoints[i - up] = PointParent.transform.GetChild(i).gameObject;
+        }
+    }
 }

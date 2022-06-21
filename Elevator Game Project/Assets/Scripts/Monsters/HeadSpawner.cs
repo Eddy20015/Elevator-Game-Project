@@ -6,8 +6,8 @@ using Photon.Pun;
 public class HeadSpawner : MonoBehaviourPunCallbacks
 {
     [SerializeField] private string HeadName;
-    [SerializeField] private Vector3 MasterLocation;
-    [SerializeField] private Vector3 FollowLocation;
+    [SerializeField] private Vector3[] MasterLocations;
+    [SerializeField] private Vector3[] FollowLocations;
     private GameObject[] HeadMonsters;
     private bool Found;
 
@@ -25,11 +25,18 @@ public class HeadSpawner : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                PhotonNetwork.Instantiate(HeadName, MasterLocation, Quaternion.identity);
+                //0 is lower head, 1 is higher head
+                GameObject downHead = PhotonNetwork.Instantiate(HeadName, MasterLocations[1], Quaternion.identity);
+                downHead.GetComponent<HeadAI>().SetPatrolPoints(true);
+                GameObject upHead = PhotonNetwork.Instantiate(HeadName, MasterLocations[1], Quaternion.identity);
+                upHead.GetComponent<HeadAI>().SetPatrolPoints(true);
             }
             else
             {
-                PhotonNetwork.Instantiate(HeadName, FollowLocation, Quaternion.identity);
+                GameObject downHead = PhotonNetwork.Instantiate(HeadName, FollowLocations[1], Quaternion.identity);
+                downHead.GetComponent<HeadAI>().SetPatrolPoints(true);
+                GameObject upHead = PhotonNetwork.Instantiate(HeadName, FollowLocations[1], Quaternion.identity);
+                upHead.GetComponent<HeadAI>().SetPatrolPoints(true);
             }
         }
 
@@ -79,7 +86,7 @@ public class HeadSpawner : MonoBehaviourPunCallbacks
 
             for (int i = 0; i < LocalHeadAI.patrolPoints.Length; i++)
             {
-                OnlineHeadAI.patrolPoints[i] = PointParent.transform.GetChild(i).gameObject;
+                //OnlineHeadAI.patrolPoints[i] = PointParent.transform.GetChild(i).gameObject;
                 Debug.LogWarning("Local Head AI Points " + LocalHeadAI.patrolPoints[i]);
                 Debug.LogWarning("Patrol Point Directly " + PointParent.transform.GetChild(i).gameObject);
             }
