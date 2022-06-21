@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEngine.Audio;
 
 public class Vignette : MonoBehaviourPunCallbacks
 {
-    [SerializeField] private GameObject[] vignette;
+    [SerializeField] private GameObject[] vignette, monsters;
     [SerializeField] private GameObject player, monster;
-    [SerializeField] private float farthestDistance, decreaseAmount;
+    [SerializeField] private float farthestDistance, decreaseAmount, initialDecreaseAmount;
+
+    private AudioSource source;
 
     //player has been set online, monster has been set online, all the vignettes are off for the dead player
     private bool OnlinePlayerFound, OnlineMonsterFound, AllAreFalse;
@@ -17,6 +20,9 @@ public class Vignette : MonoBehaviourPunCallbacks
     void Start()
     {
         //if()
+        source = GetComponent<AudioSource>();
+
+        initialDecreaseAmount = decreaseAmount;
     }
 
     private void Update()
@@ -36,7 +42,7 @@ public class Vignette : MonoBehaviourPunCallbacks
                     }
                 }
             }
-            if((monster == null || !monster.activeInHierarchy) && !OnlineMonsterFound)
+            if((monsters[0] == null || !monster.activeInHierarchy) && !OnlineMonsterFound)
             {
                 GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
                 foreach (GameObject monsterr in monsters)
@@ -44,12 +50,38 @@ public class Vignette : MonoBehaviourPunCallbacks
                     PhotonView monsterView = monsterr.GetComponent<PhotonView>();
                     if (monsterView != null && monsterView.IsMine)
                     {
-                        monster = monsterr;
+                        monsters[0] = monsterr;
+                        OnlineMonsterFound = true;
+                    }
+                }
+            }
+            if ((monsters[1] == null || !monster.activeInHierarchy) && !OnlineMonsterFound)
+            {
+                GameObject[] monsters = GameObject.FindGameObjectsWithTag("Monster");
+                foreach (GameObject monsterr in monsters)
+                {
+                    PhotonView monsterView = monsterr.GetComponent<PhotonView>();
+                    if (monsterView != null && monsterView.IsMine && monsterr != monsters[0])
+                    {
+                        monsters[1] = monsterr;
                         OnlineMonsterFound = true;
                     }
                 }
             }
         }
+
+        float f = Mathf.Abs(player.transform.position.y - monsters[0].transform.position.y);
+
+        if (f > Mathf.Abs(player.transform.position.y - monsters[1].transform.position.y))
+        {
+            monster = monsters[1];
+        } else
+        {
+            monster = monsters[0];
+        }
+
+        //decreaseAmount = initialDecreaseAmount * Mathf.Clamp01(3 - Mathf.Abs(player.transform.position.y - monster.transform.position.y));
+
         //since it is two floors, we have to make sure that the players don't see the vignette when the monster is above or below them
         if (player != null && player.activeInHierarchy && GameStateManager.GetGameState() != GameStateManager.GAMESTATE.CINEMATIC &&
             GameStateManager.GetGameState() != GameStateManager.GAMESTATE.GAMEOVER)
@@ -58,12 +90,14 @@ public class Vignette : MonoBehaviourPunCallbacks
             AllAreFalse = false;
             if (Math.Abs(Vector3.Distance(player.transform.position, monster.transform.position)) > farthestDistance)
             {
+                source.Pause();
                 //gameObject.GetComponent<Animator>().SetInteger("Level", 0);
                 vignette[0].SetActive(false);
                 vignette[1].SetActive(false);
             }
             else if (Math.Abs(Vector3.Distance(player.transform.position, monster.transform.position)) > farthestDistance - decreaseAmount * 1)
             {
+                source.Play();
                 //gameObject.GetComponent<Animator>().SetInteger("Level", 1);
                 vignette[0].SetActive(false);
                 vignette[1].SetActive(true);

@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
 
+/// <summary>
+/// Doomba AI, uses a simple behaviour tree to control the Doomba
+/// </summary>
 public class Doomba : Monster
 {
     [SerializeField] private GameObject player;
@@ -11,6 +14,8 @@ public class Doomba : Monster
     [SerializeField] private GameObject[] patrolPoints;
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private float range, chaseSpeed, patrolSpeed;
+    //Offset for the other raycasts
+    [SerializeField] private float xOffset;
     private bool patrolling;
     private PhotonView view;
     private RaycastHit hit;
@@ -35,32 +40,46 @@ public class Doomba : Monster
         //Checks if destination has been reached before going to the next destination
         if (GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.LOCAL)
         {
-            //Reached a destination, go to the next one
-            if (agent.destination.x == agent.transform.position.x && agent.destination.z == agent.transform.position.z)
+            RunBehavior();
+        }
+        else if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        {
+            //Only 1 client will have it move
+            if (view.IsMine)
             {
-                Patrol();
+                RunBehavior();
             }
+        }
 
-            //Checks if a player is in line of sight, if they go out of line of sight, go back to patrolling
-            if (Physics.Raycast(transform.position, transform.forward, out hit, range, playerLayer))
+        if (patrolling)
+        {
+            //Debug.Log(agent.destination);
+        }
+    }
+
+    //Runs the behavior of the AI
+    public void RunBehavior()
+    {
+        //Reached a destination, go to the next one
+        if (agent.remainingDistance <= agent.stoppingDistance)
+        {
+            Patrol();
+        }
+
+        //(FIRST RAYCAST)Checks if a player is in line of sight, if they go out of line of sight, go back to patrolling
+        if (Physics.Raycast(transform.position, transform.forward, out hit, range, playerLayer))
+        {
+            if (hit.transform.tag == "Player" && ChargingStationManager.chargingStationManager.NumOfCompletedStations >= 2)
             {
-                if (hit.transform.tag == "Player" && ChargingStationManager.chargingStationManager.NumOfCompletedStations >= 2)
-                {
-                    Chase();
-                    //Animation Code would be here for beginning to chase
+                Chase();
+                //Animation Code would be here for beginning to chase
 
-                }
-                else if (patrolling == false)
-                {
-                    Patrol();
-                    //Animation Code would be here to go back to patrolling
+            }
+            else if (patrolling == false)
+            {
+                //Patrol();
+                //Animation Code would be here to go back to patrolling
 
-                }
-                else
-                {
-                    Debug.DrawRay(transform.position, transform.forward * range, Color.white);
-                    //Debug.Log("Did not Hit");
-                }
             }
             else
             {
@@ -68,44 +87,64 @@ public class Doomba : Monster
                 //Debug.Log("Did not Hit");
             }
         }
-        else if(GameStateManager.GetPlayState() == GameStateManager.PLAYSTATE.ONLINE)
+        else
         {
-            //Only 1 client will have it move
-            if (view.IsMine)
-            {
-                //Reached a destination, go to the next one
-                if (agent.destination.x == agent.transform.position.x && agent.destination.z == agent.transform.position.z)
-                {
-                    Patrol();
-                }
-
-                //Checks if a player is in line of sight, if they go out of line of sight, go back to patrolling
-                if (Physics.Raycast(transform.position, transform.forward, out hit, range, playerLayer))
-                {
-                    if (hit.transform.tag == "Player" && ChargingStationManager.chargingStationManager.NumOfCompletedStations >= 1)
-                    {
-                        Chase();
-                        //Animation Code would be here for beginning to chase
-
-                    }
-                    else if (patrolling == false)
-                    {
-                        //Patrol();
-                        //Animation Code would be here to go back to patrolling
-
-                    }
-                }
-                else
-                {
-                    Debug.DrawRay(transform.position, transform.forward * range, Color.white);
-                    //Debug.Log("Did not Hit");
-                }
-            }
+            Debug.DrawRay(transform.position, transform.forward * range, Color.white);
+            //Debug.Log("Did not Hit");
         }
 
-        if (patrolling)
+        //(SECOND RAYCAST)Checks if a player is in line of sight, if they go out of line of sight, go back to patrolling
+        if (Physics.Raycast(transform.position + transform.right * xOffset, transform.forward, out hit, range, playerLayer))
         {
-            //Debug.Log(agent.destination);
+            if (hit.transform.tag == "Player" && ChargingStationManager.chargingStationManager.NumOfCompletedStations >= 2)
+            {
+                Chase();
+                //Animation Code would be here for beginning to chase
+
+            }
+            else if (patrolling == false)
+            {
+                //Patrol();
+                //Animation Code would be here to go back to patrolling
+
+            }
+            else
+            {
+                Debug.DrawRay(transform.position + transform.right * xOffset, transform.forward * range, Color.white);
+                //Debug.Log("Did not Hit");
+            }
+        }
+        else
+        {
+            Debug.DrawRay(transform.position + transform.right * xOffset, transform.forward * range, Color.white);
+            //Debug.Log("Did not Hit");
+        }
+
+        //(THIRD RAYCAST)Checks if a player is in line of sight, if they go out of line of sight, go back to patrolling
+        if (Physics.Raycast(transform.position - transform.right * xOffset, transform.forward, out hit, range, playerLayer))
+        {
+            if (hit.transform.tag == "Player" && ChargingStationManager.chargingStationManager.NumOfCompletedStations >= 2)
+            {
+                Chase();
+                //Animation Code would be here for beginning to chase
+
+            }
+            else if (patrolling == false)
+            {
+                //Patrol();
+                //Animation Code would be here to go back to patrolling
+
+            }
+            else
+            {
+                Debug.DrawRay(transform.position - transform.right * xOffset, transform.forward * range, Color.white);
+                //Debug.Log("Did not Hit");
+            }
+        }
+        else
+        {
+            Debug.DrawRay(transform.position - transform.right * xOffset, transform.forward * range, Color.white);
+            //Debug.Log("Did not Hit");
         }
     }
 

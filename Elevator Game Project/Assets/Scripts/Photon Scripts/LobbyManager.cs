@@ -36,6 +36,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject StartButton;
     [SerializeField] private string GameScene;
 
+    string[] regions = { "asia", "au", "cae", "eu", "in", "jp", "ru", "rue", "za", "sa", "kr", "tr", "us", "usw" };
+
     //start here will activate the LobbyPanel and deactivate all other panels
     //then the player will join the lobby
     private void Start()
@@ -250,5 +252,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         GameStateManager.Start(GameScene);
         //PhotonNetwork.LoadLevel(GameScene);
+    }
+
+    public void ChangeRegion(int i)
+    {
+        PhotonNetwork.ConnectToRegion(regions[i]);
+        Debug.Log(PhotonNetwork.CloudRegion);
     }
 }
