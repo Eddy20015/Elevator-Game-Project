@@ -16,7 +16,7 @@ public class HeadAI : Monster
     [SerializeField] AudioSource[] audioSources;
     [SerializeField] Volume volume;
     private PhotonView view;
-    private bool patrolling, following, chasing;
+    private bool patrolling, following, chasing, gaveUp;
     private float chaseTime;
     private RaycastHit hit;
     Vector3 destination;
@@ -60,6 +60,8 @@ public class HeadAI : Monster
         if(chasing == true && Time.time - chaseTime > 10f)
         {
             Patrol();
+            gaveUp = true;
+            StartCoroutine(GiveUp());
         }
         //Patrol
         //Reached a destination, go to the next one
@@ -113,7 +115,7 @@ public class HeadAI : Monster
     {
         patrolling = false;
         following = false;
-        if (!chasing)
+        if (!chasing && !gaveUp)
         {
             agent.speed = chaseSpeed;
             destination = player.transform.position;
@@ -128,7 +130,7 @@ public class HeadAI : Monster
     public void Follow()
     {
         patrolling = false;
-        if (!following)
+        if (!following && !gaveUp)
         {
             agent.speed = followSpeed;
             destination = player.transform.position;
@@ -184,5 +186,11 @@ public class HeadAI : Monster
         {
             patrolPoints[i - up] = PointParent.transform.GetChild(i).gameObject;
         }
+    }
+
+    IEnumerator GiveUp()
+    {
+        yield return new WaitForSeconds(5);
+        gaveUp = false;
     }
 }
