@@ -113,6 +113,12 @@ public class HeadAI : Monster
     {
         patrolling = false;
         following = false;
+        if (!chasing)
+        {
+            agent.speed = chaseSpeed;
+            destination = player.transform.position;
+            agent.SetDestination(destination);
+        }
         chasing = true;
         //transform.LookAt(player.transform.position);
         agent.speed = chaseSpeed;
@@ -122,12 +128,16 @@ public class HeadAI : Monster
     public void Follow()
     {
         patrolling = false;
+        if (!following)
+        {
+            agent.speed = followSpeed;
+            destination = player.transform.position;
+            agent.SetDestination(destination);
+        }
         following = true;
         chasing = false;
         //transform.LookAt(player.transform.position);
-        agent.speed = followSpeed;
-        destination = player.transform.position;
-        agent.SetDestination(destination);
+        
     }
 
     public void Patrol()
@@ -140,7 +150,11 @@ public class HeadAI : Monster
             agent.speed = patrolSpeed;
             destination = patrolPoints[Random.Range(0, patrolPoints.Length)].transform.position;
             //transform.LookAt(destination);
-            agent.SetDestination(destination);
+            if (agent.destination != destination)
+            {
+                agent.SetDestination(destination);
+            }
+            
         }
     }
 
