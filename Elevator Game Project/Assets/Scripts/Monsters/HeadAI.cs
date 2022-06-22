@@ -57,7 +57,7 @@ public class HeadAI : Monster
             agent.SetDestination(transform.position);
         }
         //After 10 seconds of chasing go back to patrol
-        if(chasing == true && Time.time - chaseTime > 10f)
+        if(chasing == true && (Time.time - chaseTime) > 5f)
         {
             Patrol();
             gaveUp = true;
@@ -81,7 +81,8 @@ public class HeadAI : Monster
                 }
             }
             //Keep following if they are still in distance
-            if (Vector3.Distance(transform.position, player.transform.position) < followRange)
+            if (Vector3.Distance(transform.position, player.transform.position) < followRange &&
+                Mathf.Abs(transform.position.y - player.transform.position.y) < 5 && !chasing)
             {
                 //Debug.Log(agent.speed);
                 Follow();
@@ -99,7 +100,8 @@ public class HeadAI : Monster
             }
             //if (player != null || player.activeInHierarchy)
                 //Keep chasing if they are still in distance
-            if (Vector3.Distance(transform.position, player.transform.position) < chaseRange)
+            if (Vector3.Distance(transform.position, player.transform.position) < chaseRange &&
+                Mathf.Abs(transform.position.y - player.transform.position.y) < 5 && !gaveUp)
             {
                 Chase();
             }
@@ -120,12 +122,15 @@ public class HeadAI : Monster
             agent.speed = chaseSpeed;
             destination = player.transform.position;
             agent.SetDestination(destination);
+            chaseTime = Time.time;
+            Debug.Log(chaseTime);
         }
-        chasing = true;
+        if (!gaveUp)
+        {
+            chasing = true;
+        }
+        
         //transform.LookAt(player.transform.position);
-        agent.speed = chaseSpeed;
-        destination = player.transform.position;
-        agent.SetDestination(destination);
     }
     public void Follow()
     {
@@ -192,5 +197,6 @@ public class HeadAI : Monster
     {
         yield return new WaitForSeconds(5);
         gaveUp = false;
+        Debug.Log(gaveUp);
     }
 }
