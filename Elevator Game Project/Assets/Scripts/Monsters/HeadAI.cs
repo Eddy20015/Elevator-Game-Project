@@ -16,7 +16,7 @@ public class HeadAI : Monster
     [SerializeField] AudioSource[] audioSources;
     [SerializeField] Volume volume;
     private PhotonView view;
-    private bool patrolling, following, chasing;
+    private bool patrolling, following, chasing, gaveUp;
     private float chaseTime;
     private RaycastHit hit;
     Vector3 destination;
@@ -57,9 +57,11 @@ public class HeadAI : Monster
             agent.SetDestination(transform.position);
         }
         //After 10 seconds of chasing go back to patrol
-        if(chasing == true && Time.time - chaseTime > 10f)
+        if(chasing == true && (Time.time - chaseTime) > 5f)
         {
             Patrol();
+            gaveUp = true;
+            StartCoroutine(GiveUp());
         }
         //Patrol
         //Reached a destination, go to the next one
@@ -79,7 +81,8 @@ public class HeadAI : Monster
                 }
             }
             //Keep following if they are still in distance
-            if (Vector3.Distance(transform.position, player.transform.position) < followRange)
+            if (Vector3.Distance(transform.position, player.transform.position) < followRange &&
+                Mathf.Abs(transform.position.y - player.transform.position.y) < 5 && !chasing)
             {
                 //Debug.Log(agent.speed);
                 Follow();
@@ -97,7 +100,8 @@ public class HeadAI : Monster
             }
             //if (player != null || player.activeInHierarchy)
                 //Keep chasing if they are still in distance
-            if (Vector3.Distance(transform.position, player.transform.position) < chaseRange)
+            if (Vector3.Distance(transform.position, player.transform.position) < chaseRange &&
+                Mathf.Abs(transform.position.y - player.transform.position.y) < 5 && !gaveUp)
             {
                 Chase();
             }
@@ -113,21 +117,34 @@ public class HeadAI : Monster
     {
         patrolling = false;
         following = false;
-        chasing = true;
+        if (!chasing && !gaveUp)
+        {
+            agent.speed = chaseSpeed;
+            destination = player.transform.position;
+            agent.SetDestination(destination);
+            chaseTime = Time.time;
+            Debug.Log(chaseTime);
+        }
+        if (!gaveUp)
+        {
+            chasing = true;
+        }
+        
         //transform.LookAt(player.transform.position);
-        agent.speed = chaseSpeed;
-        destination = player.transform.position;
-        agent.SetDestination(destination);
     }
     public void Follow()
     {
         patrolling = false;
+        if (!following && !gaveUp)
+        {
+            agent.speed = followSpeed;
+            destination = player.transform.position;
+            agent.SetDestination(destination);
+        }
         following = true;
         chasing = false;
         //transform.LookAt(player.transform.position);
-        agent.speed = followSpeed;
-        destination = player.transform.position;
-        agent.SetDestination(destination);
+        
     }
 
     public void Patrol()
@@ -140,7 +157,11 @@ public class HeadAI : Monster
             agent.speed = patrolSpeed;
             destination = patrolPoints[Random.Range(0, patrolPoints.Length)].transform.position;
             //transform.LookAt(destination);
-            agent.SetDestination(destination);
+            if (agent.destination != destination)
+            {
+                agent.SetDestination(destination);
+            }
+            
         }
     }
 
@@ -170,5 +191,12 @@ public class HeadAI : Monster
         {
             patrolPoints[i - up] = PointParent.transform.GetChild(i).gameObject;
         }
+    }
+
+    IEnumerator GiveUp()
+    {
+        yield return new WaitForSeconds(5);
+        gaveUp = false;
+        Debug.Log(gaveUp);
     }
 }
