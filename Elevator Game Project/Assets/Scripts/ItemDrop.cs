@@ -10,9 +10,11 @@ public class ItemDrop : MonoBehaviour
     [SerializeField] private GameObject item;
     [SerializeField] private float destroyTime;
     [SerializeField] private AudioSource audio;
+    [SerializeField] private AudioClip otherClip;
     private void Start()
     {
         item.SetActive(false);
+        audio.clip = otherClip;
         audio.GetComponent<AudioSource>();
     }
 
@@ -21,6 +23,7 @@ public class ItemDrop : MonoBehaviour
         //Check if it hits a player
         if(other.tag == "Player")
         {
+            gameObject.GetComponent<BoxCollider>().enabled = false;
             //Drop the item by activating it
             item.SetActive(true);
             audio.Play();
