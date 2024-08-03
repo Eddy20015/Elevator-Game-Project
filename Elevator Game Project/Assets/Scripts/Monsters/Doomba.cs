@@ -165,7 +165,7 @@ public class Doomba : Monster
         Debug.Log(agent.destination);
     }
 
-    public void Chase()
+    public override void Chase()
     {
         patrolling = false;
         //Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.yellow);

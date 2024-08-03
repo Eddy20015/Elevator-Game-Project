@@ -113,7 +113,7 @@ public class HeadAI : Monster
 
         volume.weight = Mathf.Clamp01(10 / (Vector3.Distance(transform.position, player.transform.position) + 1) - 0.1f);
     }
-    public void Chase()
+    public override void Chase()
     {
         patrolling = false;
         following = false;
