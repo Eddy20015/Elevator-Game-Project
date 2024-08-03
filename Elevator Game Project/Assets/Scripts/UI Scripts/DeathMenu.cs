@@ -8,9 +8,6 @@ public class DeathMenu : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject deathUI;
 
-    [SerializeField]
-    private TMPro.
-
     private PhotonView view;
 
     private bool MasterLeft;
