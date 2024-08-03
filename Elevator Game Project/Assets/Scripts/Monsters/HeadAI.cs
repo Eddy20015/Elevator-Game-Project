@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 
 public class HeadAI : Monster
 {
-    [SerializeField] private override GameObject player;
+    [SerializeField] private GameObject player;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] public GameObject[] patrolPoints;
     [SerializeField] private NavMeshAgent agent;

@@ -9,7 +9,7 @@ using Photon.Pun;
 /// </summary>
 public class Doomba : Monster
 {
-    [SerializeField] private override GameObject player;
+    [SerializeField] private GameObject player;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private GameObject[] patrolPoints;
     [SerializeField] private NavMeshAgent agent;
