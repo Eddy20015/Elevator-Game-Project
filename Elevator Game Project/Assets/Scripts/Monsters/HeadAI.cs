@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 
 public class HeadAI : Monster
 {
-    [SerializeField] private GameObject player;
+    [SerializeField] private override GameObject player;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] public GameObject[] patrolPoints;
     [SerializeField] private NavMeshAgent agent;
@@ -113,7 +113,7 @@ public class HeadAI : Monster
 
         volume.weight = Mathf.Clamp01(10 / (Vector3.Distance(transform.position, player.transform.position) + 1) - 0.1f);
     }
-    public void Chase()
+    public override void Chase()
     {
         patrolling = false;
         following = false;

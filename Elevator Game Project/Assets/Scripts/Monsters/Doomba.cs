@@ -9,7 +9,7 @@ using Photon.Pun;
 /// </summary>
 public class Doomba : Monster
 {
-    [SerializeField] private GameObject player;
+    [SerializeField] private override GameObject player;
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private GameObject[] patrolPoints;
     [SerializeField] private NavMeshAgent agent;
@@ -165,7 +165,7 @@ public class Doomba : Monster
         Debug.Log(agent.destination);
     }
 
-    public void Chase()
+    public override void Chase()
     {
         patrolling = false;
         //Debug.DrawRay(transform.position, transform.forward * hit.distance, Color.yellow);
