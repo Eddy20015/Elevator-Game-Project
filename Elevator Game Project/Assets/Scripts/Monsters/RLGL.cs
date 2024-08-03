@@ -130,13 +130,28 @@ public class RLGL : Monster
 
         if(players.Count == 0 || (players.Count == 1 && other.gameObject != players[0]))
         {
-            players.Add(other.gameObject);
+            if(PerformListAddRaycast(other))
+                players.Add(other.gameObject);
         }
 
         if (other.gameObject.GetComponent<Light1>())
         {
-            lights.Add(other.gameObject);
+            if(PerformListAddRaycast(other))
+                lights.Add(other.gameObject);
         }
+    }
+
+    private bool PerformListAddRaycast(Collider other)
+    {
+        RaycastHit Hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(other.transform.position), out Hit, Mathf.Infinity))
+        {
+            if (other.gameObject.CompareTag(Hit.collider.gameObject.tag))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void OnTriggerExit(Collider other)
