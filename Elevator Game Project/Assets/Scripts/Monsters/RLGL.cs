@@ -5,6 +5,7 @@ using UnityEngine;
 public class RLGL : Monster
 {
     private List<GameObject> players;
+    private List<GameObject> lights;
     [SerializeField] private float MaxTimeBeforePounce;
 
     public enum RLGLSTATE
@@ -61,6 +62,19 @@ public class RLGL : Monster
         // Turn off all the lights in its vicinity during that time
 
         // Begin the red light green light and have it turn all the lights
+        StartCoroutine(RLGLCycle());
+    }
+
+    private IEnumerator RLGLCycle()
+    {
+        while (CurrState == RLGLSTATE.ACTIVATED)
+        {
+            // maybe parameterize these range values?
+            yield return new WaitForSeconds(Random.Range(3, 5));
+            GreenLight();
+            yield return new WaitForSeconds(Random.Range(6, 10));
+            RedLight();
+        }
     }
 
     private void RedLight()
@@ -118,6 +132,11 @@ public class RLGL : Monster
         {
             players.Add(other.gameObject);
         }
+
+        if (other.gameObject.GetComponent<Light1>())
+        {
+            lights.Add(other.gameObject);
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -129,6 +148,11 @@ public class RLGL : Monster
         else
         {
             players.Remove(other.gameObject);
+        }
+
+        if (other.gameObject.GetComponent<Light1>())
+        {
+            lights.Remove(other.gameObject);
         }
     }
 }
