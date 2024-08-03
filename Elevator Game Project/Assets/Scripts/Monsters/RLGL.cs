@@ -5,7 +5,7 @@ using UnityEngine;
 public class RLGL : Monster
 {
     private List<GameObject> players;
-    private List<GameObject> lights;
+    //private List<GameObject> lights;
     [SerializeField] private float MaxTimeBeforePounce;
 
     public enum RLGLSTATE
@@ -134,11 +134,11 @@ public class RLGL : Monster
                 players.Add(other.gameObject);
         }
 
-        if (other.gameObject.GetComponent<Light1>())
+        /*if (other.gameObject.GetComponent<Light1>())
         {
             if(PerformListAddRaycast(other))
                 lights.Add(other.gameObject);
-        }
+        }*/
     }
 
     private bool PerformListAddRaycast(Collider other)
@@ -165,9 +165,9 @@ public class RLGL : Monster
             players.Remove(other.gameObject);
         }
 
-        if (other.gameObject.GetComponent<Light1>())
+        /*if (other.gameObject.GetComponent<Light1>())
         {
             lights.Remove(other.gameObject);
-        }
+        }*/
     }
 }
