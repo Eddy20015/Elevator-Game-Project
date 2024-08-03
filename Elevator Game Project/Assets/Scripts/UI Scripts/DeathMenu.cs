@@ -8,6 +8,9 @@ public class DeathMenu : MonoBehaviourPunCallbacks
     [SerializeField]
     private GameObject deathUI;
 
+    [SerializeField]
+    private TMPro.
+
     private PhotonView view;
 
     private bool MasterLeft;
@@ -47,6 +50,11 @@ public class DeathMenu : MonoBehaviourPunCallbacks
         {
             view.RPC("RPC_Restart", RpcTarget.All);
         }
+    }
+
+    public void ClientDisableRestart()
+    {
+            deathUI.transform.GetChild(1).GetChild(0).gameObject.SetActive(PhotonNetwork.IsMasterClient);
     }
 
     [PunRPC]

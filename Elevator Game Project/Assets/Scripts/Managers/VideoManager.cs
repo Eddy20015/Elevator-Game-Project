@@ -90,7 +90,7 @@ public class VideoManager : MonoBehaviourPunCallbacks
     // Turns off the video
     private void Update()
     {
-        Debug.LogError("Completed is " + Completed + " Bring Up Panel is " + BringUpPanel);
+        //Debug.LogError("Completed is " + Completed + " Bring Up Panel is " + BringUpPanel);
         //just so that things may look a little cleaner and cover up ugly parts that should not be seen,
         //we will use the other black image to cover that all up
         if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.CINEMATIC)

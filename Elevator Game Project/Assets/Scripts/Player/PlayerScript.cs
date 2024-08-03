@@ -111,7 +111,7 @@ public class PlayerScript : MonoBehaviourPunCallbacks
         }
 
         if(GameStateManager.GetGameState() == GameStateManager.GAMESTATE.GAMEOVER)
-        Debug.LogError(GameStateManager.GetGameState());
+        //Debug.LogError(GameStateManager.GetGameState());
 
         if (!StayAlive)
         {

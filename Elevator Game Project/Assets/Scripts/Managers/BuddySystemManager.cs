@@ -72,6 +72,7 @@ public class BuddySystemManager : MonoBehaviourPunCallbacks
 
                 //opening up the gameover panel here because the players will be deactivated
                 deathUI.GetComponent<Canvas>().enabled = true;
+                deathUI.ClientDisableRestart();
                 Cursor.lockState = CursorLockMode.None;
             }
         }
