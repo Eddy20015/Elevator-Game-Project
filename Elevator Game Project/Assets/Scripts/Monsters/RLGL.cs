@@ -7,6 +7,8 @@ public class RLGL : Monster
 {
     private List<GameObject> players;
     //private List<GameObject> lights;
+    [SerializeField] private MeshRenderer MonsterMesh;
+    [SerializeField] private Light Spotlight;
     [SerializeField] private float MaxTimeBeforePounce;
     [SerializeField] private float MinTimeOfLight;
     [SerializeField] private float MaxTimeOfLight;
@@ -34,7 +36,7 @@ public class RLGL : Monster
     private ACTIVELIGHT CurrLight = ACTIVELIGHT.NONE;
    
     private ChargingStationManager CSM;
-    private GameObject LocalPlayer = null;
+    private GameObject LocalPlayer;
     private Vector3 LocalPlayerPrevPosition;
 
     // Start is called before the first frame update
@@ -45,7 +47,7 @@ public class RLGL : Monster
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(CurrState == RLGLSTATE.ACTIVATED)
         {
@@ -79,11 +81,17 @@ public class RLGL : Monster
                 if (LookTimeSinceSwitch > LookResponseTime)
                 {
                     Vector3 PlayerForward = LocalPlayer.transform.forward;
-                    Vector3 BetweenVector = LocalPlayer.transform.position - transform.position;
-                    if (Vector3.Dot(PlayerForward, BetweenVector) < LookAtThreshhold)
+                    Vector3 BetweenVector = transform.position - LocalPlayer.transform.position; 
+                    float DotProduct = Vector3.Dot(PlayerForward, BetweenVector);
+                    if (DotProduct < LookAtThreshhold)
                     {
                         players.Remove(LocalPlayer);
                         LocalPlayer.GetComponent<PlayerScript>().GetKilled();
+                        if(players.Count == 0)
+                        {
+                            DeactivateMonster();
+                            return;
+                        }
                     }
                 }
             }
@@ -98,6 +106,11 @@ public class RLGL : Monster
                     {
                         players.Remove(LocalPlayer);
                         LocalPlayer.GetComponent<PlayerScript>().GetKilled();
+                        if (players.Count == 0)
+                        {
+                            DeactivateMonster();
+                            return;
+                        }
                     }
                 }
             }
@@ -111,10 +124,16 @@ public class RLGL : Monster
                     {
                         players.Remove(LocalPlayer);
                         LocalPlayer.GetComponent<PlayerScript>().GetKilled();
+                        if (players.Count == 0)
+                        {
+                            DeactivateMonster();
+                            return;
+                        }
                     }
                 }
             }
 
+            print("LocalPrev: " + LocalPlayerPrevPosition + ", LocalNow: " + LocalPlayer.transform.position);
             LocalPlayerPrevPosition = LocalPlayer.transform.position;
         }
         else
@@ -152,7 +171,10 @@ public class RLGL : Monster
     {
         //Provide some time between when the player sees the monster and when it begins
         // Begin the red light green light and have it turn all the lights
-        float NumOfLights = CSM.NumOfCompletedStations / 2 + 1;
+        transform.position = LocalPlayer.transform.position + (LocalPlayerPrevPosition - LocalPlayer.transform.position) * 10 + LocalPlayer.transform.forward * 10;
+        transform.LookAt(LocalPlayer.transform);
+        float NumOfLights = 1;//CSM.NumOfCompletedStations / 2 + 1;
+        MonsterMesh.enabled = true;
         StartCoroutine(RLGLCycle(NumOfLights));
     }
 
@@ -167,7 +189,7 @@ public class RLGL : Monster
         while (0 < NumOfLights--)
         {
             // The more of one color appears, the less likely it will continue to appear
-            if( LightColorDeterminer >= Random.Range(0, 1))
+            if( LightColorDeterminer >= Random.Range(0f, 1f))
             {
                 LightColorDeterminer -= LightColorModifier;
                 GreenLight();
@@ -181,24 +203,31 @@ public class RLGL : Monster
             yield return new WaitForSeconds(Random.Range(MinTimeOfLight, MaxTimeOfLight));
         }
         TurnOffLight();
+        DeactivateMonster();
     }
 
     private void RedLight()
     {
         MoveTimeSinceSwitch = 0;
         CurrLight = ACTIVELIGHT.RED;
+        Spotlight.intensity = 200;
+        Spotlight.color = Color.red;
     }
 
     private void GreenLight()
     {
         MoveTimeSinceSwitch = 0;
         CurrLight = ACTIVELIGHT.GREEN;
+        Spotlight.intensity = 200;
+        Spotlight.color = Color.green;
     }
 
     private void TurnOffLight()
     {
         LookTimeSinceSwitch = 0;
         CurrLight = ACTIVELIGHT.NONE;
+        Spotlight.intensity = 0;
+        Spotlight.color = Color.white;
     }
 
     public void AggroMonster()
@@ -210,13 +239,15 @@ public class RLGL : Monster
     {
         if(CurrState == RLGLSTATE.DEACTIVATED)
         {
+            players.Add(player);
             Chase();
         }
     }
 
-    public void DeativateMonster()
+    public void DeactivateMonster()
     {
         CurrState = RLGLSTATE.DEACTIVATED;
+        MonsterMesh.enabled = false;
         players.Clear();
     }
 
@@ -225,6 +256,17 @@ public class RLGL : Monster
         if(other.gameObject.tag != "Player")
         {
             return; 
+        }
+
+        if(RLGLSTATE.DOCILE == CurrState)
+        {
+            DeactivateMonster();
+            return;
+        }
+
+        if(RLGLSTATE.DEACTIVATED == CurrState)
+        {
+            return;
         }
 
         if(players.Count == 0 || (players.Count == 1 && other.gameObject != players[0]))
@@ -253,20 +295,20 @@ public class RLGL : Monster
         return false;
     }
 
-    private void OnTriggerExit(Collider other)
+    /*private void OnTriggerExit(Collider other)
     {
         if(players.Count == 0 || other.gameObject.tag != "Player")
         {
             return;
         }
-        else
+        else if(CurrState == RLGLSTATE.ACTIVATED)
         {
             players.Remove(other.gameObject);
         }
 
-        /*if (other.gameObject.GetComponent<Light1>())
+        if (other.gameObject.GetComponent<Light1>())
         {
             lights.Remove(other.gameObject);
-        }*/
-    }
+        }
+    }*/
 }
