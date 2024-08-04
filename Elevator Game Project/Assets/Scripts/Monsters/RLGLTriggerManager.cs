@@ -14,15 +14,19 @@ public class RLGLTriggerManager : MonoBehaviour
     {
         for(int i = 0; i < TeleportPoints.Length; i++)
         {
-            if(Triggers[i] != null)
+            int r = Random.Range(i, TeleportPoints.Length - 1);
+            Transform temp = TeleportPoints[i];
+            TeleportPoints[i] = TeleportPoints[r];
+            TeleportPoints[r] = temp;
+
+            if (Triggers[i] != null)
             {
                 NumTriggers++;
-            }
-            else
-            {
-                return;
+                Triggers[i].transform.position = TeleportPoints[i].position;
+                Triggers[i].transform.rotation = TeleportPoints[i].rotation;
             }
         }
+
     }
 
     public void TeleportTrigger(RLGLTrigger CurrTrigger)

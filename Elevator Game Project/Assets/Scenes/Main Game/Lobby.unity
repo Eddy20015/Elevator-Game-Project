@@ -639,7 +639,7 @@ MonoBehaviour:
   PlayerItemPrefab: {fileID: 1073214181372001711, guid: 269823846cd91d341b562469ca053dba, type: 3}
   PlayerItemParent: {fileID: 1205937610}
   StartButton: {fileID: 920439247}
-  GameScene: Intro Scene
+  GameScene: RLGLTesting
 --- !u!4 &117294038
 Transform:
   m_ObjectHideFlags: 0
