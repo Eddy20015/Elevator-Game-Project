@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Game/End Cutscene.unity
     guid: 92d97b1f5881cce4b9bca17a86d1f341
+  - enabled: 1
+    path: Assets/Scenes/RLGLTesting.unity
+    guid: 62454ccffe477d14a8cff5e4bab1babc
   m_configObjects: {}
