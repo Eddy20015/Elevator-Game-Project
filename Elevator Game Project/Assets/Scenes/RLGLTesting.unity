@@ -1299,18 +1299,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3590121451834370874, guid: 83c12ba1f9cd57f479981982b51c2f45, type: 3}
-      propertyPath: Spotlight
-      value: 
-      objectReference: {fileID: 1896712080}
-    - target: {fileID: 4736248095321422309, guid: 83c12ba1f9cd57f479981982b51c2f45, type: 3}
-      propertyPath: m_Type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4736248095321422309, guid: 83c12ba1f9cd57f479981982b51c2f45, type: 3}
-      propertyPath: m_Intensity
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4797178943484436029, guid: 83c12ba1f9cd57f479981982b51c2f45, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -1358,30 +1346,6 @@ PrefabInstance:
     - target: {fileID: 5396188220133972593, guid: 83c12ba1f9cd57f479981982b51c2f45, type: 3}
       propertyPath: m_Name
       value: RLGL
-      objectReference: {fileID: 0}
-    - target: {fileID: 7464552402425195002, guid: 83c12ba1f9cd57f479981982b51c2f45, type: 3}
-      propertyPath: m_Radius
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 9205138268552445037, guid: 83c12ba1f9cd57f479981982b51c2f45, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 9205138268552445037, guid: 83c12ba1f9cd57f479981982b51c2f45, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 9205138268552445037, guid: 83c12ba1f9cd57f479981982b51c2f45, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9205138268552445037, guid: 83c12ba1f9cd57f479981982b51c2f45, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 9205138268552445037, guid: 83c12ba1f9cd57f479981982b51c2f45, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83c12ba1f9cd57f479981982b51c2f45, type: 3}
@@ -5484,11 +5448,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1830521861}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!108 &1896712080 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 4736248095321422309, guid: 83c12ba1f9cd57f479981982b51c2f45, type: 3}
-  m_PrefabInstance: {fileID: 457025477}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1899159608
 PrefabInstance:
   m_ObjectHideFlags: 0
